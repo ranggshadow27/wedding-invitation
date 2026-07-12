@@ -43,8 +43,8 @@ export default function InvitationPage({
     <main>
       {/* Landing Hero */}
       {!isOpened && (
-        <div className="min-h-screen flex flex-col antialiased items-center justify-end pb-20 text-center px-6 bg-[url(/images/bg.png)] bg-cover bg-center">
-          <p className="text-xs tracking-[4] font-medium font-['Montserrat'] mb-2">
+        <div className="min-h-screen text-white flex flex-col antialiased items-center justify-end pb-20 text-center px-6 bg-[url(/images/bg.png)] bg-cover bg-center">
+          <p className="text-xs  tracking-[4] font-medium font-['Montserrat'] mb-2">
             WEDDING INVITATION
           </p>
 
@@ -68,9 +68,7 @@ export default function InvitationPage({
             We Invite You to Celebrate Our Wedding
           </p>
 
-          <p className="text-sm text-[#D9D9D9] font-['Montserrat'] mb-4">
-            Dear Sir / Madam,
-          </p>
+          <p className="text-sm font-['Montserrat'] mb-4">Dear Sir / Madam,</p>
           <p className="text-xl font-semibold font-['Montserrat'] mb-12">
             {guest.name}
           </p>
