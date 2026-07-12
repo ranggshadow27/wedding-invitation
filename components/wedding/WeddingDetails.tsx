@@ -5,7 +5,7 @@ import Countdown from "../Countdown";
 export default function WeddingDetails() {
   return (
     <div className="bg-[#CFCDC9]">
-      <div className="pt-12 pb-20 px-12 max-w-5xl mx-auto font-['Montserrat_Alternates']">
+      <div className="pt-12 pb-20 px-12 max-w-5xl mx-auto font-['Montserrat']">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#674A11] tracking-wide">
@@ -26,27 +26,27 @@ export default function WeddingDetails() {
         </div>
 
         {/* Detail Pengantin */}
-        <div className="mb-20">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-10">
+        <div className="mb-20 ">
+          <div className="flex flex-col md:flex-row items-center justify-center">
             {/* Pengantin Perempuan */}
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10 text-right">
+            <div className="w-screen p-6 flex flex-col md:flex-row items-center gap-8 md:gap-10 text-right">
               <div className="flex items-center gap-4 md:gap-8">
                 <div className="flex-1">
-                  <h3 className="text-xl md:text-2xl font-base text-gray-800">
+                  <h3 className="text-lg md:text-2xl font-base text-gray-800">
                     <span className="font-bold">Annisa</span> Lutfia Putri
                     Pratama
                   </h3>
-                  <p className="text-[#674A11]/80 mt-2 text-sm">
+                  <p className="text-[#674A11]/80 mt-2 text-xs">
                     Putri Pertama dari Bapak Deden Achmadi & Ibu Sulviana Syafri
                     (Almh)
                   </p>
                 </div>
 
-                <div className="w-70 h-65 md:w-75 md:h-70 flex-1">
+                <div className="w-55 h-55 md:w-75 md:h-70 flex-1">
                   <img
                     src="/images/bride.png"
                     alt="Pengantin Perempuan"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-scale-down"
                   />
                 </div>
               </div>
@@ -62,21 +62,21 @@ export default function WeddingDetails() {
             </div>
 
             {/* Pengantin Laki-laki */}
-            <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-10 text-left md:text-left">
-              <div className="flex items-center gap-4 md:gap-8 ">
-                <div className="w-70 h-65 md:w-75 md:h-70 rounded-3xl flex-1">
+            <div className="w-screen p-6 flex flex-col md:flex-row-reverse items-center gap-8 md:gap-10 text-left md:text-left ">
+              <div className=" flex items-center gap-4 md:gap-8 ">
+                <div className="w-55 h-55 md:w-75 md:h-70 rounded-3xl flex-1">
                   <img
                     src="/images/groom.png"
                     alt="Pengantin Laki-laki"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-scale-down"
                   />
                 </div>
 
                 <div className="flex-1">
-                  <h3 className="text-xl md:text-2xl font-base text-gray-800">
+                  <h3 className="text-lg md:text-2xl font-base text-gray-800">
                     <span className="font-bold">Rangga</span> Tito Prayogo
                   </h3>
-                  <p className="text-[#674A11]/80 mt-2 text-sm">
+                  <p className="text-[#674A11]/80 mt-2 text-xs">
                     Putra Pertama dari Bapak Gatot Subroto & Ibu Wati
                   </p>
                 </div>

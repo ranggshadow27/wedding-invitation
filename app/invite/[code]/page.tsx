@@ -44,23 +44,23 @@ export default function InvitationPage({
       {/* Landing Hero */}
       {!isOpened && (
         <div className="min-h-screen flex flex-col antialiased items-center justify-end pb-20 text-center px-6 bg-[url(/images/bg.png)] bg-cover bg-center">
-          <p className="text-sm tracking-[4] font-medium  font-['Montserrat'] mb-2">
+          <p className="text-xs tracking-[4] font-medium font-['Montserrat'] mb-2">
             WEDDING INVITATION
           </p>
 
-          <div className="w-full md:w-120 flex flex-wrap items-center justify-between mb-2">
-            <h1 className="text-6xl md:text-7xl tracking-tight  font-['Allura']">
+          <div className="w-full md:w-120 flex flex-wrap items-center justify-evenly mb-2">
+            <h1 className="text-5xl md:text-7xl tracking-tight  font-['Allura']">
               Annisa
             </h1>
-            <h1 className="text-4xl md:text-5xl tracking-tight text-rose-500  font-['Allura']">
+            <h1 className="text-4xl md:text-5xl tracking-tight text-rose-400  font-['Allura']">
               &
             </h1>
-            <h1 className="text-6xl md:text-7xl tracking-tight  font-['Allura']">
+            <h1 className="text-5xl md:text-7xl tracking-tight  font-['Allura']">
               Rangga
             </h1>
           </div>
 
-          <p className="text-sm tracking-[4] font-medium  font-['Montserrat'] mb-30">
+          <p className="text-xs tracking-[4] font-medium  font-['Montserrat'] mb-20">
             26 SEPTEMBER 2026
           </p>
 
@@ -72,12 +72,12 @@ export default function InvitationPage({
             Dear Sir / Madam,
           </p>
           <p className="text-xl font-semibold font-['Montserrat'] mb-12">
-            Yth. {guest.name}
+            {guest.name}
           </p>
 
           <button
             onClick={() => setIsOpened(true)}
-            className="bg-white/50 hover:bg-white/60 text-[#404040] font-bold px-10 py-4 rounded-[5.5vw] drop-shadow-md text-l font-['Montserrat']"
+            className="bg-white/50 hover:bg-white/60 text-[#404040] h-12 w-40 font-bold  rounded-2xl drop-shadow-md text-sm font-['Montserrat']"
           >
             Open Invitation
           </button>
