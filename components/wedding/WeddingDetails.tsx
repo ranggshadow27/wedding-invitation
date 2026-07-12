@@ -4,80 +4,87 @@ import Countdown from "../Countdown";
 
 export default function WeddingDetails() {
   return (
-    <div className="bg-white">
-      <div className="pt-12 pb-20 px-6 max-w-5xl mx-auto font-['Montserrat_Alternates']">
+    <div className="bg-[#CFCDC9]">
+      <div className="pt-12 pb-20 px-12 max-w-5xl mx-auto font-['Montserrat_Alternates']">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-5xl md:text-6xl font-['Allura'] text-rose-700 tracking-wide">
-            We Are Getting Married
+          <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#674A11] tracking-wide">
+            We Are Getting Married !
           </h2>
-          <div className="w-24 h-px bg-rose-400 mx-auto mt-6"></div>
+          <div className="w-24 h-px bg-[#674A11] mx-auto mt-6"></div>
         </div>
 
         {/* Ayat Ar-Rum */}
-        <div className="max-w-2xl mx-auto text-center mb-16">
-          <p className="text-lg md:text-xl leading-relaxed italic text-gray-800 mb-4">
+        <div className="max-w-full mx-auto text-center mb-16">
+          <p className="text-base md:text-xl leading-relaxed italic text-[#674A11]/80 mb-4">
             "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan
             untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung
             dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa
             kasih dan sayang."
           </p>
-          <p className="text-rose-700 font-medium">Q.S. Ar-Rum : 21</p>
+          <p className="text-[#674A11] font-bold text-lg">Q.S. Ar-Rum : 21</p>
         </div>
 
         {/* Detail Pengantin */}
         <div className="mb-20">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-10">
             {/* Pengantin Perempuan */}
-            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10 text-center md:text-left">
-              <div className="w-64 h-64 md:w-72 md:h-72 rounded-3xl overflow-hidden border-8 border-rose-100 shadow-xl">
-                <img
-                  src="/images/bride.jpg"
-                  alt="Pengantin Perempuan"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <h3 className="text-3xl md:text-4xl font-semibold text-gray-800">
-                  Aisyah Putri
-                </h3>
-                <p className="text-rose-700 mt-2">
-                  Putri Pertama dari Bapak & Ibu
-                </p>
+            <div className="flex flex-col md:flex-row items-center gap-8 md:gap-10 text-right">
+              <div className="flex items-center gap-4 md:gap-8">
+                <div className="flex-1">
+                  <h3 className="text-xl md:text-2xl font-base text-gray-800">
+                    <span className="font-bold">Annisa</span> Lutfia Putri
+                    Pratama
+                  </h3>
+                  <p className="text-[#674A11]/80 mt-2 text-sm">
+                    Putri Pertama dari Bapak Deden Achmadi & Ibu Sulviana Syafri
+                    (Almh)
+                  </p>
+                </div>
+
+                <div className="w-70 h-65 md:w-75 md:h-70 flex-1">
+                  <img
+                    src="/images/bride.png"
+                    alt="Pengantin Perempuan"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="text-7xl md:text-8xl font-['Allura'] text-rose-400 hidden md:block">
+            <div className="text-7xl md:text-8xl font-['Allura'] text-[#674A11] hidden md:block">
               {" "}
               &{" "}
             </div>
-            <div className="text-6xl font-['Allura'] text-rose-400 md:hidden my-4">
+            <div className="text-6xl font-['Allura'] text-[#674A11] md:hidden my-4">
               {" "}
               &{" "}
             </div>
 
             {/* Pengantin Laki-laki */}
-            <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-10 text-center md:text-right">
-              <div className="w-64 h-64 md:w-72 md:h-72 rounded-3xl overflow-hidden border-8 border-rose-100 shadow-xl">
-                <img
-                  src="/images/groom.jpg"
-                  alt="Pengantin Laki-laki"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <h3 className="text-3xl md:text-4xl font-semibold text-gray-800">
-                  Ahmad Rafi
-                </h3>
-                <p className="text-rose-700 mt-2">
-                  Putra Pertama dari Bapak & Ibu
-                </p>
+            <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-10 text-left md:text-left">
+              <div className="flex items-center gap-4 md:gap-8 ">
+                <div className="w-70 h-65 md:w-75 md:h-70 rounded-3xl flex-1">
+                  <img
+                    src="/images/groom.png"
+                    alt="Pengantin Laki-laki"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <h3 className="text-xl md:text-2xl font-base text-gray-800">
+                    <span className="font-bold">Rangga</span> Tito Prayogo
+                  </h3>
+                  <p className="text-[#674A11]/80 mt-2 text-sm">
+                    Putra Pertama dari Bapak Gatot Subroto & Ibu Wati
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Save The Date + Countdown */}
         {/* Save The Date + Countdown */}
         <div className="text-center mb-16">
           <h2 className="text-6xl md:text-7xl font-['Allura'] text-rose-700 mb-6">

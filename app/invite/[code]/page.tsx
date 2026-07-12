@@ -43,17 +43,43 @@ export default function InvitationPage({
     <main>
       {/* Landing Hero */}
       {!isOpened && (
-        <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 bg-gradient-to-b from-rose-50 to-white">
-          <h1 className="text-5xl md:text-7xl font-serif mb-6">
-            Nama Pengantin
-          </h1>
-          <p className="text-2xl text-gray-600 mb-12">Yth. {guest.name}</p>
+        <div className="min-h-screen flex flex-col antialiased items-center justify-end pb-20 text-center px-6 bg-[url(/images/bg.png)] bg-cover bg-center">
+          <p className="text-sm tracking-[4] font-medium  font-['Montserrat'] mb-2">
+            WEDDING INVITATION
+          </p>
+
+          <div className="w-full md:w-120 flex flex-wrap items-center justify-between mb-2">
+            <h1 className="text-6xl md:text-7xl tracking-tight  font-['Allura']">
+              Annisa
+            </h1>
+            <h1 className="text-4xl md:text-5xl tracking-tight text-rose-500  font-['Allura']">
+              &
+            </h1>
+            <h1 className="text-6xl md:text-7xl tracking-tight  font-['Allura']">
+              Rangga
+            </h1>
+          </div>
+
+          <p className="text-sm tracking-[4] font-medium  font-['Montserrat'] mb-30">
+            26 SEPTEMBER 2026
+          </p>
+
+          <p className="text-m italic font-semibold  font-['Montserrat'] mb-6">
+            We Invite You to Celebrate Our Wedding
+          </p>
+
+          <p className="text-sm text-[#D9D9D9] font-['Montserrat'] mb-4">
+            Dear Sir / Madam,
+          </p>
+          <p className="text-xl font-semibold font-['Montserrat'] mb-12">
+            Yth. {guest.name}
+          </p>
 
           <button
             onClick={() => setIsOpened(true)}
-            className="bg-rose-600 text-white px-12 py-5 rounded-full text-xl"
+            className="bg-white/50 hover:bg-white/60 text-[#404040] font-bold px-10 py-4 rounded-[5.5vw] drop-shadow-md text-l font-['Montserrat']"
           >
-            Buka Undangan
+            Open Invitation
           </button>
         </div>
       )}

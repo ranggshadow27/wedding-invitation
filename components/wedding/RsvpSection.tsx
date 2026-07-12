@@ -156,10 +156,10 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
           </div>
 
           {/* RSVP List */}
-          <div className="bg-rose-500 opacity-25 rounded-3xl p-8 shadow-sm">
+          <div className="bg-white bg-opacity-30 rounded-3xl p-8 shadow-sm">
             <h3 className="text-xl font-bold text-gray-800 mb-6">RSVP List</h3>
 
-            <div className="max-h-[500px] overflow-y-auto space-y-4 pr-2">
+            <div className="max-h-125 overflow-y-auto space-y-4 pr-2">
               {rsvps.length === 0 ? (
                 <div className="text-center py-12 text-gray-500">
                   <Heart className="w-12 h-12 mx-auto mb-4 opacity-30" />
