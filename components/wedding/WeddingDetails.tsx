@@ -4,25 +4,25 @@ import Countdown from "../Countdown";
 
 export default function WeddingDetails() {
   return (
-    <div className="py-20 px-8  bg-[#CFCDC9]">
+    <div className="py-20 px-8 bg-linear-to-b from-[#CFCDC9]/90 to-[#CFCDC9]/60  backdrop-blur-sm">
       <div className="max-w-5xl mx-auto font-['Montserrat']">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#674A11] tracking-wide">
+          <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide">
             We Are Getting Married !
           </h2>
-          <div className="w-24 h-px bg-[#674A11] mx-auto mt-6"></div>
+          <div className="w-24 h-px bg-[#3E2900] mx-auto mt-6"></div>
         </div>
 
         {/* Ayat Ar-Rum */}
         <div className="max-w-full mx-auto text-center mb-16">
-          <p className="text-base md:text-xl leading-relaxed italic text-[#674A11]/80 mb-4">
+          <p className="text-base md:text-xl leading-relaxed italic text-[#3E2900]/80 mb-4">
             "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan
             untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung
             dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa
             kasih dan sayang."
           </p>
-          <p className="text-[#674A11] font-bold text-lg">Q.S. Ar-Rum : 21</p>
+          <p className="text-[#3E2900] font-bold text-lg">Q.S. Ar-Rum : 21</p>
         </div>
 
         {/* Detail Pengantin */}
@@ -36,7 +36,7 @@ export default function WeddingDetails() {
                     <span className="font-bold">Annisa</span> Lutfia Putri
                     Pratama
                   </h3>
-                  <p className="text-[#674A11]/80 mt-2 text-sm">
+                  <p className="text-[#3E2900]/80 mt-2 text-sm">
                     Putri Pertama dari Bapak Deden Achmadi & Ibu Sulviana Syafri
                     (Almh)
                   </p>
@@ -52,11 +52,11 @@ export default function WeddingDetails() {
               </div>
             </div>
 
-            <div className="text-7xl md:text-8xl font-['Allura'] text-[#674A11] hidden md:block">
+            <div className="text-7xl md:text-8xl font-['Allura'] text-[#3E2900] hidden md:block">
               {" "}
               &{" "}
             </div>
-            <div className="text-6xl font-['Allura'] text-[#674A11] md:hidden my-4">
+            <div className="text-6xl font-['Allura'] text-[#3E2900] md:hidden my-4">
               {" "}
               &{" "}
             </div>
@@ -76,7 +76,7 @@ export default function WeddingDetails() {
                   <h3 className="text-lg md:text-2xl font-base text-gray-800">
                     <span className="font-bold">Rangga</span> Tito Prayogo
                   </h3>
-                  <p className="text-[#674A11]/80 mt-2 text-sm">
+                  <p className="text-[#3E2900]/80 mt-2 text-sm">
                     Putra Pertama dari Bapak Gatot Subroto & Ibu Wati
                   </p>
                 </div>

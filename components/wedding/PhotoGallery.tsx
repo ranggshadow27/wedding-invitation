@@ -15,7 +15,7 @@ const galleryImages = [
 
 export default function PhotoGallery() {
   return (
-    <div className="py-20 px-6 bg-white">
+    <div className="py-20 px-6 bg-linear-to-b from-[#CFCDC9]/60 to-[#CFCDC9]/0 backdrop-blur-sm">
       <div className="text-center mb-12">
         <h2 className="text-5xl md:text-6xl font-['Allura'] text-rose-700 tracking-wide">
           Our Gallery

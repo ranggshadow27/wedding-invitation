@@ -57,7 +57,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   };
 
   return (
-    <div className="py-20 px-8 bg-[url(/images/bg.png)] bg-cover bg-center font-['Montserrat']">
+    <div className="py-20 px-8 backdrop-blur-xs font-['Montserrat']">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#D9D9D9]">

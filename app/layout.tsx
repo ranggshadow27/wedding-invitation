@@ -33,7 +33,19 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body
+        style={{
+          backgroundImage: "url('/images/bg.png')",
+          backgroundAttachment: "fixed",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          minHeight: "100vh",
+        }}
+        className="min-h-screen"
+      >
+        {children}
+      </body>
     </html>
   );
 }
