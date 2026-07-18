@@ -12,6 +12,17 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Gaya untuk React Masonry CSS */
+.my-masonry-grid {
+  display: flex;
+  margin-left: -16px; /* sesuaikan dengan jarak gap yang diinginkan */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 16px; /* sesuaikan dengan jarak gap yang diinginkan */
+  background-clip: padding-box;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

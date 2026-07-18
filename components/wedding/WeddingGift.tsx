@@ -1,14 +1,13 @@
 // components/wedding/WeddingGift.tsx
-
 import {
   Copy,
-  Gift,
   CurrencyBtc,
   CurrencyEth,
   PaypalLogo,
   Bank,
 } from "@phosphor-icons/react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const gifts = [
   {
@@ -53,25 +52,42 @@ export default function WeddingGift() {
   return (
     <div className="py-20 px-8 backdrop-blur-xs font-['Montserrat']">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#D9D9D9] mb-6">
             Wedding Gift
           </h2>
-        </div>
+        </motion.div>
 
-        <p className="text-center text-base text-[#D9D9D9] max-w-2xl mx-auto mb-16">
+        <motion.p
+          className="text-center text-base text-[#D9D9D9] max-w-2xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        >
           Kehadiran dan doa Anda sudah lebih dari cukup bagi kami. Namun jika
           Bapak/Ibu ingin memberikan tanda kasih sayang, kami sangat menghargai.
-        </p>
+        </motion.p>
 
         {/* Gift Cards */}
         <div className="grid md:grid-cols-2 gap-6 mb-20">
-          {gifts.map((gift) => {
+          {gifts.map((gift, index) => {
             const Icon = gift.icon;
             return (
-              <div
+              <motion.div
                 key={gift.id}
                 className="border-3 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-2xl p-4 hover:shadow-md transition-all group"
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 + 0.3 }}
               >
                 <div className="flex items-center gap-2 mb-6">
                   <Icon size={25} weight="duotone" className="text-[#D9D9D9]" />
@@ -83,7 +99,7 @@ export default function WeddingGift() {
                 <div>
                   <div
                     onClick={() => copyToClipboard(gift.account, gift.name)}
-                    className="rounded-lg py-2 flex items-center justify-between cursor-pointer transition-all border border-transparent"
+                    className="rounded-lg py-2 flex items-center justify-between cursor-pointer transition-all border border-transparent hover:border-[#D9D9D9]/50"
                   >
                     <span className="font-mono text-xl break-all font-bold">
                       {gift.account}
@@ -97,18 +113,36 @@ export default function WeddingGift() {
                     </div>
                   </div>
 
-                  <p className="text-start text-sm font-mono text-[#D9D9D9]">
+                  <p className="text-start text-sm font-mono text-[#D9D9D9] mt-3">
                     {gift.owner}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
 
-        <p className="text-base  text-[#D9D9D9] border-3 border-[#D9D9D9]/50 bg-[#D9D9D9]/10 rounded-2xl p-6 font-light text-center">
+        <motion.p
+          className="text-base text-[#D9D9D9] border-3 border-[#D9D9D9]/50 bg-[#D9D9D9]/10 rounded-2xl p-6 font-light text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          animate={{
+            y: [0, -6, 0, -4, 0], // wiggle pelan
+          }}
+          transition={{
+            delay: 0.8,
+            duration: 3.5,
+            y: {
+              duration: 4,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut",
+            },
+          }}
+        >
           Terima kasih atas perhatian dan doanya 🤍
-        </p>
+        </motion.p>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 import { User, Heart } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface RsvpSectionProps {
   guest: any;
@@ -17,7 +18,6 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   const [submitting, setSubmitting] = useState(false);
   const [rsvps, setRsvps] = useState<any[]>([]);
 
-  // Fetch RSVP List
   const fetchRsvps = async () => {
     const { data } = await supabase
       .from("rsvps")
@@ -38,7 +38,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
 
     const { error } = await supabase.from("rsvps").insert({
       guest_name: name,
-      attending: attending ? totalAttending : 0,
+      attending: attending ? true : false,
       total_attending: attending ? totalAttending : 0,
       message: message.trim(),
       guest_id: guest.id,
@@ -50,29 +50,48 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
       alert("Terima kasih! RSVP berhasil disimpan ❤️");
       setMessage("");
       setAttending(null);
-      fetchRsvps(); // refresh list
+      fetchRsvps();
     }
 
     setSubmitting(false);
   };
 
   return (
-    <div className="py-20 px-8 backdrop-blur-xs font-['Montserrat']">
+    <div className="py-20 px-8 backdrop-blur-xs bg-[#CFCDC9]/10 font-['Montserrat']">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#D9D9D9]">
             Confirm Your Attendance
           </h2>
-        </div>
+        </motion.div>
 
-        <p className="text-center text-base text-[#D9D9D9] max-w-2xl mx-auto mb-16">
+        <motion.p
+          className="text-center text-base text-[#D9D9D9] max-w-2xl mx-auto mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+        >
           Kehadiran dan doa dari Anda merupakan hadiah dan kesan terbaik bagi
           kami. Semoga Allah SWT mempertemukan kita dalam kebahagiaan.
-        </p>
+        </motion.p>
 
         <div className="grid md:grid-cols-2 gap-2">
           {/* Form RSVP */}
-          <div className="rounded-3xl p-4">
+          <motion.div
+            className="rounded-3xl p-4"
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
             <h3 className="text-2xl text-center font-bold text-[#D9D9D9] mb-6">
               Confirm Here
             </h3>
@@ -153,10 +172,16 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                 {submitting ? "Menyimpan..." : <b>Submit RSVP</b>}
               </button>
             </form>
-          </div>
+          </motion.div>
 
           {/* RSVP List */}
-          <div className="rounded-3xl p-4">
+          <motion.div
+            className="rounded-3xl p-4"
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
             <h3 className="text-2xl text-center font-bold text-[#D9D9D9] mb-10">
               RSVP List
             </h3>
@@ -169,7 +194,14 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                 </div>
               ) : (
                 rsvps.map((rsvp, index) => (
-                  <div key={index} className="flex gap-3 text-[#D9D9D9]">
+                  <motion.div
+                    key={index}
+                    className="flex gap-3 text-[#D9D9D9]"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                  >
                     <div className="w-10 h-10 bg-[#D9D9D9] text-[#404040] rounded-4xl flex items-center justify-center font-bold shrink-0">
                       {rsvp.guest_name?.slice(0, 2).toUpperCase()}
                     </div>
@@ -189,11 +221,11 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                           : "Tidak Hadir"}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 ))
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
