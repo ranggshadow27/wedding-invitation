@@ -4,8 +4,8 @@ import Countdown from "../Countdown";
 
 export default function WeddingDetails() {
   return (
-    <div className="bg-[#CFCDC9]">
-      <div className="pt-12 pb-20 px-12 max-w-5xl mx-auto font-['Montserrat']">
+    <div className="py-20 px-8  bg-[#CFCDC9]">
+      <div className="max-w-5xl mx-auto font-['Montserrat']">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#674A11] tracking-wide">
@@ -36,7 +36,7 @@ export default function WeddingDetails() {
                     <span className="font-bold">Annisa</span> Lutfia Putri
                     Pratama
                   </h3>
-                  <p className="text-[#674A11]/80 mt-2 text-xs">
+                  <p className="text-[#674A11]/80 mt-2 text-sm">
                     Putri Pertama dari Bapak Deden Achmadi & Ibu Sulviana Syafri
                     (Almh)
                   </p>
@@ -76,7 +76,7 @@ export default function WeddingDetails() {
                   <h3 className="text-lg md:text-2xl font-base text-gray-800">
                     <span className="font-bold">Rangga</span> Tito Prayogo
                   </h3>
-                  <p className="text-[#674A11]/80 mt-2 text-xs">
+                  <p className="text-[#674A11]/80 mt-2 text-sm">
                     Putra Pertama dari Bapak Gatot Subroto & Ibu Wati
                   </p>
                 </div>
