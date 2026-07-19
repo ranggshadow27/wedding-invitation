@@ -12,7 +12,7 @@ export default function AudioPlayer() {
 
   useEffect(() => {
     // Inisialisasi Audio object
-    audioRef.current = new Audio("/audio/wedding-song.m4a");
+    audioRef.current = new Audio("/audio/wedding-song.mp3");
     audioRef.current.loop = true;
 
     // Kebijakan browser modern melarang autoplay sebelum user interaksi.
