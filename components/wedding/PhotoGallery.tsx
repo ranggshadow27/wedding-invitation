@@ -26,15 +26,69 @@ const toBase64 = (str: string) =>
 // Tips: Berikan variasi height (misal ada yang portrait 800, ada yang landscape 450 atau 600)
 // agar efek masonry pinterest-nya semakin terlihat nyata dan indah!
 const galleryImages = [
-  { id: 1, url: "/images/gallery/1.png", alt: "Prewedding 1", w: 600, h: 350 },
-  { id: 2, url: "/images/gallery/2.jpg", alt: "Prewedding 2", w: 600, h: 450 }, // Landscape
-  { id: 3, url: "/images/gallery/3.jpg", alt: "Prewedding 3", w: 600, h: 600 }, // Portrait Panjang
-  { id: 4, url: "/images/gallery/4.jpg", alt: "Prewedding 4", w: 600, h: 600 },
-  { id: 5, url: "/images/gallery/5.jpg", alt: "Prewedding 5", w: 600, h: 600 }, // Square
-  { id: 6, url: "/images/gallery/6.jpg", alt: "Prewedding 6", w: 600, h: 350 },
-  { id: 7, url: "/images/gallery/7.jpg", alt: "Prewedding 7", w: 600, h: 450 }, // Landscape
-  { id: 8, url: "/images/gallery/8.jpg", alt: "Prewedding 8", w: 600, h: 600 }, // Portrait Panjang
-  { id: 9, url: "/images/gallery/9.jpg", alt: "Prewedding 9", w: 600, h: 600 },
+  {
+    id: 1,
+    url: "/images/gallery/img_7.png",
+    alt: "Prewedding 1",
+    w: 600,
+    h: 350,
+  },
+  {
+    id: 2,
+    url: "/images/gallery/img_3.png",
+    alt: "Prewedding 2",
+    w: 600,
+    h: 450,
+  }, // Landscape
+  {
+    id: 3,
+    url: "/images/gallery/img_2.png",
+    alt: "Prewedding 3",
+    w: 600,
+    h: 600,
+  }, // Portrait Panjang
+  {
+    id: 4,
+    url: "/images/gallery/img_1_v2.png",
+    alt: "Prewedding 4",
+    w: 600,
+    h: 600,
+  },
+  {
+    id: 5,
+    url: "/images/gallery/img_4_wide.png",
+    alt: "Prewedding 5",
+    w: 600,
+    h: 400,
+  }, // Square
+  {
+    id: 6,
+    url: "/images/gallery/img_6.png",
+    alt: "Prewedding 6",
+    w: 600,
+    h: 350,
+  },
+  {
+    id: 7,
+    url: "/images/gallery/img_5_wide.png",
+    alt: "Prewedding 7",
+    w: 600,
+    h: 400,
+  }, // Landscape
+  {
+    id: 8,
+    url: "/images/gallery/img_9.png",
+    alt: "Prewedding 8",
+    w: 600,
+    h: 500,
+  }, // Portrait Panjang
+  {
+    id: 9,
+    url: "/images/gallery/img_8.png",
+    alt: "Prewedding 9",
+    w: 600,
+    h: 400,
+  },
 ];
 
 export default function PhotoGallery() {
@@ -42,7 +96,7 @@ export default function PhotoGallery() {
   const breakpointColumnsObj = {
     default: 3, // Layar komputer/desktop (3 kolom)
     1100: 3,
-    700: 2, // Layar tablet (2 kolom)
+    700: 1, // Layar tablet (2 kolom)
     500: 1, // Layar HP (1 kolom mendatar)
   };
 
@@ -69,7 +123,7 @@ export default function PhotoGallery() {
           {galleryImages.map((photo, index) => (
             <motion.div
               key={photo.id}
-              className="mb-4 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group"
+              className="mb-4 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-100 group"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -81,9 +135,6 @@ export default function PhotoGallery() {
                   alt={photo.alt}
                   width={photo.w}
                   height={photo.h}
-                  // ⚠️ PERUBAHAN DI SINI:
-                  // Hapus 'h-auto', lalu paksa tingginya mengikuti prop 'h' yang kita tentukan di array.
-                  // Tambahkan inline style 'height' agar ukurannya presisi memotong gambar asli.
                   className="w-full object-cover transform group-hover:scale-105 transition-transform duration-500 ease-out"
                   style={{ height: `${photo.h}px` }}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

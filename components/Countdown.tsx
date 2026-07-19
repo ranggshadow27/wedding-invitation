@@ -41,41 +41,32 @@ export default function Countdown({ targetDate }: CountdownProps) {
     return () => clearInterval(interval);
   }, [targetDate]);
 
+  // Helper untuk padding angka satuan (misal: 9 jadi 09) agar lebar card tidak goyang
+  const formatNumber = (num: number) => String(num).padStart(2, "0");
+
+  const timeData = [
+    { label: "days", value: timeLeft.days },
+    { label: "hours", value: timeLeft.hours },
+    { label: "mins", value: timeLeft.minutes },
+    { label: "secs", value: timeLeft.seconds },
+  ];
+
   return (
-    <div className="bg-white/70 backdrop-blur-md rounded-2xl p-8 inline-block shadow-sm">
-      <div className="grid grid-cols-4 gap-6 text-center">
-        <div>
-          <div className="text-4xl font-light text-gray-800">
-            {timeLeft.days}
+    <div className="max-w-xl mx-auto px-4 font-['Montserrat Alternates']">
+      <div className="grid grid-cols-4 gap-2 text-center">
+        {timeData.map((item, index) => (
+          <div
+            key={index}
+            className="bg-white/70 backdrop-blur-md rounded-3xl sm:rounded-4xl p-2 sm:p-5 md:p-6 shadow-2xl flex flex-col justify-center items-center aspect-square sm:aspect-auto"
+          >
+            <div className="text-xl sm:text-3xl md:text-3xl font-bold text-gray-600">
+              {formatNumber(item.value)}
+            </div>
+            <div className="text-[10px] sm:text-sm font-medium text-gray-600/50 tracking-wider">
+              {item.label}
+            </div>
           </div>
-          <div className="text-sm uppercase tracking-widest text-gray-600">
-            Days
-          </div>
-        </div>
-        <div>
-          <div className="text-4xl font-light text-gray-800">
-            {timeLeft.hours}
-          </div>
-          <div className="text-sm uppercase tracking-widest text-gray-600">
-            Hours
-          </div>
-        </div>
-        <div>
-          <div className="text-4xl font-light text-gray-800">
-            {timeLeft.minutes}
-          </div>
-          <div className="text-sm uppercase tracking-widest text-gray-600">
-            Mins
-          </div>
-        </div>
-        <div>
-          <div className="text-4xl font-light text-gray-800">
-            {timeLeft.seconds}
-          </div>
-          <div className="text-sm uppercase tracking-widest text-gray-600">
-            Secs
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

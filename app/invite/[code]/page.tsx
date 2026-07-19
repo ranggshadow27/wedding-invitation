@@ -85,7 +85,7 @@ export default function InvitationPage({
             key="landing"
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.8 }}
-            className="min-h-screen text-white flex flex-col antialiased items-center justify-end pb-20 text-center px-6 bg-[url(/images/bg.png)] bg-cover bg-center"
+            className="min-h-screen  text-white flex flex-col antialiased items-center justify-end pb-20 text-center px-6 bg-[url(/images/bg.png)] bg-cover bg-center"
           >
             {/* 2. Group: Wedding Invitation, Tanggal, We Invite (muncul bareng) */}
             <motion.div
@@ -122,56 +122,74 @@ export default function InvitationPage({
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <p className="text-xs tracking-[4] font-medium font-['Montserrat'] mb-20">
+              <p className="text-xs tracking-[4] font-medium font-['Montserrat'] mb-10">
                 26 SEPTEMBER 2026
-              </p>
-
-              <p className="text-m italic font-semibold font-['Montserrat'] mb-6">
-                We Invite You to Celebrate Our Wedding
               </p>
             </motion.div>
 
-            {/* 3. Group: Dear + Nama Tamu (muncul bareng) */}
+            <div className="backdrop-blur-xs overflow-hidden  mb-6">
+              {/* 3. Group: Dear + Nama Tamu (muncul bareng) */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.1 }}
+                className="font-['Montserrat'] space-y-2"
+              >
+                <div className="w-30 h-px bg-white/50 mx-auto mb-4"></div>
+
+                <p className="text-xs text-white/80">Dear Sir / Madam,</p>
+                <p className="text-lg font-semibold">{guest.name}</p>
+
+                <div className="w-30 h-px bg-white/50 mx-auto mt-4"></div>
+              </motion.div>
+            </div>
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.1 }}
+              transition={{ delay: 0.6 }}
             >
-              <p className="text-sm font-['Montserrat'] mb-4">
-                Dear Sir / Madam,
-              </p>
-              <p className="text-xl font-semibold font-['Montserrat'] mb-12">
-                {guest.name}
+              <p className="text-m italic font-semibold font-['Montserrat'] mb-6">
+                We invite you to celebrate our wedding
               </p>
             </motion.div>
 
             {/* 4. Button - Slide Up Terakhir */}
             {/* Button dengan animasi wiggle */}
-            <motion.button
-              onClick={() => setIsOpened(true)}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{
-                opacity: 1,
-                x: 0,
-                // Efek wiggle / bounce berulang
-                y: [0, -8, 0, -5, 0],
-              }}
-              transition={{
-                delay: 1.5,
-                duration: 0.8,
-                y: {
-                  duration: 5.0,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  ease: "easeInOut",
-                },
-              }}
-              className="bg-white/50 hover:bg-white/60 text-[#404040] h-12 w-40 font-bold rounded-2xl drop-shadow-md text-sm font-['Montserrat']"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.1 }}
+              className="w-full md:w-sm pt-6 rounded-t-4xl bg-linear-to-b from-[#CFCDC9]/40 to-[#CFCDC9]/0 backdrop-blur-xs"
             >
-              Open Invitation
-            </motion.button>
+              <div>
+                <motion.button
+                  onClick={() => setIsOpened(true)}
+                  whileHover={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    // Efek wiggle / bounce berulang
+                    y: [0, -8, 0, -5, 0],
+                  }}
+                  transition={{
+                    delay: 1.5,
+                    duration: 0.8,
+                    y: {
+                      duration: 5.0,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                      ease: "easeInOut",
+                    },
+                  }}
+                  className="bg-white/50 hover:bg-white/60 text-[#404040] cursor-pointer h-12 w-40 font-bold rounded-2xl drop-shadow-md text-sm font-['Montserrat']"
+                >
+                  Open Invitation
+                </motion.button>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

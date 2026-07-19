@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
-import { User, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface RsvpSectionProps {
@@ -17,6 +17,23 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [rsvps, setRsvps] = useState<any[]>([]);
+
+  // Helper function untuk mengubah tanggal menjadi time ago format
+  const formatDateDiff = (dateString: string) => {
+    if (!dateString) return "";
+    const now = new Date();
+    const past = new Date(dateString);
+    const diffInMs = now.getTime() - past.getTime();
+
+    const diffInMins = Math.floor(diffInMs / (1000 * 60));
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+
+    if (diffInMins < 1) return "Just now";
+    if (diffInMins < 60) return `${diffInMins}m ago`;
+    if (diffInHours < 24) return `${diffInHours}h ago`;
+    return `${diffInDays}d ago`;
+  };
 
   const fetchRsvps = async () => {
     const { data } = await supabase
@@ -57,7 +74,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   };
 
   return (
-    <div className="py-20 px-8 backdrop-blur-xs bg-[#CFCDC9]/10 font-['Montserrat']">
+    <div className="py-20 px-8 backdrop-blur-xs bg-[#CFCDC9]/10 font-['Montserrat'] w-screen overflow-hidden">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
@@ -73,7 +90,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
         </motion.div>
 
         <motion.p
-          className="text-center text-base text-[#D9D9D9] max-w-2xl mx-auto mb-16"
+          className="text-center text-base text-[#D9D9D9] max-w-full mx-auto mb-10"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -83,10 +100,10 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
           kami. Semoga Allah SWT mempertemukan kita dalam kebahagiaan.
         </motion.p>
 
-        <div className="grid md:grid-cols-2 gap-2">
+        <div className="grid md:grid-cols-2 gap-10 max-w-screen mx-auto">
           {/* Form RSVP */}
           <motion.div
-            className="rounded-3xl p-4"
+            className="rounded-3xl mb-12"
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -158,7 +175,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Semoga bahagia selalu, dilancarkan segala urusannya..."
+                  placeholder="write your wishes here"
                   rows={4}
                   className="w-full border-3 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-2xl px-4 py-3 focus:outline-none focus:border-rose-500"
                 />
@@ -176,7 +193,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
 
           {/* RSVP List */}
           <motion.div
-            className="rounded-3xl p-4"
+            className="rounded-3xl"
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -186,7 +203,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
               RSVP List
             </h3>
 
-            <div className="max-h-150 overflow-y-auto space-y-4 pr-2">
+            <div className="max-h-150 overflow-y-auto space-y-2 pr-2">
               {rsvps.length === 0 ? (
                 <div className="text-center py-12 text-[#D9D9D9]">
                   <Heart className="w-12 h-12 mx-auto mb-4 opacity-30" />
@@ -210,7 +227,9 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                         <p className="font-semibold text-base">
                           {rsvp.guest_name}
                         </p>
-                        <p className="font-light text-sm italic">2d ago</p>
+                        <p className="font-light text-sm italic">
+                          {formatDateDiff(rsvp.submitted_at)}
+                        </p>
                       </div>
                       {rsvp.message && (
                         <p className="text-base mt-2">"{rsvp.message}"</p>

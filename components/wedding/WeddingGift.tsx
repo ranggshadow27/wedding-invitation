@@ -50,7 +50,7 @@ export default function WeddingGift() {
   };
 
   return (
-    <div className="py-20 px-8 backdrop-blur-xs font-['Montserrat']">
+    <div className="py-20 px-8 backdrop-blur-xs bg-linear-to-b from-[#CFCDC9]/10 to-[#CFCDC9]/0 font-['Montserrat']">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
@@ -73,7 +73,7 @@ export default function WeddingGift() {
           transition={{ delay: 0.2 }}
         >
           Kehadiran dan doa Anda sudah lebih dari cukup bagi kami. Namun jika
-          Bapak/Ibu ingin memberikan tanda kasih sayang, kami sangat menghargai.
+          ingin memberikan tanda kasih sayang, kami sangat menghargai.
         </motion.p>
 
         {/* Gift Cards */}
@@ -99,7 +99,7 @@ export default function WeddingGift() {
                 <div>
                   <div
                     onClick={() => copyToClipboard(gift.account, gift.name)}
-                    className="rounded-lg py-2 flex items-center justify-between cursor-pointer transition-all border border-transparent hover:border-[#D9D9D9]/50"
+                    className="rounded-lg pt-4 flex items-center justify-between cursor-pointer transition-all border border-transparent hover:p-4 hover:border-[#D9D9D9]/50"
                   >
                     <span className="font-mono text-xl break-all font-bold">
                       {gift.account}
@@ -113,7 +113,7 @@ export default function WeddingGift() {
                     </div>
                   </div>
 
-                  <p className="text-start text-sm font-mono text-[#D9D9D9] mt-3">
+                  <p className="text-start text-sm font-mono text-[#D9D9D9]">
                     {gift.owner}
                   </p>
                 </div>
@@ -128,13 +128,13 @@ export default function WeddingGift() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           animate={{
-            y: [0, -6, 0, -4, 0], // wiggle pelan
+            y: [0, 12, 0, -4, 0], // wiggle pelan
           }}
           transition={{
-            delay: 0.8,
-            duration: 3.5,
+            delay: 0.2,
+            duration: 1.5,
             y: {
-              duration: 4,
+              duration: 1,
               repeat: Infinity,
               repeatType: "reverse",
               ease: "easeInOut",

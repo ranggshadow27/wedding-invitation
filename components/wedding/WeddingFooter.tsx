@@ -40,10 +40,9 @@ export default function WeddingFooter() {
             transition={{ delay: 0.2 }}
           >
             <motion.a
-              href="#"
               className="text-white p-2 rounded-full transition-all hover:scale-110"
               animate={{
-                scale: [1, 1.15, 1], // efek detak
+                scale: [1, 1.5, 1], // efek detak
               }}
               transition={{
                 duration: 2.2,
@@ -67,12 +66,21 @@ export default function WeddingFooter() {
 
         {/* Divider */}
         <motion.div
-          className="h-px bg-gray-700 mb-10"
+          className="h-px bg-gray-700 mb-2"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         />
+
+        {/* Logo */}
+        <div className="w-full h-20 flex items-center justify-center my-8">
+          <img
+            src="/logo.png"
+            alt="Wedding Photo"
+            className="w-20 h-20 object-cover"
+          />
+        </div>
 
         {/* Social Media Icons */}
         <motion.div
@@ -88,12 +96,7 @@ export default function WeddingFooter() {
           >
             <InstagramLogoIcon size={20} weight="duotone" />
           </a>
-          <a
-            href="#"
-            className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
-          >
-            <XLogoIcon size={20} weight="duotone" />
-          </a>
+
           <a
             href="#"
             className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
