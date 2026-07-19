@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import WeddingContent from "../../../components/wedding/WeddingContent";
 import { HeartIcon } from "@phosphor-icons/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function InvitationPage({
   params,
