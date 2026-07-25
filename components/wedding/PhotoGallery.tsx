@@ -1,9 +1,9 @@
-// components/PhotoGallery.tsx
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import Masonry from "react-masonry-css";
 
-// Fungsi helper untuk generate SVG shimmer placeholder (tetap dipertahankan)
+// Helper SVG Shimmer (tetap)
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
@@ -23,8 +23,6 @@ const toBase64 = (str: string) =>
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
 
-// Tips: Berikan variasi height (misal ada yang portrait 800, ada yang landscape 450 atau 600)
-// agar efek masonry pinterest-nya semakin terlihat nyata dan indah!
 const galleryImages = [
   {
     id: 1,
@@ -39,14 +37,14 @@ const galleryImages = [
     alt: "Prewedding 2",
     w: 600,
     h: 450,
-  }, // Landscape
+  },
   {
     id: 3,
     url: "/images/gallery/img_2.png",
     alt: "Prewedding 3",
     w: 600,
     h: 600,
-  }, // Portrait Panjang
+  },
   {
     id: 4,
     url: "/images/gallery/img_1_v2.png",
@@ -60,7 +58,7 @@ const galleryImages = [
     alt: "Prewedding 5",
     w: 600,
     h: 400,
-  }, // Square
+  },
   {
     id: 6,
     url: "/images/gallery/img_6.png",
@@ -74,14 +72,14 @@ const galleryImages = [
     alt: "Prewedding 7",
     w: 600,
     h: 400,
-  }, // Landscape
+  },
   {
     id: 8,
     url: "/images/gallery/img_9.png",
     alt: "Prewedding 8",
     w: 600,
     h: 500,
-  }, // Portrait Panjang
+  },
   {
     id: 9,
     url: "/images/gallery/img_8.png",
@@ -91,17 +89,71 @@ const galleryImages = [
   },
 ];
 
+// Sub-komponen untuk menangani efek Parallax tiap gambar
+function ParallaxCard({
+  photo,
+  index,
+}: {
+  photo: (typeof galleryImages)[0];
+  index: number;
+}) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Melacak progres scroll khusus untuk card ini saja saat melintasi viewport
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"], // Dimulai saat bagian atas elemen menyentuh bagian bawah viewport
+  });
+
+  // Mengubah posisi Y gambar dari -10% ke 10% (pergerakan halus di dalam container)
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      className="mb-4 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.05, duration: 0.6 }}
+    >
+      {/* Container pembungkus gambar dibuat relative + overflow-hidden */}
+      <div
+        className="relative overflow-hidden rounded-2xl w-full"
+        style={{ height: `${photo.h}px` }}
+      >
+        {/* Gambar di-scale 120% (scale-120) agar tidak terlihat bolong saat digeser y-axis nya */}
+        <motion.div
+          style={{ y }}
+          className="w-full h-full transform scale-120 group-hover:scale-125 transition-transform duration-500 ease-out"
+        >
+          <Image
+            src={photo.url}
+            alt={photo.alt}
+            width={photo.w}
+            height={photo.h}
+            className="w-full h-full object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            quality={75}
+            placeholder="blur"
+            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(photo.w, photo.h))}`}
+          />
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function PhotoGallery() {
-  // Menentukan jumlah kolom berdasarkan ukuran layar (Responsive breakpoints)
   const breakpointColumnsObj = {
-    default: 3, // Layar komputer/desktop (3 kolom)
+    default: 3,
     1100: 3,
-    700: 1, // Layar tablet (2 kolom)
-    500: 1, // Layar HP (1 kolom mendatar)
+    700: 1,
+    500: 1,
   };
 
   return (
-    <div className="py-20 px-6 bg-linear-to-b from-[#CFCDC9]/60 to-[#CFCDC9]/10 backdrop-blur-xs">
+    <div className="py-20 px-6 bg-linear-to-b from-[#CFCDC9]/60 to-[#CFCDC9]/10">
       <div className="text-center mb-12">
         <motion.h2
           className="text-4xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide"
@@ -117,33 +169,11 @@ export default function PhotoGallery() {
       <div className="max-w-6xl mx-auto">
         <Masonry
           breakpointCols={breakpointColumnsObj}
-          className="flex w-auto -ml-4" // Mengatasi margin layout masonry
-          columnClassName="pl-4 bg-clip-padding" // Jarak antar kolom (Gap)
+          className="flex w-auto -ml-4"
+          columnClassName="pl-4 bg-clip-padding"
         >
           {galleryImages.map((photo, index) => (
-            <motion.div
-              key={photo.id}
-              className="mb-4 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-100 group"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <div className="overflow-hidden rounded-2xl">
-                <Image
-                  src={photo.url}
-                  alt={photo.alt}
-                  width={photo.w}
-                  height={photo.h}
-                  className="w-full object-cover transform group-hover:scale-105 transition-transform duration-500 ease-out"
-                  style={{ height: `${photo.h}px` }}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  quality={75}
-                  placeholder="blur"
-                  blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(photo.w, photo.h))}`}
-                />
-              </div>
-            </motion.div>
+            <ParallaxCard key={photo.id} photo={photo} index={index} />
           ))}
         </Masonry>
       </div>

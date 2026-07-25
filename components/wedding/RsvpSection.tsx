@@ -74,7 +74,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   };
 
   return (
-    <div className="py-20 px-8 backdrop-blur-xs bg-[#CFCDC9]/10 font-['Montserrat'] w-screen overflow-hidden">
+    <div className="py-20 px-8 bg-[#CFCDC9]/10 font-['Montserrat'] w-screen overflow-hidden">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div

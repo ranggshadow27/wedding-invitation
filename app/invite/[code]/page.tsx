@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import WeddingContent from "../../../components/wedding/WeddingContent";
-import { HeartIcon } from "@phosphor-icons/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { HeartIcon, CaretDoubleUp } from "@phosphor-icons/react";
+// import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function InvitationPage({
   params,
@@ -16,6 +16,7 @@ export default function InvitationPage({
   const [loading, setLoading] = useState(true);
   const [isOpened, setIsOpened] = useState(false);
   const [code, setCode] = useState("");
+  const controls = useAnimation(); // Untuk mengontrol balikan animasi drag
 
   useEffect(() => {
     params.then((p) => setCode(p.code));
@@ -33,6 +34,20 @@ export default function InvitationPage({
         setLoading(false);
       });
   }, [code]);
+
+  // Fungsi untuk menangani event saat drag (swipe) selesai
+  const handleDragEnd = (event: any, info: any) => {
+    // Jika ditarik ke atas melewati batas (misal -50px), buka undangan
+    if (info.offset.y < -50) {
+      setIsOpened(true);
+    } else {
+      // Jika tidak melewati batas, kembalikan ke posisi semula
+      controls.start({
+        y: 0,
+        transition: { type: "spring", stiffness: 300, damping: 20 },
+      });
+    }
+  };
 
   if (loading) {
     return (
@@ -84,52 +99,48 @@ export default function InvitationPage({
         {!isOpened && (
           <motion.div
             key="landing"
-            exit={{ opacity: 0, scale: 0.98 }}
+            exit={{ opacity: 0, y: -100, scale: 0.98 }} // Transisi keluar ke atas
             transition={{ duration: 0.8 }}
-            className="min-h-screen  text-white flex flex-col antialiased items-center justify-end pb-20 text-center px-6 bg-[url(/images/bg.png)] bg-cover bg-center"
+            className="min-h-screen text-white flex flex-col antialiased items-center justify-end pb-12 text-center px-6 bg-[url(/images/bg.png)] bg-cover bg-center overflow-hidden touch-none"
           >
-            {/* 2. Group: Wedding Invitation, Tanggal, We Invite (muncul bareng) */}
+            {/* The Wedding Of */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <p className="text-xs tracking-[4] font-medium font-['Montserrat'] mb-2">
-                WEDDING INVITATION
+              <p className="text-xs tracking-[2] font-medium font-['Montserrat'] mb-2">
+                THE WEDDING OF
               </p>
             </motion.div>
 
-            {/* 1. Annisa & Rangga - Slide Up */}
+            {/* Nama Mempelai */}
             <motion.div
-              className="w-full md:w-120 flex flex-wrap items-center justify-evenly mb-2"
+              className="w-full md:w-120 flex flex-wrap items-center justify-evenly mb-2 tracking-tight font-['Allura']"
               initial={{ opacity: 0, y: 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-5xl md:text-7xl tracking-tight font-['Allura']">
-                Annisa
-              </h1>
-              <h1 className="text-4xl md:text-5xl tracking-tight text-rose-400 font-['Allura']">
-                &
-              </h1>
-              <h1 className="text-5xl md:text-7xl tracking-tight font-['Allura']">
-                Rangga
-              </h1>
+              <h1 className="text-5xl md:text-7xl">Annisa</h1>
+              <h1 className="text-4xl md:text-5xl text-rose-400">&</h1>
+              <h1 className="text-5xl md:text-7xl">Rangga</h1>
+
+              <div className="w-60 h-px bg-white/50 my-4"></div>
             </motion.div>
 
-            {/* 2. Group: Wedding Invitation, Tanggal, We Invite (muncul bareng) */}
+            {/* Tanggal */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
+              className="text-xs tracking-[2] antialiased font-medium font-['Montserrat']"
             >
-              <p className="text-xs tracking-[4] font-medium font-['Montserrat'] mb-10">
-                26 SEPTEMBER 2026
-              </p>
+              <p className="mb-1">SATURDAY</p>
+              <p className="mb-5">26 - SEPTEMBER - 2026</p>
             </motion.div>
 
-            <div className="backdrop-blur-xs overflow-hidden  mb-6">
-              {/* 3. Group: Dear + Nama Tamu (muncul bareng) */}
+            {/* Dear Tamu */}
+            <div className="overflow-hidden mb-5">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -137,59 +148,56 @@ export default function InvitationPage({
                 className="font-['Montserrat'] space-y-2"
               >
                 <div className="w-30 h-px bg-white/50 mx-auto mb-4"></div>
-
-                <p className="text-xs text-white/80">Dear Sir / Madam,</p>
-                <p className="text-lg font-semibold">{guest.name}</p>
-
+                <p className="text-xs text-[#D9D9D9]">Dear Sir / Madam,</p>
+                <p className="text-lg font-semibold text-white">{guest.name}</p>
                 <div className="w-30 h-px bg-white/50 mx-auto mt-4"></div>
               </motion.div>
             </div>
 
+            {/* We Invite */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              <p className="text-m italic font-semibold font-['Montserrat'] mb-6">
-                We invite you to celebrate our wedding
+              <p className="text-[.6rem] text-[#D9D9D9] tracking-[2] font-medium font-['Montserrat'] mb-8">
+                WE INVITE YOU TO CELEBRATE OUR <br /> WEDDING CEREMONY
               </p>
             </motion.div>
 
-            {/* 4. Button - Slide Up Terakhir */}
-            {/* Button dengan animasi wiggle */}
+            {/* AREA DRAG/SWIPE UP */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.1 }}
-              className="w-full md:w-sm pt-6 rounded-t-4xl bg-linear-to-b from-[#CFCDC9]/40 to-[#CFCDC9]/0 backdrop-blur-xs"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.5, duration: 0.8 }}
+              className="w-full md:w-sm pt-4 flex flex-col items-center justify-center cursor-grab active:cursor-grabbing"
             >
-              <div>
-                <motion.button
-                  onClick={() => setIsOpened(true)}
-                  whileHover={{ scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    // Efek wiggle / bounce berulang
-                    y: [0, -8, 0, -5, 0],
-                  }}
-                  transition={{
-                    delay: 1.5,
-                    duration: 0.8,
-                    y: {
-                      duration: 5.0,
-                      repeat: Infinity,
-                      repeatType: "reverse",
-                      ease: "easeInOut",
-                    },
-                  }}
-                  className="bg-white/50 hover:bg-white/60 text-[#404040] cursor-pointer h-12 w-40 font-bold rounded-2xl drop-shadow-md text-sm font-['Montserrat']"
-                >
+              <motion.div
+                drag="y"
+                dragConstraints={{ top: 0, bottom: 0 }} // Membatasi pergerakan agar tak lewat batas asli
+                dragElastic={0.4} // Memberikan rasa "karet" saat ditarik
+                onDragEnd={handleDragEnd}
+                animate={controls}
+                className="flex flex-col items-center justify-center p-4 bg-white/10 rounded-3xl backdrop-blur-sm border border-white/20"
+                // Menambahkan animasi bouncing vertikal berulang
+                whileInView={{
+                  y: [0, -10, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <CaretDoubleUp
+                  size={30}
+                  weight="light"
+                  className="text-white animate-pulse"
+                />
+                <span className="text-[.6rem] font-['Montserrat'] text-white/80 mt-2 font-medium tracking-widest uppercase">
                   Open Invitation
-                </motion.button>
-              </div>
+                </span>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}

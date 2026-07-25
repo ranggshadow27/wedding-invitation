@@ -74,13 +74,21 @@ export default function WeddingFooter() {
         />
 
         {/* Logo */}
-        <div className="w-full h-20 flex items-center justify-center my-8">
-          <img
-            src="/logo.png"
-            alt="Wedding Photo"
-            className="w-20 h-20 object-cover"
-          />
-        </div>
+        <motion.div
+          className="w-full h-20 flex items-center justify-center my-8"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <div>
+            <img
+              src="/logo.png"
+              alt="Wedding Photo"
+              className="w-20 h-20 object-cover"
+            />
+          </div>
+        </motion.div>
 
         {/* Social Media Icons */}
         <motion.div

@@ -50,7 +50,7 @@ export default function WeddingGift() {
   };
 
   return (
-    <div className="py-20 px-8 backdrop-blur-xs bg-linear-to-b from-[#CFCDC9]/10 to-[#CFCDC9]/0 font-['Montserrat']">
+    <div className="py-20 px-8 text-white bg-linear-to-b from-[#CFCDC9]/10 to-[#CFCDC9]/0 font-['Montserrat']">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div

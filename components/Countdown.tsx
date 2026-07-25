@@ -57,12 +57,12 @@ export default function Countdown({ targetDate }: CountdownProps) {
         {timeData.map((item, index) => (
           <div
             key={index}
-            className="bg-white/70 backdrop-blur-md rounded-3xl sm:rounded-4xl p-2 sm:p-5 md:p-6 shadow-2xl flex flex-col justify-center items-center aspect-square sm:aspect-auto"
+            className="bg-white/10 border border-white backdrop-blur-xs rounded-3xl sm:rounded-4xl p-2 sm:p-5 md:p-6 shadow-2xl flex flex-col justify-center items-center aspect-square sm:aspect-auto"
           >
-            <div className="text-xl sm:text-3xl md:text-3xl font-bold text-gray-600">
+            <div className="text-xl sm:text-3xl md:text-3xl font-bold text-white-600">
               {formatNumber(item.value)}
             </div>
-            <div className="text-[10px] sm:text-sm font-medium text-gray-600/50 tracking-wider">
+            <div className="text-[10px] sm:text-sm font-medium text-white-600/50 tracking-wider">
               {item.label}
             </div>
           </div>

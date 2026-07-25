@@ -6,7 +6,7 @@ import { ArrowSquareOutIcon, MapPinIcon } from "@phosphor-icons/react";
 
 export default function WeddingDetails() {
   return (
-    <div className="py-20 px-8 bg-linear-to-b from-[#CFCDC9]/90 to-[#CFCDC9]/60 backdrop-blur-sm overflow-hidden">
+    <div className="py-20 px-8 bg-linear-to-b from-[#CFCDC9]/90 to-[#CFCDC9]/60 overflow-hidden">
       <div className="max-w-5xl mx-auto font-['Montserrat']">
         {/* Header */}
         <motion.div
@@ -203,43 +203,76 @@ export default function WeddingDetails() {
 
         {/* Lokasi */}
         <motion.div
-          className="text-center max-w-md mx-auto"
+          className="flex flex-col text-center items-center justify-center max-w-md mx-auto"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
         >
-          <p className="text-gray-700 font-medium text-lg md:text-xl leading-relaxed">
-            Saturday
-          </p>
+          <div className="tracking-[4]">
+            <p className="text-gray-700 font-medium text-lg md:text-xl leading-relaxed">
+              SATURDAY
+            </p>
 
-          <p className="text-gray-700 font-bold text-2xl md:text-3xl leading-relaxed">
-            26 September 2026
-          </p>
+            <p className="text-gray-700 font-bold text-xl md:text-3xl leading-relaxed">
+              26 SEPTEMBER 2026
+            </p>
 
-          <p className="text-gray-700 font-medium text-base md:text-xl leading-relaxed">
-            08.00 - 16.00
-          </p>
+            <p className="text-gray-700 font-medium text-sm md:text-xl leading-relaxed">
+              08.00 - 16.00
+            </p>
+          </div>
 
-          <div className="h-px bg-gray-700 my-5"></div>
+          <div className="h-px w-20 bg-gray-700 my-5"></div>
 
           <div className="flex justify-center mb-4">
             <MapPinIcon size={32} weight="duotone" className="text-gray-800" />
           </div>
 
-          <p className="text-gray-700 font-medium text-sm md:text-base leading-relaxed">
-            <b>GEDUNG SERBAGUNA MUTIARA CIBARUSAH</b>
-            <br />
-            <br />
-            Ruko Pelangi Blok P2 No. 12A, RW.21, Sindangmulya
-            <br />
-            Kec. Cibarusah, Kabupaten Bekasi
-            <br />
-            Jawa Barat 17340
-          </p>
+          <div className="flex flex-col text-gray-700 font-medium text-sm md:text-base leading-relaxed gap-2 mb-10">
+            <p className="tracking-[2]">
+              <b>
+                GEDUNG SERBAGUNA MUTIARA <br />
+                CIBARUSAH
+              </b>
+            </p>
+            <p>
+              Ruko Pelangi Blok P2 No. 12A, RW.21, Sindangmulya
+              <br />
+              Kec. Cibarusah, Kabupaten Bekasi
+              <br />
+              Jawa Barat 17340
+            </p>
+          </div>
 
-          <button
-            onClick={() => window.open("https://maps.google.com", "_blank")}
+          <motion.div
+            className="flex flex-col h-max w-max items-center justify-center p-4 bg-white/10 rounded-3xl backdrop-blur-sm border border-white"
+            whileInView={{
+              y: [0, -10, 0],
+            }}
+            onClick={() =>
+              window.open("https://maps.app.goo.gl/MPQG5Svx15RAzmEZ8", "_blank")
+            }
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <ArrowSquareOutIcon
+              className="group-hover:rotate-45 transition-transform cursor-pointer"
+              size={24}
+              weight="duotone"
+            />
+            <span className="text-[.8rem] font-['Montserrat'] text-white/80 mt-2 font-medium tracking-widest uppercase">
+              Google Maps
+            </span>
+          </motion.div>
+
+          {/* <button
+            onClick={() =>
+              window.open("https://maps.app.goo.gl/MPQG5Svx15RAzmEZ8", "_blank")
+            }
             className="group flex mt-10 items-center gap-1 font-medium text-sm md:text-base mx-auto backdrop-blur-md bg-white/80 hover:bg-white text-gray-800 px-6 py-3 rounded-full transition-all active:scale-95"
           >
             Google Maps
@@ -248,7 +281,7 @@ export default function WeddingDetails() {
               size={24}
               weight="duotone"
             />
-          </button>
+          </button> */}
         </motion.div>
       </div>
     </div>
