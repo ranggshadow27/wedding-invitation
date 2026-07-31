@@ -52,17 +52,17 @@ export default function Countdown({ targetDate }: CountdownProps) {
   ];
 
   return (
-    <div className="max-w-xl mx-auto px-4 font-['Montserrat Alternates']">
+    <div className="max-w-xl mx-auto px-4 font-['Montserrat Alternates'] text-white-600">
       <div className="grid grid-cols-4 gap-2 text-center">
         {timeData.map((item, index) => (
           <div
             key={index}
             className="bg-white/10 border border-white backdrop-blur-xs rounded-3xl sm:rounded-4xl p-2 sm:p-5 md:p-6 shadow-2xl flex flex-col justify-center items-center aspect-square sm:aspect-auto"
           >
-            <div className="text-xl sm:text-3xl md:text-3xl font-bold text-white-600">
+            <div className="text-xl sm:text-3xl md:text-3xl font-bold ">
               {formatNumber(item.value)}
             </div>
-            <div className="text-[10px] sm:text-sm font-medium text-white-600/50 tracking-wider">
+            <div className="text-[10px] sm:text-sm font-medium tracking-wider">
               {item.label}
             </div>
           </div>
