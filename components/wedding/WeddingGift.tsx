@@ -50,7 +50,7 @@ export default function WeddingGift() {
   };
 
   return (
-    <div className="py-20 px-8 text-white bg-linear-to-b from-[#CFCDC9]/10 to-[#CFCDC9]/0 font-['Montserrat']">
+    <div className="pt-0 pb-10 px-8 text-white bg-linear-to-b from-[#CFCDC9]/10 to-[#CFCDC9]/0 font-['Montserrat']">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
@@ -60,13 +60,13 @@ export default function WeddingGift() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#D9D9D9] mb-6">
+          <h2 className="text-3xl md:text-6xl font-['Allura'] text-[#D9D9D9] mb-6">
             Wedding Gift
           </h2>
         </motion.div>
 
         <motion.p
-          className="text-center text-base text-[#D9D9D9] max-w-2xl mx-auto mb-16"
+          className="text-center text-sm text-[#D9D9D9] max-w-2xl mx-auto mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -83,15 +83,15 @@ export default function WeddingGift() {
             return (
               <motion.div
                 key={gift.id}
-                className="border-3 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-2xl p-4 hover:shadow-md transition-all group"
+                className="border-2 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-xl p-4 hover:shadow-md transition-all group"
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 + 0.3 }}
               >
                 <div className="flex items-center gap-2 mb-6">
-                  <Icon size={25} weight="duotone" className="text-[#D9D9D9]" />
-                  <h3 className="text-lg font-semibold text-[#D9D9D9]">
+                  <Icon size={20} weight="duotone" className="text-[#D9D9D9]" />
+                  <h3 className="text-sm font-semibold text-[#D9D9D9]">
                     {gift.name}
                   </h3>
                 </div>
@@ -99,9 +99,9 @@ export default function WeddingGift() {
                 <div>
                   <div
                     onClick={() => copyToClipboard(gift.account, gift.name)}
-                    className="rounded-lg pt-4 flex items-center justify-between cursor-pointer transition-all border border-transparent hover:p-4 hover:border-[#D9D9D9]/50"
+                    className="rounded-lg pt-1 flex items-center justify-between cursor-pointer transition-all border border-transparent hover:p-4 hover:border-[#D9D9D9]/50"
                   >
-                    <span className="font-mono text-xl break-all font-bold">
+                    <span className="font-mono text-base break-all font-bold">
                       {gift.account}
                     </span>
                     <div className="text-[#D9D9D9]">
@@ -113,7 +113,7 @@ export default function WeddingGift() {
                     </div>
                   </div>
 
-                  <p className="text-start text-sm font-mono text-[#D9D9D9]">
+                  <p className="text-start text-xs font-mono text-[#D9D9D9]">
                     {gift.owner}
                   </p>
                 </div>

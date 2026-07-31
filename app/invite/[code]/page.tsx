@@ -5,7 +5,6 @@ import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import WeddingContent from "../../../components/wedding/WeddingContent";
 import { HeartIcon, CaretDoubleUp } from "@phosphor-icons/react";
-// import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function InvitationPage({
   params,
@@ -16,7 +15,7 @@ export default function InvitationPage({
   const [loading, setLoading] = useState(true);
   const [isOpened, setIsOpened] = useState(false);
   const [code, setCode] = useState("");
-  const controls = useAnimation(); // Untuk mengontrol balikan animasi drag
+  const controls = useAnimation();
 
   useEffect(() => {
     params.then((p) => setCode(p.code));
@@ -35,13 +34,10 @@ export default function InvitationPage({
       });
   }, [code]);
 
-  // Fungsi untuk menangani event saat drag (swipe) selesai
   const handleDragEnd = (event: any, info: any) => {
-    // Jika ditarik ke atas melewati batas (misal -50px), buka undangan
     if (info.offset.y < -50) {
       setIsOpened(true);
     } else {
-      // Jika tidak melewati batas, kembalikan ke posisi semula
       controls.start({
         y: 0,
         transition: { type: "spring", stiffness: 300, damping: 20 },
@@ -51,8 +47,7 @@ export default function InvitationPage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#CFCDC9] flex flex-col items-center justify-center text-center px-6">
-        {/* Lingkaran + Heart */}
+      <div className="min-h-[100dvh] bg-[#CFCDC9] flex flex-col items-center justify-center text-center px-6">
         <div className="relative mb-10">
           <motion.div
             className="w-26 h-26 border-4 border-white/30 border-t-rose-400 rounded-full"
@@ -63,11 +58,8 @@ export default function InvitationPage({
               ease: "easeInOut",
             }}
           />
-
           <motion.div
-            animate={{
-              scale: [1, 1.15, 1],
-            }}
+            animate={{ scale: [1, 1.15, 1] }}
             transition={{
               duration: 1.4,
               repeat: Infinity,
@@ -79,11 +71,9 @@ export default function InvitationPage({
           </motion.div>
         </div>
 
-        {/* Text */}
         <h2 className="text-xl font-semibold font-['Montserrat'] text-gray-600 mb-3">
           Preparing Invitation
         </h2>
-
         <p className="text-xs font-['Montserrat'] text-gray-600 max-w-60">
           Currently setting up your invitation kindly please wait a moment...
         </p>
@@ -94,14 +84,22 @@ export default function InvitationPage({
   if (!guest) return <div>Undangan tidak ditemukan</div>;
 
   return (
-    <main>
+    /* 
+      1. KITA TARUH BACKGROUND DI SINI (<main>)
+      2. Menggunakan fixed inset-0 agar background menempel sempurna di viewport iPhone tanpa terpengaruh scroll.
+    */
+    <main className="relative w-full min-h-[100dvh] overflow-x-hidden">
+      {/* Container Khusus Background Image agar Stabil di Safari iOS */}
+      <div className="fixed inset-0 bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat pointer-events-none -z-10" />
+
       <AnimatePresence mode="wait">
         {!isOpened && (
           <motion.div
             key="landing"
-            exit={{ opacity: 0, y: -100, scale: 0.98 }} // Transisi keluar ke atas
+            exit={{ opacity: 0, y: -100, scale: 0.98 }}
             transition={{ duration: 0.8 }}
-            className="min-h-screen text-white flex flex-col antialiased items-center justify-end pb-12 text-center px-6 bg-[url(/images/bg.png)] bg-cover bg-center overflow-hidden touch-none"
+            /* Class background di div ini sudah dihapus karena dipindah ke <main> */
+            className="relative min-h-[100dvh] w-full text-white flex flex-col antialiased items-center justify-end pb-12 text-center px-6 overflow-hidden touch-none"
           >
             {/* The Wedding Of */}
             <motion.div
@@ -174,12 +172,11 @@ export default function InvitationPage({
             >
               <motion.div
                 drag="y"
-                dragConstraints={{ top: 0, bottom: 0 }} // Membatasi pergerakan agar tak lewat batas asli
-                dragElastic={0.4} // Memberikan rasa "karet" saat ditarik
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={0.4}
                 onDragEnd={handleDragEnd}
                 animate={controls}
                 className="flex flex-col items-center justify-center p-4 bg-white/10 rounded-3xl backdrop-blur-sm border border-white/20"
-                // Menambahkan animasi bouncing vertikal berulang
                 whileInView={{
                   y: [0, -10, 0],
                 }}

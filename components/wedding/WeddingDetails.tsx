@@ -6,7 +6,7 @@ import { ArrowSquareOutIcon, MapPinIcon } from "@phosphor-icons/react";
 
 export default function WeddingDetails() {
   return (
-    <div className="py-20 px-8 bg-linear-to-b from-[#CFCDC9]/90 to-[#CFCDC9]/60 overflow-hidden">
+    <div className="pt-10 py-10 px-8 bg-linear-to-b from-[#CFCDC9]/90 to-[#CFCDC9]/60 overflow-hidden">
       <div className="max-w-5xl mx-auto font-['Montserrat']">
         {/* Header */}
         <motion.div
@@ -16,7 +16,7 @@ export default function WeddingDetails() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide">
+          <h2 className="text-3xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide">
             We Are Getting Married !
           </h2>
           <div className="w-24 h-px bg-[#3E2900] mx-auto mt-6"></div>
@@ -30,13 +30,13 @@ export default function WeddingDetails() {
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
         >
-          <p className="text-base md:text-xl leading-relaxed italic text-gray-800/80 mb-4">
+          <p className="text-xs md:text-xl leading-relaxed italic text-gray-800/80 mb-4">
             "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan
             untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung
             dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa
             kasih dan sayang."
           </p>
-          <p className="text-gray-800 font-bold text-lg">Q.S. Ar-Rum : 21</p>
+          <p className="text-gray-800 font-bold text-sm">Q.S. Ar-Rum : 21</p>
         </motion.div>
 
         {/* Detail Pengantin */}
@@ -52,8 +52,8 @@ export default function WeddingDetails() {
             >
               <div className="flex items-center gap-4 md:gap-8">
                 <div className="flex-1">
-                  <motion.h3
-                    className="text-xl md:text-2xl font-base text-gray-800"
+                  <motion.p
+                    className="text-base md:text-2xl font-base text-gray-800"
                     initial={{ opacity: 0, x: -40 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -61,9 +61,9 @@ export default function WeddingDetails() {
                   >
                     <span className="font-bold">Annisa</span> Lutfia Putri
                     Pratama
-                  </motion.h3>
+                  </motion.p>
                   <motion.p
-                    className="text-gray-800/80 mt-2 text-sm"
+                    className="text-gray-800/80 mt-2 text-xs"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
@@ -124,7 +124,7 @@ export default function WeddingDetails() {
 
                 <div className="flex-1">
                   <motion.h3
-                    className="text-xl md:text-2xl font-base text-gray-800"
+                    className="text-base md:text-2xl font-base text-gray-800"
                     initial={{ opacity: 0, x: 40 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -133,7 +133,7 @@ export default function WeddingDetails() {
                     <span className="font-bold">Rangga</span> Tito Prayogo
                   </motion.h3>
                   <motion.p
-                    className="text-gray-800/80 mt-2 text-sm"
+                    className="text-gray-800/80 mt-2 text-xs"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
@@ -155,7 +155,7 @@ export default function WeddingDetails() {
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
         >
-          <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide">
+          <h2 className="text-3xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide">
             Save The Date
           </h2>
         </motion.div>
@@ -210,15 +210,15 @@ export default function WeddingDetails() {
           transition={{ duration: 0.9 }}
         >
           <div className="tracking-[4]">
-            <p className="text-gray-700 font-medium text-lg md:text-xl leading-relaxed">
+            <p className="text-gray-700 font-medium text-base md:text-xl leading-relaxed">
               SATURDAY
             </p>
 
-            <p className="text-gray-700 font-bold text-xl md:text-3xl leading-relaxed">
+            <p className="text-gray-700 font-bold text-base md:text-3xl leading-relaxed">
               26 SEPTEMBER 2026
             </p>
 
-            <p className="text-gray-700 font-medium text-sm md:text-xl leading-relaxed">
+            <p className="text-gray-700 font-medium text-xs md:text-xl leading-relaxed">
               08.00 - 16.00
             </p>
           </div>
@@ -229,7 +229,7 @@ export default function WeddingDetails() {
             <MapPinIcon size={32} weight="duotone" className="text-gray-800" />
           </div>
 
-          <div className="flex flex-col text-gray-700 font-medium text-sm md:text-base leading-relaxed gap-2 mb-10">
+          <div className="flex flex-col text-gray-700 font-medium text-xs md:text-base leading-relaxed gap-2 mb-10">
             <p className="tracking-[2]">
               <b>
                 GEDUNG SERBAGUNA MUTIARA <br />

@@ -84,13 +84,13 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-6xl font-['Allura'] text-[#D9D9D9]">
+          <h2 className="text-3xl md:text-6xl font-['Allura'] text-[#D9D9D9]">
             Confirm Your Attendance
           </h2>
         </motion.div>
 
         <motion.p
-          className="text-center text-base text-[#D9D9D9] max-w-full mx-auto mb-10"
+          className="text-center text-sm text-[#D9D9D9] max-w-full mx-auto mb-10"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -103,35 +103,33 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
         <div className="grid md:grid-cols-2 gap-10 max-w-screen mx-auto">
           {/* Form RSVP */}
           <motion.div
-            className="rounded-3xl mb-12"
+            className="rounded-3xl mb-2"
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            <h3 className="text-2xl text-center font-bold text-[#D9D9D9] mb-6">
+            <h3 className="text-base text-center font-bold text-[#D9D9D9] mb-6">
               Confirm Here
             </h3>
 
-            <form onSubmit={handleSubmit} className="space-y-8 text-[#D9D9D9]">
-              <div>
-                <label className="block text-lg font-bold mb-2">
-                  Your Name *
-                </label>
+            <form onSubmit={handleSubmit} className="space-y-5 text-[#D9D9D9]">
+              <div className="text-sm">
+                <label className="block font-bold mb-2">Your Name *</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full border-3 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-xl px-4 py-3 focus:outline-none focus:border-rose-500"
+                  className="w-full border-2 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500"
                   required
                 />
               </div>
 
-              <div>
-                <label className="block text-lg font-bold text-[#D9D9D9] mb-3">
+              <div className="text-sm">
+                <label className="block  font-bold text-[#D9D9D9] mb-3">
                   Will you be there?
                 </label>
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="radio"
@@ -154,8 +152,8 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
               </div>
 
               {attending && (
-                <div>
-                  <label className="block text-lg font-bold text-[#D9D9D9] mb-2">
+                <div className="text-sm">
+                  <label className="block  font-bold text-[#D9D9D9] mb-2">
                     Total Attending
                   </label>
                   <input
@@ -163,13 +161,13 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                     min="1"
                     value={totalAttending}
                     onChange={(e) => setTotalAttending(Number(e.target.value))}
-                    className="w-full border-3 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-xl px-4 py-3"
+                    className="w-full border-2 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-xl px-3 py-2"
                   />
                 </div>
               )}
 
-              <div>
-                <label className="block text-lg font-bold text-[#D9D9D9] mb-2">
+              <div className="text-sm">
+                <label className="block  font-bold text-[#D9D9D9] mb-2">
                   Your Wishes
                 </label>
                 <textarea
@@ -177,33 +175,37 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="write your wishes here"
                   rows={4}
-                  className="w-full border-3 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-2xl px-4 py-3 focus:outline-none focus:border-rose-500"
+                  className="w-full border-2 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting || attending === null}
-                className="w-full bg-rose-600 hover:bg-rose-700 disabled:bg-gray-400 text-white py-4 rounded-2xl font-medium transition-all"
+                className="w-full  bg-rose-600 hover:bg-rose-700 disabled:bg-gray-400 text-white px-3 py-2 rounded-xl font-medium transition-all"
               >
-                {submitting ? "Menyimpan..." : <b>Submit RSVP</b>}
+                {submitting ? (
+                  "Submitting..."
+                ) : (
+                  <b className="text-xs">Submit RSVP</b>
+                )}
               </button>
             </form>
           </motion.div>
 
           {/* RSVP List */}
           <motion.div
-            className="rounded-3xl"
+            className="rounded-xl"
             initial={{ opacity: 0, x: 60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
           >
-            <h3 className="text-2xl text-center font-bold text-[#D9D9D9] mb-10">
+            <h3 className="text-base text-center font-bold text-[#D9D9D9] mb-10">
               RSVP List
             </h3>
 
-            <div className="max-h-150 overflow-y-auto space-y-2 pr-2">
+            <div className="max-h-150 overflow-y-auto space-y-4 pr-2">
               {rsvps.length === 0 ? (
                 <div className="text-center py-12 text-[#D9D9D9]">
                   <Heart className="w-12 h-12 mx-auto mb-4 opacity-30" />
@@ -219,22 +221,22 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <div className="w-10 h-10 bg-[#D9D9D9] text-[#404040] rounded-4xl flex items-center justify-center font-bold shrink-0">
+                    <div className="w-10 h-10 bg-[#D9D9D9] text-[#404040] rounded-2xl flex items-center justify-center font-bold shrink-0">
                       {rsvp.guest_name?.slice(0, 2).toUpperCase()}
                     </div>
                     <div className="bg-[#D9D9D9]/20 rounded-2xl rounded-tl-none px-4 py-2 flex-1">
                       <div className="flex items-center justify-between">
-                        <p className="font-semibold text-base">
+                        <p className="font-semibold text-sm">
                           {rsvp.guest_name}
                         </p>
-                        <p className="font-light text-sm italic">
+                        <p className="font-light text-xs italic">
                           {formatDateDiff(rsvp.submitted_at)}
                         </p>
                       </div>
                       {rsvp.message && (
-                        <p className="text-base mt-2">"{rsvp.message}"</p>
+                        <p className="text-sm mt-2">"{rsvp.message}"</p>
                       )}
-                      <p className="text-sm text-white italic mt-4">
+                      <p className="text-xs text-white italic mt-4">
                         {rsvp.attending
                           ? `Hadir (${rsvp.total_attending} orang)`
                           : "Tidak Hadir"}

@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Masonry from "react-masonry-css";
 
-// Helper SVG Shimmer (tetap)
+// Helper SVG Shimmer
 const shimmer = (w: number, h: number) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
@@ -23,73 +23,64 @@ const toBase64 = (str: string) =>
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
 
+// Kamu bisa menambahkan properti aspect ratio sendiri jika ingin ada yang beda (contoh: portrait/square/landscape)
 const galleryImages = [
   {
     id: 1,
     url: "/images/gallery/img_7.png",
     alt: "Prewedding 1",
-    w: 600,
-    h: 350,
-  },
+    aspect: "aspect-[3/4]",
+  }, // Portrait
   {
     id: 2,
     url: "/images/gallery/img_3.png",
     alt: "Prewedding 2",
-    w: 600,
-    h: 450,
-  },
+    aspect: "aspect-[4/6]",
+  }, // Landscape
   {
     id: 3,
     url: "/images/gallery/img_2.png",
     alt: "Prewedding 3",
-    w: 600,
-    h: 600,
-  },
+    aspect: "aspect-[4/5]",
+  }, // Square
   {
     id: 4,
     url: "/images/gallery/img_1_v2.png",
     alt: "Prewedding 4",
-    w: 600,
-    h: 600,
+    aspect: "aspect-[3/4]",
   },
   {
     id: 5,
     url: "/images/gallery/img_4_wide.png",
     alt: "Prewedding 5",
-    w: 600,
-    h: 400,
-  },
+    aspect: "aspect-[4/3]",
+  }, // Extra wide
   {
     id: 6,
     url: "/images/gallery/img_6.png",
     alt: "Prewedding 6",
-    w: 600,
-    h: 350,
+    aspect: "aspect-[4/5]",
   },
   {
     id: 7,
     url: "/images/gallery/img_5_wide.png",
     alt: "Prewedding 7",
-    w: 600,
-    h: 400,
+    aspect: "aspect-[4/4]",
   },
   {
     id: 8,
     url: "/images/gallery/img_9.png",
     alt: "Prewedding 8",
-    w: 600,
-    h: 500,
+    aspect: "aspect-[4/6]",
   },
   {
     id: 9,
     url: "/images/gallery/img_8.png",
     alt: "Prewedding 9",
-    w: 600,
-    h: 400,
+    aspect: "aspect-[4/5]",
   },
 ];
 
-// Sub-komponen untuk menangani efek Parallax tiap gambar
 function ParallaxCard({
   photo,
   index,
@@ -99,30 +90,26 @@ function ParallaxCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Melacak progres scroll khusus untuk card ini saja saat melintasi viewport
   const { scrollYProgress } = useScroll({
     target: cardRef,
-    offset: ["start end", "end start"], // Dimulai saat bagian atas elemen menyentuh bagian bawah viewport
+    offset: ["start end", "end start"],
   });
 
-  // Mengubah posisi Y gambar dari -10% ke 10% (pergerakan halus di dalam container)
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
     <motion.div
       ref={cardRef}
-      className="mb-4 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group"
+      className="mb-6 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.05, duration: 0.6 }}
     >
-      {/* Container pembungkus gambar dibuat relative + overflow-hidden */}
+      {/* Menggunakan aspect-ratio dinamis dari data photo */}
       <div
-        className="relative overflow-hidden rounded-2xl w-full"
-        style={{ height: `${photo.h}px` }}
+        className={`relative overflow-hidden rounded-2xl w-full ${photo.aspect || "aspect-4/3"}`}
       >
-        {/* Gambar di-scale 120% (scale-120) agar tidak terlihat bolong saat digeser y-axis nya */}
         <motion.div
           style={{ y }}
           className="w-full h-full transform scale-120 group-hover:scale-125 transition-transform duration-500 ease-out"
@@ -130,13 +117,12 @@ function ParallaxCard({
           <Image
             src={photo.url}
             alt={photo.alt}
-            width={photo.w}
-            height={photo.h}
-            className="w-full h-full object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            quality={75}
+            fill // Menggunakan fill agar Next Image otomatis mengisi container aspect-ratio
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
+            quality={80}
             placeholder="blur"
-            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(photo.w, photo.h))}`}
+            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(600, 400))}`}
           />
         </motion.div>
       </div>
@@ -145,18 +131,18 @@ function ParallaxCard({
 }
 
 export default function PhotoGallery() {
+  // Untuk foto berorientasi Landscape, 2 kolom pada layar desktop akan terlihat jauh lebih pas
   const breakpointColumnsObj = {
-    default: 3,
-    1100: 3,
-    700: 1,
-    500: 1,
+    default: 2,
+    1024: 2,
+    640: 2, // 1 Kolom penuh pada layar mobile HP
   };
 
   return (
-    <div className="py-20 px-6 bg-linear-to-b from-[#CFCDC9]/60 to-[#CFCDC9]/10">
+    <div className="py-0 px-4 md:px-8 bg-linear-to-b from-[#CFCDC9]/60 to-[#CFCDC9]/10">
       <div className="text-center mb-12">
         <motion.h2
-          className="text-4xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide"
+          className="text-3xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -166,11 +152,11 @@ export default function PhotoGallery() {
         <div className="w-24 h-px bg-[#3E2900] mx-auto mt-6"></div>
       </div>
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <Masonry
           breakpointCols={breakpointColumnsObj}
-          className="flex w-auto -ml-4"
-          columnClassName="pl-4 bg-clip-padding"
+          className="flex w-auto -ml-6"
+          columnClassName="pl-6 bg-clip-padding"
         >
           {galleryImages.map((photo, index) => (
             <ParallaxCard key={photo.id} photo={photo} index={index} />
