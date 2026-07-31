@@ -214,12 +214,24 @@ export default function WeddingDetails() {
               SATURDAY
             </p>
 
-            <p className="text-gray-700 font-bold text-base md:text-3xl leading-relaxed">
+            <p className="text-gray-700 font-bold text-base md:text-3xl leading-relaxed mb-5">
               26 SEPTEMBER 2026
             </p>
 
             <p className="text-gray-700 font-medium text-xs md:text-xl leading-relaxed">
-              08.00 - 16.00
+              09.00 - 11.00
+            </p>
+
+            <p className="text-gray-700 font-bold text-xs md:text-xl mb-3 tracking-[2] ">
+              Akad
+            </p>
+
+            <p className="text-gray-700 font-medium text-xs md:text-xl leading-relaxed">
+              11.00 - 16.00
+            </p>
+
+            <p className="text-gray-700 font-bold text-xs md:text-xl tracking-[2]">
+              Resepsi
             </p>
           </div>
 
@@ -231,10 +243,7 @@ export default function WeddingDetails() {
 
           <div className="flex flex-col text-gray-700 font-medium text-xs md:text-base leading-relaxed gap-2 mb-10">
             <p className="tracking-[2]">
-              <b>
-                GEDUNG SERBAGUNA MUTIARA <br />
-                CIBARUSAH
-              </b>
+              <b>GEDUNG SERBAGUNA MUTIARA BEKASI JAYA CIBARUSAH</b>
             </p>
             <p>
               Ruko Pelangi Blok P2 No. 12A, RW.21, Sindangmulya
@@ -261,10 +270,10 @@ export default function WeddingDetails() {
           >
             <ArrowSquareOutIcon
               className="group-hover:rotate-45 transition-transform cursor-pointer"
-              size={24}
+              size={20}
               weight="duotone"
             />
-            <span className="text-[.8rem] font-['Montserrat'] text-white/80 mt-2 font-medium tracking-widest uppercase">
+            <span className="text-[.6rem] font-['Montserrat'] text-white/80 mt-2 font-medium tracking-widest uppercase">
               Google Maps
             </span>
           </motion.div>

@@ -88,7 +88,7 @@ export default function InvitationPage({
       1. KITA TARUH BACKGROUND DI SINI (<main>)
       2. Menggunakan fixed inset-0 agar background menempel sempurna di viewport iPhone tanpa terpengaruh scroll.
     */
-    <main className="relative w-full min-h-[100dvh] overflow-x-hidden">
+    <main className="relative w-full min-h-dvh overflow-x-hidden">
       {/* Container Khusus Background Image agar Stabil di Safari iOS */}
       <div className="fixed inset-0 bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat pointer-events-none -z-10" />
 
@@ -99,7 +99,7 @@ export default function InvitationPage({
             exit={{ opacity: 0, y: -100, scale: 0.98 }}
             transition={{ duration: 0.8 }}
             /* Class background di div ini sudah dihapus karena dipindah ke <main> */
-            className="relative min-h-[100dvh] w-full text-white flex flex-col antialiased items-center justify-end pb-12 text-center px-6 overflow-hidden touch-none"
+            className="relative min-h-dvh w-full text-white flex flex-col antialiased items-center justify-end pb-12 text-center px-6 overflow-hidden touch-none"
           >
             {/* The Wedding Of */}
             <motion.div
@@ -187,7 +187,7 @@ export default function InvitationPage({
                 }}
               >
                 <CaretDoubleUp
-                  size={30}
+                  size={18}
                   weight="light"
                   className="text-white animate-pulse"
                 />

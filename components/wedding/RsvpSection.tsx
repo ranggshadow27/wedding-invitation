@@ -236,11 +236,16 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                       {rsvp.message && (
                         <p className="text-sm mt-2">"{rsvp.message}"</p>
                       )}
-                      <p className="text-xs text-white italic mt-4">
-                        {rsvp.attending
-                          ? `Hadir (${rsvp.total_attending} orang)`
-                          : "Tidak Hadir"}
-                      </p>
+                      {rsvp.attending ? (
+                        <p className="text-xs text-green-500 mt-4">
+                          <b>✔️ Attend</b>
+                        </p>
+                      ) : (
+                        //({rsvp.total_attending} person)
+                        <p className="text-xs text-rose-500 mt-4">
+                          <b>❌ Not Attend</b>
+                        </p>
+                      )}
                     </div>
                   </motion.div>
                 ))
