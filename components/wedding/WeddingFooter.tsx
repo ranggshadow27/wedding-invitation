@@ -13,7 +13,10 @@ import { motion } from "framer-motion";
 
 export default function WeddingFooter() {
   return (
-    <footer className="bg-gray-900 text-white py-20 px-6 font-['Montserrat']">
+    /* 
+      1. Ditambahkan class `relative` 
+    */
+    <footer className="relative bg-gray-900 text-white py-20 px-6 font-['Montserrat']">
       <div className="max-w-5xl mx-auto">
         {/* Family Section */}
         <motion.div
@@ -152,6 +155,14 @@ export default function WeddingFooter() {
           icaa-awe wedding invitation
         </motion.div>
       </div>
+
+      {/* 
+        2. Trik Penutup Overleak:
+        Elemen di bawah ini akan memanjangkan warna hitam (bg-gray-900) sejauh 100vh ke bawah.
+        Sehingga saat user scroll paksa di paling bawah (overscroll bounce di iPhone),
+        yang terlihat tetap warna hitam footer dan menutup video/image leak.
+      */}
+      <div className="absolute top-full left-0 right-0 h-2 bg-gray-900 pointer-events-none" />
     </footer>
   );
 }

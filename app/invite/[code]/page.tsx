@@ -47,7 +47,7 @@ export default function InvitationPage({
 
   if (loading) {
     return (
-      <div className="min-h-[100dvh] bg-[#CFCDC9] flex flex-col items-center justify-center text-center px-6">
+      <div className="fixed inset-0 z-50 bg-[#CFCDC9] flex flex-col items-center justify-center text-center px-6">
         <div className="relative mb-10">
           <motion.div
             className="w-26 h-26 border-4 border-white/30 border-t-rose-400 rounded-full"

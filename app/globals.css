@@ -12,6 +12,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html,
+body {
+  overscroll-behavior-y: none; /* Mencegah karet bounce di iOS/Android */
+}
+
 /* Gaya untuk React Masonry CSS */
 .my-masonry-grid {
   display: flex;
