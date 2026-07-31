@@ -5,7 +5,6 @@ import {
   FacebookLogoIcon,
   DiscordLogoIcon,
   GithubLogoIcon,
-  XLogoIcon,
   ThreadsLogoIcon,
   HeartIcon,
 } from "@phosphor-icons/react";
@@ -13,156 +12,203 @@ import { motion } from "framer-motion";
 
 export default function WeddingFooter() {
   return (
-    /* 
-      1. Ditambahkan class `relative` 
-    */
-    <footer className="relative bg-gray-900 text-white py-20 px-6 font-['Montserrat']">
-      <div className="max-w-5xl mx-auto">
-        {/* Family Section */}
+    <>
+      {/* ========================================================= */}
+      {/* SECTION THANK YOU WITH BG IMAGE                           */}
+      {/* ========================================================= */}
+      <section className="relative w-full overflow-hidden flex items-start justify-center min-h-125 md:min-h-150 py-6 px-8 text-white text-center">
+        {/* Background Image Container */}
+        <div className="absolute inset-0 w-full h-full -z-10">
+          <img
+            src="/images/bg_footer_2.png" // Ganti dengan path foto prewedding / background-mu
+            alt="Thank You Background"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Overlay Gelap Transparan agar Teks Mudah Dibaca */}
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
+
+        {/* Content Box (Thank You + Words + Names) */}
         <motion.div
-          className="grid md:grid-cols-3 gap-12 text-center md:text-left mb-16"
-          initial={{ opacity: 0, y: 50 }}
+          className="max-w-xl mx-auto space-y-4 md:space-y-6"
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          {/* Family Perempuan */}
-          <div className="md:text-left">
-            <p className="text-rose-400 text-xs tracking-widest mb-3">
-              THE BIG FAMILY OF
-            </p>
-            <p className="text-2xl font-bold">ANNISA LUTFIA PUTRI PRATAMA</p>
-          </div>
+          {/* H3 Thank You */}
+          <h3 className="text-2xl md:text-5xl md:mt-5 font-['Allura'] text-white tracking-wide">
+            Thank You
+          </h3>
 
-          {/* Logo Tengah */}
+          {/* Susunan Kata-kata */}
+          <p className="text-[.6rem] md:text-sm font-['Montserrat'] font-light leading-relaxed tracking-wide text-gray-100 max-w-md mx-auto">
+            Kami siap melangkah bersama untuk merajut masa depan. Kehadiran Anda
+            bukan hanya sekadar saksi, tetapi juga pemberi doa yang akan
+            menguatkan langkah kami berdua. <br /> Sampai jumpa di hari bahagia
+            kami!
+          </p>
+
+          {/* Divider Kecil */}
+          <div className="w-16 h-px bg-white/60 mx-auto my-2"></div>
+
+          {/* Nama Annisa & Rangga */}
+          <p className="text-xs md:text-lg font-['Montserrat'] tracking-widest text-white">
+            Annisa & Rangga
+          </p>
+        </motion.div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* FOOTER MAIN (BG-GRAY-900)                                 */}
+      {/* ========================================================= */}
+      <footer className="relative bg-gray-900 text-white py-10 px-6 font-['Montserrat']">
+        <div className="max-w-5xl mx-auto">
+          {/* Family Section */}
           <motion.div
-            className="flex justify-center items-center"
-            initial={{ opacity: 0, scale: 0.6 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            className="grid md:grid-cols-3 gap-6 text-center md:text-left mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            transition={{ duration: 0.8 }}
           >
-            <motion.a
-              className="text-white p-2 rounded-full transition-all hover:scale-110"
-              animate={{
-                scale: [1, 1.5, 1], // efek detak
-              }}
-              transition={{
-                duration: 2.2,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut",
-              }}
+            {/* Family Perempuan */}
+            <div className="md:text-left">
+              <p className="text-rose-400 text-xs tracking-widest mb-3">
+                THE BIG FAMILY OF
+              </p>
+              <p className="text-lg font-bold">ANNISA LUTFIA PUTRI PRATAMA</p>
+            </div>
+
+            {/* Logo Tengah */}
+            <motion.div
+              className="flex justify-center items-center"
+              initial={{ opacity: 0, scale: 0.6 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
             >
-              <HeartIcon size={40} weight="duotone" className="text-rose-400" />
-            </motion.a>
+              <motion.a
+                className="text-white p-2 rounded-full transition-all hover:scale-110"
+                animate={{
+                  scale: [1, 1.5, 1], // efek detak
+                }}
+                transition={{
+                  duration: 2.2,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut",
+                }}
+              >
+                <HeartIcon
+                  size={40}
+                  weight="duotone"
+                  className="text-rose-400"
+                />
+              </motion.a>
+            </motion.div>
+
+            {/* Family Laki-laki */}
+            <div className="md:text-right">
+              <p className="text-rose-400 text-xs tracking-widest mb-3">
+                THE BIG FAMILY OF
+              </p>
+              <p className="text-lg font-bold">RANGGA TITO PRAYOGO</p>
+            </div>
           </motion.div>
 
-          {/* Family Laki-laki */}
-          <div className="md:text-right">
-            <p className="text-rose-400 text-xs tracking-widest mb-3">
-              THE BIG FAMILY OF
-            </p>
-            <p className="text-2xl font-bold">RANGGA TITO PRAYOGO</p>
-          </div>
-        </motion.div>
+          {/* Divider */}
+          <motion.div
+            className="h-px bg-gray-700 mb-2"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          />
 
-        {/* Divider */}
-        <motion.div
-          className="h-px bg-gray-700 mb-2"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        />
-
-        {/* Logo */}
-        <motion.div
-          className="w-full h-20 flex items-center justify-center my-8"
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-        >
-          <div>
-            <img
-              src="/logo.png"
-              alt="Wedding Photo"
-              className="w-20 h-20 object-cover"
-            />
-          </div>
-        </motion.div>
-
-        {/* Social Media Icons */}
-        <motion.div
-          className="flex justify-center gap-4 mb-8"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-        >
-          <a
-            href="#"
-            className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
+          {/* Logo */}
+          <motion.div
+            className="w-full h-20 flex items-center justify-center my-8"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
           >
-            <InstagramLogoIcon size={20} weight="duotone" />
-          </a>
+            <div>
+              <img
+                src="/logo.png"
+                alt="Wedding Photo"
+                className="w-20 h-20 object-cover"
+              />
+            </div>
+          </motion.div>
 
-          <a
-            href="#"
-            className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
+          {/* Social Media Icons */}
+          <motion.div
+            className="flex justify-center gap-4 mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
           >
-            <ThreadsLogoIcon size={20} weight="duotone" />
-          </a>
-          <a
-            href="#"
-            className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
-          >
-            <FacebookLogoIcon size={20} weight="duotone" />
-          </a>
-          <a
-            href="#"
-            className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
-          >
-            <DiscordLogoIcon size={20} weight="duotone" />
-          </a>
-          <a
-            href="#"
-            className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
-          >
-            <GithubLogoIcon size={20} weight="duotone" />
-          </a>
-        </motion.div>
+            <a
+              href="#"
+              className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
+            >
+              <InstagramLogoIcon size={20} weight="duotone" />
+            </a>
 
-        {/* Copyright */}
-        <motion.div
-          className="text-center font-semibold text-xs text-[#D9D9D9]"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
-        >
-          © 2026 ratipray. All Rights Reserved.
-        </motion.div>
+            <a
+              href="#"
+              className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
+            >
+              <ThreadsLogoIcon size={20} weight="duotone" />
+            </a>
+            <a
+              href="#"
+              className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
+            >
+              <FacebookLogoIcon size={20} weight="duotone" />
+            </a>
+            <a
+              href="#"
+              className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
+            >
+              <DiscordLogoIcon size={20} weight="duotone" />
+            </a>
+            <a
+              href="#"
+              className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
+            >
+              <GithubLogoIcon size={20} weight="duotone" />
+            </a>
+          </motion.div>
 
-        <motion.div
-          className="text-center text-xs font-light text-[#D9D9D9]/50 pt-1"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-        >
-          icaa-awe wedding invitation
-        </motion.div>
-      </div>
+          {/* Copyright */}
+          <motion.div
+            className="text-center font-semibold text-xs text-[#D9D9D9]"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+          >
+            © 2026 ratipray. All Rights Reserved.
+          </motion.div>
 
-      {/* 
-        2. Trik Penutup Overleak:
-        Elemen di bawah ini akan memanjangkan warna hitam (bg-gray-900) sejauh 100vh ke bawah.
-        Sehingga saat user scroll paksa di paling bawah (overscroll bounce di iPhone),
-        yang terlihat tetap warna hitam footer dan menutup video/image leak.
-      */}
-      <div className="absolute top-full left-0 right-0 h-2 bg-gray-900 pointer-events-none" />
-    </footer>
+          <motion.div
+            className="text-center text-xs font-light text-[#D9D9D9]/50 pt-1"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+          >
+            icaa-awe wedding invitation
+          </motion.div>
+        </div>
+
+        {/* Trik Penutup Overleak Bounce iPhone */}
+        {/* <div className="absolute top-full left-0 right-0 h-2 bg-gray-900 pointer-events-none" /> */}
+      </footer>
+    </>
   );
 }

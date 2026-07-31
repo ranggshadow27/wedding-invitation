@@ -6,7 +6,7 @@ import { ArrowSquareOutIcon, MapPinIcon } from "@phosphor-icons/react";
 
 export default function WeddingDetails() {
   return (
-    <div className="pt-10 py-10 px-8 bg-linear-to-b from-[#CFCDC9]/90 to-[#CFCDC9]/60 overflow-hidden">
+    <div className="py-10 px-8 backdrop-brightness-75 bg-linear-to-b from-[#CFCDC9]/90 to-[#CFCDC9]/60 overflow-hidden">
       <div className="max-w-5xl mx-auto font-['Montserrat']">
         {/* Header */}
         <motion.div
@@ -19,7 +19,7 @@ export default function WeddingDetails() {
           <h2 className="text-3xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide">
             We Are Getting Married !
           </h2>
-          <div className="w-24 h-px bg-[#3E2900] mx-auto mt-6"></div>
+          <div className="w-20 h-px bg-[#3E2900] mx-auto mt-3"></div>
         </motion.div>
 
         {/* Ayat Ar-Rum */}
@@ -30,13 +30,15 @@ export default function WeddingDetails() {
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
         >
-          <p className="text-xs md:text-xl leading-relaxed italic text-gray-800/80 mb-4">
+          <p className="text-xs md:text-sm leading-relaxed italic text-gray-800 mb-3 font-light">
             "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan
             untukmu pasangan hidup dari jenismu sendiri, supaya kamu cenderung
             dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa
             kasih dan sayang."
           </p>
-          <p className="text-gray-800 font-bold text-sm">Q.S. Ar-Rum : 21</p>
+          <p className="text-gray-800 font-bold text-xs tracking-widest uppercase">
+            — Q.S. Ar-Rum : 21
+          </p>
         </motion.div>
 
         {/* Detail Pengantin */}
@@ -202,60 +204,63 @@ export default function WeddingDetails() {
         </motion.div>
 
         {/* Lokasi */}
+
+        {/* ================= EVENT DETAILS & LOCATION ================= */}
         <motion.div
-          className="flex flex-col text-center items-center justify-center max-w-md mx-auto"
-          initial={{ opacity: 0, y: 50 }}
+          className="flex flex-col text-center items-center justify-center max-w-lg mx-auto bg-black/10 border border-white/10 p-8 rounded-3xl"
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9 }}
+          transition={{ duration: 0.8 }}
         >
-          <div className="tracking-[4]">
-            <p className="text-gray-700 font-medium text-base md:text-xl leading-relaxed">
+          {/* Tanggal Utama */}
+          <div className="space-y-1 mb-6">
+            <p className="text-amber-200 font-semibold text-xs tracking-widest uppercase">
               SATURDAY
             </p>
-
-            <p className="text-gray-700 font-bold text-base md:text-3xl leading-relaxed mb-5">
+            <p className="text-sm md:text-3xl font-bold tracking-widest text-white">
               26 SEPTEMBER 2026
             </p>
+          </div>
 
-            <p className="text-gray-700 font-medium text-xs md:text-xl leading-relaxed">
-              09.00 - 11.00
+          {/* Sesi Akad & Resepsi */}
+          <div className="grid grid-cols-2 gap-4 w-full max-w-xs my-2 py-4 border-y border-white/10">
+            <div className="border-r border-white/10 pr-2">
+              <p className="text-[0.65rem] uppercase tracking-wider text-amber-200 font-semibold mb-1">
+                Akad Nikah
+              </p>
+              <p className="text-xs md:text-sm font-medium text-white">
+                09.00 - 10.00 WIB
+              </p>
+            </div>
+            <div className="pl-2">
+              <p className="text-[0.65rem] uppercase tracking-wider text-amber-200 font-semibold mb-1">
+                Resepsi
+              </p>
+              <p className="text-xs md:text-sm font-medium text-white">
+                11.00 - 16.00 WIB
+              </p>
+            </div>
+          </div>
+
+          {/* Location Info */}
+          <div className="my-6">
+            <MapPinIcon
+              size={32}
+              weight="duotone"
+              className="text-amber-200 mx-auto mb-3"
+            />
+            <p className="font-bold text-xs md:text-sm tracking-wide text-white mb-2 uppercase">
+              Gedung Serbaguna Mutiara Bekasi Jaya Cibarusah
             </p>
-
-            <p className="text-gray-700 font-bold text-xs md:text-xl mb-3 tracking-[2] ">
-              Akad
-            </p>
-
-            <p className="text-gray-700 font-medium text-xs md:text-xl leading-relaxed">
-              11.00 - 16.00
-            </p>
-
-            <p className="text-gray-700 font-bold text-xs md:text-xl tracking-[2]">
-              Resepsi
+            <p className="text-[0.75rem] text-gray-100 font-light leading-relaxed max-w-sm">
+              Ruko Pelangi Blok P2 No. 12A, RW.21, Sindangmulya, Kec. Cibarusah,
+              Kabupaten Bekasi, Jawa Barat 17340
             </p>
           </div>
 
-          <div className="h-px w-20 bg-gray-700 my-5"></div>
-
-          <div className="flex justify-center mb-4">
-            <MapPinIcon size={32} weight="duotone" className="text-gray-800" />
-          </div>
-
-          <div className="flex flex-col text-gray-700 font-medium text-xs md:text-base leading-relaxed gap-2 mb-10">
-            <p className="tracking-[2]">
-              <b>GEDUNG SERBAGUNA MUTIARA BEKASI JAYA CIBARUSAH</b>
-            </p>
-            <p>
-              Ruko Pelangi Blok P2 No. 12A, RW.21, Sindangmulya
-              <br />
-              Kec. Cibarusah, Kabupaten Bekasi
-              <br />
-              Jawa Barat 17340
-            </p>
-          </div>
-
-          <motion.div
-            className="flex flex-col h-max w-max items-center justify-center p-4 bg-white/10 rounded-3xl backdrop-blur-sm border border-white"
+          {/* Google Maps Button */}
+          <motion.button
             whileInView={{
               y: [0, -10, 0],
             }}
@@ -267,30 +272,11 @@ export default function WeddingDetails() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
+            className="flex items-center gap-2 bg-linear-to-r from-amber-200/20 to-amber-400/20 hover:from-amber-200/30 hover:to-amber-400/30 border border-amber-200/40 text-amber-100 px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all shadow-md cursor-pointer mt-2"
           >
-            <ArrowSquareOutIcon
-              className="group-hover:rotate-45 transition-transform cursor-pointer"
-              size={20}
-              weight="duotone"
-            />
-            <span className="text-[.6rem] font-['Montserrat'] text-white/80 mt-2 font-medium tracking-widest uppercase">
-              Google Maps
-            </span>
-          </motion.div>
-
-          {/* <button
-            onClick={() =>
-              window.open("https://maps.app.goo.gl/MPQG5Svx15RAzmEZ8", "_blank")
-            }
-            className="group flex mt-10 items-center gap-1 font-medium text-sm md:text-base mx-auto backdrop-blur-md bg-white/80 hover:bg-white text-gray-800 px-6 py-3 rounded-full transition-all active:scale-95"
-          >
-            Google Maps
-            <ArrowSquareOutIcon
-              className="group-hover:rotate-45 transition-transform cursor-pointer"
-              size={24}
-              weight="duotone"
-            />
-          </button> */}
+            <span>Google Maps</span>
+            <ArrowSquareOutIcon size={18} weight="duotone" />
+          </motion.button>
         </motion.div>
       </div>
     </div>

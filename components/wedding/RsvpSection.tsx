@@ -3,7 +3,14 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
-import { Heart } from "lucide-react";
+import {
+  Heart,
+  CheckCircle2,
+  XCircle,
+  Send,
+  UserCheck,
+  UserX,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 interface RsvpSectionProps {
@@ -11,7 +18,7 @@ interface RsvpSectionProps {
 }
 
 export default function RsvpSection({ guest }: RsvpSectionProps) {
-  const [name, setName] = useState(guest?.name || "unknown");
+  const [name, setName] = useState(guest?.name || "");
   const [attending, setAttending] = useState<boolean | null>(null);
   const [totalAttending, setTotalAttending] = useState(1);
   const [message, setMessage] = useState("");
@@ -49,7 +56,8 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!attending) return alert("Pilih kehadiran dulu ya");
+    if (attending === null)
+      return alert("Silakan pilih kepastian kehadiran ya ❤️");
 
     setSubmitting(true);
 
@@ -58,13 +66,13 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
       attending: attending ? true : false,
       total_attending: attending ? totalAttending : 0,
       message: message.trim(),
-      guest_id: guest.id,
+      guest_id: guest?.id,
     });
 
     if (error) {
-      alert("Gagal submit RSVP, coba lagi");
+      alert("Gagal menyimpan RSVP, coba lagi ya");
     } else {
-      alert("Terima kasih! RSVP berhasil disimpan ❤️");
+      alert("Terima kasih! Konfirmasi berhasil disimpan ❤️");
       setMessage("");
       setAttending(null);
       fetchRsvps();
@@ -74,179 +82,226 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   };
 
   return (
-    <div className="py-20 px-8 bg-[#CFCDC9]/10 font-['Montserrat'] w-screen overflow-hidden">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
+    <section className="py-16 px-6 backdrop-blur-sm bg-linear-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] w-full overflow-hidden text-white">
+      <div className="max-w-5xl mx-auto">
+        {/* Header Section */}
         <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 40 }}
+          className="text-center mb-6"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-3xl md:text-6xl font-['Allura'] text-[#D9D9D9]">
+          <h2 className="text-3xl md:text-6xl font-['Allura'] text-amber-100 tracking-wide">
             Confirm Your Attendance
           </h2>
+          <div className="w-20 h-px bg-amber-200/50 mx-auto mt-3"></div>
         </motion.div>
 
         <motion.p
-          className="text-center text-sm text-[#D9D9D9] max-w-full mx-auto mb-10"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center text-xs md:text-sm text-gray-200 max-w-xl mx-auto mb-14 leading-relaxed font-light"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          Kehadiran dan doa dari Anda merupakan hadiah dan kesan terbaik bagi
-          kami. Semoga Allah SWT mempertemukan kita dalam kebahagiaan.
+          Kehadiran serta doa restu Anda merupakan hadiah dan kesan terindah di
+          hari bahagia kami. Mohon kesediaannya untuk mengonfirmasi kehadiran di
+          bawah ini.
         </motion.p>
 
-        <div className="grid md:grid-cols-2 gap-10 max-w-screen mx-auto">
-          {/* Form RSVP */}
+        {/* Main Grid Layout */}
+        <div className="grid md:grid-cols-2 gap-8 items-start">
+          {/* ================= FORM CARD ================= */}
           <motion.div
-            className="rounded-3xl mb-2"
-            initial={{ opacity: 0, x: -60 }}
+            className="rounded-2xl border border-white/20 bg-white/10 p-6 md:p-8 relative overflow-hidden"
+            initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            <h3 className="text-base text-center font-bold text-[#D9D9D9] mb-6">
-              Confirm Here
+            {/* Background Glare */}
+            <div className="absolute -top-16 -left-16 w-32 h-32 bg-rose-400/10 rounded-full blur-3xl pointer-events-none" />
+
+            <h3 className="text-lg font-semibold text-white mb-6 tracking-wide flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-rose-400"></span>
+              RSVP Confirmation
             </h3>
 
-            <form onSubmit={handleSubmit} className="space-y-5 text-[#D9D9D9]">
-              <div className="text-sm">
-                <label className="block font-bold mb-2">Your Name *</label>
+            <form onSubmit={handleSubmit} className="space-y-5 text-gray-200">
+              {/* Input Nama */}
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-300">
+                  Your Name *
+                </label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full border-2 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500"
+                  placeholder="Masukkan nama Anda"
+                  className="w-full border border-white/20 bg-black/30 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-amber-200 focus:ring-1 focus:ring-amber-200/50 transition-all"
                   required
                 />
               </div>
 
-              <div className="text-sm">
-                <label className="block  font-bold text-[#D9D9D9] mb-3">
-                  Will you be there?
+              {/* Radio Attendance Custom */}
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-300">
+                  Will you be there? *
                 </label>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="attending"
-                      checked={attending === true}
-                      onChange={() => setAttending(true)}
-                    />
-                    <span>I'll be definitely there ❤️</span>
-                  </label>
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="attending"
-                      checked={attending === false}
-                      onChange={() => setAttending(false)}
-                    />
-                    <span>Sorry, I can't make it 😔</span>
-                  </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setAttending(true)}
+                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-medium transition-all ${
+                      attending === true
+                        ? "bg-emerald-500/20 border-emerald-400 text-emerald-200 shadow-lg"
+                        : "bg-black/20 border-white/10 text-gray-300 hover:bg-white/10"
+                    }`}
+                  >
+                    <UserCheck className="w-4 h-4 text-emerald-400" />
+                    I'll attend ❤️
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setAttending(false)}
+                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-medium transition-all ${
+                      attending === false
+                        ? "bg-rose-500/20 border-rose-400 text-rose-200 shadow-lg"
+                        : "bg-black/20 border-white/10 text-gray-300 hover:bg-white/10"
+                    }`}
+                  >
+                    <UserX className="w-4 h-4 text-rose-400" />
+                    Can't attend 😔
+                  </button>
                 </div>
               </div>
 
+              {/* Input Total Person */}
               {attending && (
-                <div className="text-sm">
-                  <label className="block  font-bold text-[#D9D9D9] mb-2">
-                    Total Attending
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                >
+                  <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-300">
+                    Total Attending (Person)
                   </label>
                   <input
                     type="number"
                     min="1"
+                    max="2"
                     value={totalAttending}
                     onChange={(e) => setTotalAttending(Number(e.target.value))}
-                    className="w-full border-2 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-xl px-3 py-2"
+                    className="w-full border border-white/20 bg-black/30 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-200 transition-all"
                   />
-                </div>
+                </motion.div>
               )}
 
-              <div className="text-sm">
-                <label className="block  font-bold text-[#D9D9D9] mb-2">
-                  Your Wishes
+              {/* Wishes TextArea */}
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-300">
+                  Your Wishes & Prayers
                 </label>
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="write your wishes here"
+                  placeholder="Tuliskan ucapan dan doa terbaik Anda..."
                   rows={4}
-                  className="w-full border-2 border-[#D9D9D9] bg-[#D9D9D9]/20 rounded-xl px-3 py-2 focus:outline-none focus:border-rose-500"
+                  className="w-full border border-white/20 bg-black/30 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-amber-200 focus:ring-1 focus:ring-amber-200/50 transition-all resize-none"
                 />
               </div>
 
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={submitting || attending === null}
-                className="w-full  bg-rose-600 hover:bg-rose-700 disabled:bg-gray-400 text-white px-3 py-2 rounded-xl font-medium transition-all"
+                className="w-full flex items-center justify-center gap-2 bg-linear-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 disabled:opacity-40 text-white py-3 px-6 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all shadow-lg active:scale-[0.98] cursor-pointer"
               >
                 {submitting ? (
                   "Submitting..."
                 ) : (
-                  <b className="text-xs">Submit RSVP</b>
+                  <>
+                    <span>Send Confirmation</span>
+                    <Send className="w-4 h-4" />
+                  </>
                 )}
               </button>
             </form>
           </motion.div>
 
-          {/* RSVP List */}
+          {/* ================= WISHES & RSVP LIST ================= */}
           <motion.div
-            className="rounded-xl"
-            initial={{ opacity: 0, x: 60 }}
+            className="rounded-2xl border border-white/20 bg-white/10  p-6 md:p-8 flex flex-col h-130"
+            initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
           >
-            <h3 className="text-base text-center font-bold text-[#D9D9D9] mb-10">
-              RSVP List
-            </h3>
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+              <h3 className="text-lg font-semibold text-white tracking-wide flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                Wishes & Greetings
+              </h3>
+              <span className="text-xs bg-white/10 px-3 py-2 rounded-xl text-amber-200 font-mono">
+                {rsvps.length} messages
+              </span>
+            </div>
 
-            <div className="max-h-150 overflow-y-auto space-y-4 pr-2">
+            {/* Scrollable Container */}
+            <div className="flex-1 overflow-y-auto space-y-4 pr-1 custom-scrollbar">
               {rsvps.length === 0 ? (
-                <div className="text-center py-12 text-[#D9D9D9]">
-                  <Heart className="w-12 h-12 mx-auto mb-4 opacity-30" />
-                  <p>Belum ada yang konfirmasi</p>
+                <div className="h-full flex flex-col items-center justify-center text-center text-gray-400">
+                  <Heart className="w-12 h-12 mb-3 text-rose-300/40 animate-pulse" />
+                  <p className="text-xs font-light">
+                    Belum ada konfirmasi. Jadilah yang pertama!
+                  </p>
                 </div>
               ) : (
                 rsvps.map((rsvp, index) => (
                   <motion.div
                     key={index}
-                    className="flex gap-3 text-[#D9D9D9]"
-                    initial={{ opacity: 0, y: 20 }}
+                    className="p-4 rounded-xl border border-white/10 bg-black/20 hover:bg-black/30 transition-all"
+                    initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
+                    transition={{ delay: index * 0.04 }}
                   >
-                    <div className="w-10 h-10 bg-[#D9D9D9] text-[#404040] rounded-2xl flex items-center justify-center font-bold shrink-0">
-                      {rsvp.guest_name?.slice(0, 2).toUpperCase()}
-                    </div>
-                    <div className="bg-[#D9D9D9]/20 rounded-2xl rounded-tl-none px-4 py-2 flex-1">
-                      <div className="flex items-center justify-between">
-                        <p className="font-semibold text-sm">
-                          {rsvp.guest_name}
-                        </p>
-                        <p className="font-light text-xs italic">
-                          {formatDateDiff(rsvp.submitted_at)}
-                        </p>
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-full bg-linear-to-tr from-rose-400 to-amber-200 text-gray-900 font-bold text-xs flex items-center justify-center shadow-md">
+                          {rsvp.guest_name?.slice(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-xs text-white">
+                            {rsvp.guest_name}
+                          </p>
+                          <p className="text-[0.65rem] text-gray-400">
+                            {formatDateDiff(rsvp.submitted_at)}
+                          </p>
+                        </div>
                       </div>
-                      {rsvp.message && (
-                        <p className="text-sm mt-2">"{rsvp.message}"</p>
-                      )}
+
+                      {/* Status Badge */}
                       {rsvp.attending ? (
-                        <p className="text-xs text-green-500 mt-4">
-                          <b>✔️ Attend</b>
-                        </p>
+                        <span className="inline-flex items-center gap-1 text-[0.65rem] font-medium text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                          Hadir ({rsvp.total_attending || 1})
+                        </span>
                       ) : (
-                        //({rsvp.total_attending} person)
-                        <p className="text-xs text-rose-500 mt-4">
-                          <b>❌ Not Attend</b>
-                        </p>
+                        <span className="inline-flex items-center gap-1 text-[0.65rem] font-medium text-rose-300 bg-rose-500/10 border border-rose-500/20 px-2 py-0.5 rounded-full">
+                          <XCircle className="w-3 h-3 text-rose-400" />
+                          Absen
+                        </span>
                       )}
                     </div>
+
+                    {rsvp.message && (
+                      <p className="text-xs text-gray-200 leading-relaxed font-light italic mt-2 pl-10">
+                        "{rsvp.message}"
+                      </p>
+                    )}
                   </motion.div>
                 ))
               )}
@@ -254,6 +309,6 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
           </motion.div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

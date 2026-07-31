@@ -1,3 +1,4 @@
+// components/wedding/PhotoGallery.tsx
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
@@ -23,26 +24,25 @@ const toBase64 = (str: string) =>
     ? Buffer.from(str).toString("base64")
     : window.btoa(str);
 
-// Kamu bisa menambahkan properti aspect ratio sendiri jika ingin ada yang beda (contoh: portrait/square/landscape)
 const galleryImages = [
   {
     id: 1,
     url: "/images/gallery/img_7.png",
     alt: "Prewedding 1",
     aspect: "aspect-[3/4]",
-  }, // Portrait
+  },
   {
     id: 2,
     url: "/images/gallery/img_3.png",
     alt: "Prewedding 2",
     aspect: "aspect-[4/6]",
-  }, // Landscape
+  },
   {
     id: 3,
     url: "/images/gallery/img_2.png",
     alt: "Prewedding 3",
     aspect: "aspect-[4/5]",
-  }, // Square
+  },
   {
     id: 4,
     url: "/images/gallery/img_1_v2.png",
@@ -54,7 +54,7 @@ const galleryImages = [
     url: "/images/gallery/img_4_wide.png",
     alt: "Prewedding 5",
     aspect: "aspect-[4/3]",
-  }, // Extra wide
+  },
   {
     id: 6,
     url: "/images/gallery/img_6.png",
@@ -95,34 +95,38 @@ function ParallaxCard({
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
     <motion.div
       ref={cardRef}
-      className="mb-6 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group"
-      initial={{ opacity: 0, y: 40 }}
+      /* Gap bawah diperrapat dari mb-6 ke mb-2.5 (mobile) & mb-3.5 (desktop) */
+      className="mb-2.5 md:mb-3.5 rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group border border-white/10"
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: index * 0.05, duration: 0.6 }}
+      transition={{ delay: index * 0.04, duration: 0.5 }}
     >
-      {/* Menggunakan aspect-ratio dinamis dari data photo */}
       <div
-        className={`relative overflow-hidden rounded-2xl w-full ${photo.aspect || "aspect-4/3"}`}
+        className={`relative overflow-hidden w-full ${
+          photo.aspect || "aspect-4/3"
+        }`}
       >
         <motion.div
           style={{ y }}
-          className="w-full h-full transform scale-120 group-hover:scale-125 transition-transform duration-500 ease-out"
+          className="w-full h-full transform scale-115 group-hover:scale-120 transition-transform duration-500 ease-out"
         >
           <Image
             src={photo.url}
             alt={photo.alt}
-            fill // Menggunakan fill agar Next Image otomatis mengisi container aspect-ratio
+            fill
             className="object-cover"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw"
-            quality={80}
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 50vw"
+            quality={85}
             placeholder="blur"
-            blurDataURL={`data:image/svg+xml;base64,${toBase64(shimmer(600, 400))}`}
+            blurDataURL={`data:image/svg+xml;base64,${toBase64(
+              shimmer(600, 400),
+            )}`}
           />
         </motion.div>
       </div>
@@ -131,38 +135,55 @@ function ParallaxCard({
 }
 
 export default function PhotoGallery() {
-  // Untuk foto berorientasi Landscape, 2 kolom pada layar desktop akan terlihat jauh lebih pas
   const breakpointColumnsObj = {
     default: 2,
     1024: 2,
-    640: 2, // 1 Kolom penuh pada layar mobile HP
+    640: 2,
   };
 
   return (
-    <div className="py-0 px-4 md:px-8 bg-linear-to-b from-[#CFCDC9]/60 to-[#CFCDC9]/10">
-      <div className="text-center mb-12">
+    <section className="py-16 px-6 md:px-8 backdrop-blur-md bg-linear-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] text-white">
+      {/* Header Section */}
+      <div className="text-center mb-10 max-w-2xl mx-auto px-4">
         <motion.h2
-          className="text-3xl md:text-6xl font-['Allura'] text-[#3E2900] tracking-wide"
-          initial={{ opacity: 0, y: 40 }}
+          className="text-3xl md:text-6xl font-['Allura'] text-amber-100 tracking-wide mb-2"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
         >
-          Our Gallery
+          Our Moments
         </motion.h2>
-        <div className="w-24 h-px bg-[#3E2900] mx-auto mt-6"></div>
+
+        <div className="w-20 h-px bg-amber-200/50 mx-auto my-3"></div>
+
+        {/* Paragraf Cerita Momen */}
+        <motion.p
+          className="text-xs md:text-sm text-gray-200 leading-relaxed font-light mt-3"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+        >
+          Setiap detik perjalanan kami terangkum dalam cerita indah. Dari tawa
+          sederhana hingga komitmen bersama, inilah beberapa potret kebahagiaan
+          kami menuju hari istimewa.
+        </motion.p>
       </div>
 
+      {/* Masonry Container dengan Gap Rapat */}
       <div className="max-w-5xl mx-auto">
         <Masonry
           breakpointCols={breakpointColumnsObj}
-          className="flex w-auto -ml-6"
-          columnClassName="pl-6 bg-clip-padding"
+          /* Margin & Padding dirapatkan agar jarak antar foto pas & tidak bolong jauh */
+          className="flex w-auto -ml-2 md:-ml-3.5"
+          columnClassName="pl-2 md:pl-3.5 bg-clip-padding"
         >
           {galleryImages.map((photo, index) => (
             <ParallaxCard key={photo.id} photo={photo} index={index} />
           ))}
         </Masonry>
       </div>
-    </div>
+    </section>
   );
 }

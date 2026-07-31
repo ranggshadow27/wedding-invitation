@@ -90,7 +90,24 @@ export default function InvitationPage({
     */
     <main className="relative w-full min-h-dvh overflow-x-hidden">
       {/* Container Khusus Background Image agar Stabil di Safari iOS */}
-      <div className="fixed inset-0 bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat pointer-events-none -z-10" />
+      {!isOpened ? (
+        <div className="fixed inset-0 bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat pointer-events-none -z-10" />
+      ) : (
+        <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster="/images/bg.png"
+            className="w-full h-full object-cover object-center"
+          >
+            <source src="/videos/footage.mp4" type="video/mp4" />
+          </video>
+          {/* Overlay transparan agar konten teks di atas video tetap terbaca jelas */}
+          <div className="absolute inset-0 bg-black/20" />
+        </div>
+      )}
 
       <AnimatePresence mode="wait">
         {!isOpened && (
@@ -176,7 +193,7 @@ export default function InvitationPage({
                 dragElastic={0.4}
                 onDragEnd={handleDragEnd}
                 animate={controls}
-                className="flex flex-col items-center justify-center p-4 bg-white/10 rounded-3xl backdrop-blur-sm border border-white/20"
+                className="flex flex-col items-center justify-center p-4 bg-white/10 rounded-3xl border border-white/20"
                 whileInView={{
                   y: [0, -10, 0],
                 }}
