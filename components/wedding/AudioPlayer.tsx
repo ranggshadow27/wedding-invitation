@@ -23,7 +23,7 @@ export default function AudioPlayer({ isOpened = false }: AudioPlayerProps) {
 
     navigator.mediaSession.metadata = new MediaMetadata({
       title: "The Wedding of Annisa & Rangga",
-      artist: "Backsound Undangan Wedding",
+      artist: "Pancakes & Butter - Jason Mraz",
       album: "26 September 2026",
       artwork: [
         { src: "/images/music_96.png", sizes: "96x96", type: "image/png" },
