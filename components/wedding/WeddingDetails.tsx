@@ -207,7 +207,7 @@ export default function WeddingDetails() {
 
         {/* ================= EVENT DETAILS & LOCATION ================= */}
         <motion.div
-          className="flex flex-col text-center items-center justify-center max-w-lg mx-auto bg-black/15 border border-white/10 p-8 rounded-3xl"
+          className="flex flex-col text-center items-center justify-center max-w-lg mx-auto border border-white/30 shadow-md bg-stone-900/20 p-8 rounded-3xl"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
