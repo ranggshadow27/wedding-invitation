@@ -37,7 +37,7 @@ export default function WeddingFooter() {
           transition={{ duration: 0.8 }}
         >
           {/* H3 Thank You */}
-          <h3 className="text-2xl md:text-5xl md:mt-5 font-['Allura'] text-white tracking-wide">
+          <h3 className="text-3xl md:text-5xl md:mt-5 font-['Allura'] text-amber-100 tracking-wide">
             Thank You
           </h3>
 
@@ -185,25 +185,21 @@ export default function WeddingFooter() {
           </motion.div>
 
           {/* Copyright */}
-          <motion.div
-            className="text-center font-semibold text-xs text-[#D9D9D9]"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-          >
-            © 2026 ratipray. All Rights Reserved.
-          </motion.div>
-
-          <motion.div
-            className="text-center text-xs font-light text-[#D9D9D9]/50 pt-1"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.6 }}
-          >
-            icaa-awe wedding invitation
-          </motion.div>
+          <div className="flex items-center justify-center gap-1.5 text-[0.65rem] text-gray-400 font-bold tracking-tight">
+            <span>Crafted with</span>
+            <HeartIcon
+              size={14}
+              weight="fill"
+              className="text-rose-400 inline-block"
+            />
+            <span>for Annisa & Rangga Wedding</span>
+          </div>
+          <p className="text-center text-[0.6rem] text-gray-500 font-light tracking-widest mt-1 uppercase">
+            © {new Date().getFullYear()} All Rights Reserved
+          </p>
+          <p className="text-center text-[0.6rem] text-gray-500 font-light tracking-widest mt-1 uppercase">
+            RATIPRAY
+          </p>
         </div>
 
         {/* Trik Penutup Overleak Bounce iPhone */}

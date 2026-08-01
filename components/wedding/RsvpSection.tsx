@@ -82,7 +82,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   };
 
   return (
-    <section className="py-16 px-6 backdrop-blur-sm bg-linear-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] w-full overflow-hidden text-white">
+    <section className="py-16 px-6  bg-linear-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] w-full overflow-hidden text-white">
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}
         <motion.div
@@ -111,7 +111,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
         </motion.p>
 
         {/* Main Grid Layout */}
-        <div className="grid md:grid-cols-2 gap-8 items-start">
+        <div className="grid md:grid-cols-2 gap-8 backdrop-blur-sm items-start">
           {/* ================= FORM CARD ================= */}
           <motion.div
             className="rounded-2xl border border-white/20 bg-white/10 p-6 md:p-8 relative overflow-hidden"

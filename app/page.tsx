@@ -1,65 +1,147 @@
-import Image from "next/image";
+// app/page.tsx
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import {
+  EnvelopeSimpleOpen,
+  ArrowRight,
+  Heart,
+  Key,
+  ArrowRightIcon,
+  HeartIcon,
+} from "@phosphor-icons/react";
+
+export default function HomePage() {
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanCode = code.trim();
+
+    if (!cleanCode) {
+      setError("Silakan masukkan kode undangan Anda.");
+      return;
+    }
+
+    setError("");
+    setIsLoading(true);
+    // Redirect ke rute /invite/[code]
+    router.push(`/invite/${cleanCode}`);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <main className="relative min-h-dvh w-full overflow-hidden bg-stone-950 font-['Montserrat'] text-white flex flex-col justify-between items-center p-6">
+      {/* Background Image Container */}
+      <div className="fixed inset-0 bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat opacity-30 pointer-events-none -z-10" />
+
+      {/* Ambient Lighting linear */}
+      <div className="absolute inset-0 bg-radial from-amber-500/10 via-black/70 to-black pointer-events-none -z-5" />
+
+      {/* Spacer Atas */}
+      <div className="w-full h-8" />
+
+      {/* Main Glassmorphic Card Container */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative w-full max-w-md p-8 md:p-10 rounded-3xl border border-white/15 bg-white/5 backdrop-blur-xl shadow-2xl text-center flex flex-col items-center my-auto"
+      >
+        {/* Animated Icon */}
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          className="w-18 h-18 rounded-full border border-amber-200/40 bg-amber-200/10 backdrop-blur-md flex items-center justify-center mb-6 shadow-lg shadow-amber-500/5"
+        >
+          <EnvelopeSimpleOpen
+            size={32}
+            weight="duotone"
+            className="text-amber-200"
+          />
+        </motion.div>
+
+        {/* Subtitle / Header */}
+        <p className="text-[0.65rem] md:text-xs tracking-[0.3em] font-medium text-amber-100 uppercase mb-2">
+          Welcome To The Wedding Of
+        </p>
+
+        <h1 className="text-4xl md:text-5xl font-['Allura'] text-white tracking-wide mb-3">
+          Annisa <span className="text-amber-200">&</span> Rangga
+        </h1>
+
+        <div className="w-16 h-px bg-linear-to-r from-transparent via-amber-200/50 to-transparent mb-6" />
+
+        <p className="text-xs text-gray-300 font-light leading-relaxed mb-8 max-w-xs">
+          Masukkan kode undangan khusus yang telah Anda terima untuk membuka
+          lembaran momen bahagia kami.
+        </p>
+
+        {/* Form Input Kode Undangan */}
+        <form onSubmit={handleSubmit} className="w-full space-y-4">
+          <div className="relative w-full">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-amber-200/60">
+              <Key size={20} weight="duotone" />
+            </div>
+            <input
+              type="text"
+              value={code}
+              onChange={(e) => {
+                setCode(e.target.value);
+                if (error) setError("");
+              }}
+              placeholder="Contoh: ANNISA-RANGGA"
+              className="w-full pl-11 pr-4 py-3.5 bg-black/30 border border-white/15 focus:border-amber-200/60 rounded-2xl text-white placeholder-gray-500 text-xs tracking-wider uppercase focus:outline-none focus:ring-1 focus:ring-amber-200/50 transition-all font-mono"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </div>
+
+          {/* Error Message */}
+          {error && (
+            <motion.p
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-[0.7rem] text-rose-400 font-medium text-left px-1"
+            >
+              {error}
+            </motion.p>
+          )}
+
+          {/* Submit Button */}
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            type="submit"
+            disabled={isLoading}
+            className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-linear-to-r from-amber-200/20 to-amber-400/20 hover:from-amber-200/30 hover:to-amber-400/30 border border-amber-200/40 text-amber-100 font-semibold text-xs uppercase tracking-widest transition-all shadow-lg cursor-pointer disabled:opacity-50"
           >
-            Documentation
-          </a>
+            <span>{isLoading ? "Membuka Undangan..." : "Buka Undangan"}</span>
+            {!isLoading && <ArrowRightIcon size={16} weight="bold" />}
+          </motion.button>
+        </form>
+      </motion.div>
+
+      {/* Professional Footer & Copyright */}
+      <footer className="w-full max-w-md text-center py-4 font-['Montserrat']">
+        <div className="flex items-center justify-center gap-1.5 text-[0.65rem] text-gray-400 font-bold tracking-tight">
+          <span>Crafted with</span>
+          <HeartIcon
+            size={14}
+            weight="fill"
+            className="text-rose-400 inline-block"
+          />
+          <span>for Annisa & Rangga Wedding</span>
         </div>
-      </main>
-    </div>
+        <p className="text-[0.6rem] text-gray-500 font-light tracking-widest mt-1 uppercase">
+          © {new Date().getFullYear()} All Rights Reserved
+        </p>
+        <p className="text-[0.6rem] text-gray-500 font-light tracking-widest mt-1 uppercase">
+          RATIPRAY
+        </p>
+      </footer>
+    </main>
   );
 }

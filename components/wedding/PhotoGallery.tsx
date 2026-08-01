@@ -101,7 +101,7 @@ function ParallaxCard({
     <motion.div
       ref={cardRef}
       /* Gap bawah diperrapat dari mb-6 ke mb-2.5 (mobile) & mb-3.5 (desktop) */
-      className="mb-2.5 md:mb-3.5 rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group border border-white/10"
+      className="mb-2.5 md:mb-3.5 rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}

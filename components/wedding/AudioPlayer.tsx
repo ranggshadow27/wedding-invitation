@@ -2,44 +2,71 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Volume2, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SpeakerHighIcon, SpeakerXIcon } from "@phosphor-icons/react";
+import {
+  SpeakerHigh,
+  SpeakerHighIcon,
+  SpeakerX,
+  SpeakerXIcon,
+} from "@phosphor-icons/react";
 
-export default function AudioPlayer() {
+interface AudioPlayerProps {
+  isOpened?: boolean; // Prop penanda apakah cover undangan sudah dibuka
+}
+
+export default function AudioPlayer({ isOpened = false }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const updateMediaSession = (audio: HTMLAudioElement) => {
+    if (!("mediaSession" in navigator)) return;
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: "The Wedding of Annisa & Rangga",
+      artist: "Backsound Undangan Wedding",
+      album: "26 September 2026",
+      artwork: [
+        { src: "/images/music_96.png", sizes: "96x96", type: "image/png" },
+        { src: "/images/music_256.png", sizes: "256x256", type: "image/png" },
+        { src: "/images/music_512.png", sizes: "512x512", type: "image/png" },
+      ],
+    });
+
+    navigator.mediaSession.setActionHandler("play", () => {
+      audio.play();
+      setIsPlaying(true);
+    });
+
+    navigator.mediaSession.setActionHandler("pause", () => {
+      audio.pause();
+      setIsPlaying(false);
+    });
+  };
+
+  // Inisialisasi Audio
   useEffect(() => {
-    // Inisialisasi Audio object
     audioRef.current = new Audio("/audio/wedding-song.mp3");
     audioRef.current.loop = true;
-
-    // Kebijakan browser modern melarang autoplay sebelum user interaksi.
-    // Jadi kita coba play otomatis saat user pertama kali scroll atau klik layar.
-    const handleFirstInteraction = () => {
-      if (audioRef.current && !isPlaying) {
-        audioRef.current
-          .play()
-          .then(() => setIsPlaying(true))
-          .catch((err) => console.log("Autoplay dicegah oleh browser:", err));
-      }
-      // Hapus event listener setelah interaksi pertama terjadi
-      window.removeEventListener("scroll", handleFirstInteraction);
-      window.removeEventListener("click", handleFirstInteraction);
-    };
-
-    window.addEventListener("scroll", handleFirstInteraction);
-    window.addEventListener("click", handleFirstInteraction);
 
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
       }
-      window.removeEventListener("scroll", handleFirstInteraction);
-      window.removeEventListener("click", handleFirstInteraction);
     };
   }, []);
+
+  // Begitu tamu swipe/klik Buka Undangan (isOpened = true), otomatis play lagu!
+  useEffect(() => {
+    if (isOpened && audioRef.current && !isPlaying) {
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          if (audioRef.current) updateMediaSession(audioRef.current);
+        })
+        .catch((err) => console.log("Autoplay blocked:", err));
+    }
+  }, [isOpened]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -48,8 +75,13 @@ export default function AudioPlayer() {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play();
-      setIsPlaying(true);
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          if (audioRef.current) updateMediaSession(audioRef.current);
+        })
+        .catch((err) => console.log("Gagal memutar audio:", err));
     }
   };
 
@@ -57,7 +89,7 @@ export default function AudioPlayer() {
     <div className="fixed bottom-6 right-6 z-50">
       <motion.button
         onClick={togglePlay}
-        className="w-12 h-12 cursor-pointer rounded-full hover:bg-rose-700 text-white flex items-center justify-center shadow-lg focus:outline-none backdrop-blur-sm bg-rose-600/90"
+        className="w-12 h-12 cursor-pointer rounded-full text-amber-100 flex items-center justify-center shadow-xl focus:outline-none backdrop-blur-md bg-stone-900/80 border border-amber-200/30 hover:border-amber-200/60 transition-all active:scale-95"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0, y: 20 }}
@@ -74,9 +106,11 @@ export default function AudioPlayer() {
               transition={{ duration: 0.2 }}
               className="relative"
             >
-              <SpeakerHighIcon className="w-6 h-6" weight="duotone" />
-              {/* Efek denyut halus kalau lagu lagi nyala */}
-              <span className="absolute -inset-1 rounded-full border border-white opacity-40 animate-ping" />
+              <SpeakerHighIcon
+                className="w-6 h-6 text-amber-200"
+                weight="duotone"
+              />
+              <span className="absolute -inset-1 rounded-full border border-amber-200/50 opacity-40 animate-ping" />
             </motion.div>
           ) : (
             <motion.div
@@ -86,7 +120,10 @@ export default function AudioPlayer() {
               exit={{ rotate: 45, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <SpeakerXIcon className="w-6 h-6" weight="duotone" />
+              <SpeakerXIcon
+                className="w-6 h-6 text-gray-400"
+                weight="duotone"
+              />
             </motion.div>
           )}
         </AnimatePresence>
