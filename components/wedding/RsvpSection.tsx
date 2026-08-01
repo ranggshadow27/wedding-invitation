@@ -81,7 +81,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   };
 
   return (
-    <section className="py-16 px-6 bg-gradient-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] w-full overflow-hidden text-white">
+    <section className="py-16 px-6 bg-linear-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] w-full overflow-hidden text-white">
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}
         <motion.div
@@ -206,7 +206,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
               <button
                 type="submit"
                 disabled={submitting || attending === null}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 disabled:opacity-40 text-white py-3 px-6 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all shadow-lg active:scale-[0.98] cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 bg-linear-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 disabled:opacity-40 text-white py-3 px-6 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all shadow-lg active:scale-[0.98] cursor-pointer"
               >
                 {submitting ? (
                   "Submitting..."
@@ -255,7 +255,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-400 to-amber-200 text-gray-900 font-bold text-xs flex items-center justify-center shadow-md">
+                        <div className="w-8 h-8 rounded-full bg-linear-to-tr from-rose-400 to-amber-200 text-gray-900 font-bold text-xs flex items-center justify-center shadow-md">
                           {rsvp.guest_name?.slice(0, 2).toUpperCase()}
                         </div>
                         <div>

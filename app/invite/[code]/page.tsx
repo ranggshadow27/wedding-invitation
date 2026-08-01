@@ -1,12 +1,16 @@
 // app/invite/[code]/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import {
-  ASSETS_TO_PRELOAD,
+  MAIN_ASSETS,
+  VIDEO_ASSETS,
+  GALLERY_ASSETS,
+  TOTAL_ASSET_COUNT,
   preloadImage,
+  preloadAudio,
   preloadVideo,
 } from "@/lib/preloadAssets";
 import Preloader from "@/components/wedding/Preloader";
@@ -20,24 +24,43 @@ export default function InvitationPage({
 }: {
   params: Promise<{ code: string }>;
 }) {
+  // Safe Unwrap Async Params
+  const resolvedParams = use(params);
+  const code = resolvedParams.code;
+
   const [guest, setGuest] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [loadProgress, setLoadProgress] = useState(0);
   const [videoBlobUrl, setVideoBlobUrl] = useState<string>("");
   const [isOpened, setIsOpened] = useState(false);
-  const [code, setCode] = useState("");
 
-  useEffect(() => {
-    params.then((p) => setCode(p.code));
-  }, [params]);
+  // States untuk Logger & Skip Option
+  const [currentLog, setCurrentLog] = useState<string>("Initializing...");
+  const [showSkipButton, setShowSkipButton] = useState(false);
+
+  const setLog = (msg: string) => {
+    setCurrentLog(msg);
+  };
 
   useEffect(() => {
     if (!code) return;
     let isMounted = true;
+    let loadedCount = 0;
+
+    const incrementProgress = () => {
+      loadedCount++;
+      if (isMounted) {
+        setLoadProgress(
+          Math.min(Math.round((loadedCount / TOTAL_ASSET_COUNT) * 100), 100),
+        );
+      }
+    };
 
     const prepareInvitation = async () => {
       try {
-        // Fetch Supabase
+        setLog("Connecting to server...");
+
+        // 1. Fetch Guest Data Supabase
         const { data: guestData } = await supabase
           .from("guests")
           .select("*")
@@ -46,33 +69,66 @@ export default function InvitationPage({
 
         if (isMounted) setGuest(guestData);
 
-        // Calculate progress
-        const totalAssets =
-          ASSETS_TO_PRELOAD.images.length + ASSETS_TO_PRELOAD.videos.length;
-        let loadedCount = 0;
-
-        const updateProgress = () => {
-          loadedCount++;
-          if (isMounted) {
-            setLoadProgress(Math.round((loadedCount / totalAssets) * 100));
-          }
-        };
-
-        // Preload tasks
-        const imagePromises = ASSETS_TO_PRELOAD.images.map((src) =>
-          preloadImage(src).then(updateProgress),
+        // ================= PHASE 1: MAIN ASSETS =================
+        setLog("Loading core assets...");
+        await Promise.all(
+          MAIN_ASSETS.map(async (src) => {
+            if (src.endsWith(".mp3")) await preloadAudio(src);
+            else await preloadImage(src);
+            incrementProgress();
+          }),
         );
+        if (!isMounted) return;
+        setLog("✓ Main assets loaded");
 
-        const videoPromises = ASSETS_TO_PRELOAD.videos.map(async (src) => {
-          const blobUrl = await preloadVideo(src);
+        // ================= PHASE 2: VIDEO ASSET (WITH 5s TIMEOUT) =================
+        setLog("Loading video background...");
+
+        // Timer 5 Detik jika jaringan lambat
+        const skipTimer = setTimeout(() => {
+          if (isMounted) {
+            setShowSkipButton(true);
+            setLog("⚠️ Slow network detected. Option available.");
+          }
+        }, 5000);
+
+        // Preload Video dengan Race Timeout 5 Detik
+        const videoPromise = preloadVideo(VIDEO_ASSETS[0]).then((blobUrl) => {
           if (blobUrl && isMounted) setVideoBlobUrl(blobUrl);
-          updateProgress();
+          incrementProgress();
         });
 
-        await Promise.all([...imagePromises, ...videoPromises]);
+        const timeoutPromise = new Promise((resolve) =>
+          setTimeout(resolve, 5000),
+        );
+
+        await Promise.race([videoPromise, timeoutPromise]);
+        clearTimeout(skipTimer);
+
+        if (!isMounted) return;
+        setShowSkipButton(false);
+        setLog("✓ Video status checked");
+
+        // ================= PHASE 3: GALLERY ASSETS =================
+        setLog("Loading gallery images...");
+        await Promise.all(
+          GALLERY_ASSETS.map(async (src) => {
+            await preloadImage(src);
+            incrementProgress();
+          }),
+        );
+
+        if (!isMounted) return;
+        setLog("✓ All assets loaded successfully!");
+        setLoadProgress(100);
+
+        // Delay kecil agar animasi 100% terlihat
+        setTimeout(() => {
+          if (isMounted) setLoading(false);
+        }, 500);
       } catch (error) {
-        console.error("Initialization failed:", error);
-      } finally {
+        console.error("Initialization error:", error);
+        setLog("⏳ Loading complete with fallbacks");
         if (isMounted) setLoading(false);
       }
     };
@@ -84,7 +140,24 @@ export default function InvitationPage({
     };
   }, [code]);
 
-  if (loading) return <Preloader progress={loadProgress} />;
+  // Handler untuk tombol Skip Best Experience
+  const handleSkip = () => {
+    setLog("⏩ Skipping best experience...");
+    setTimeout(() => {
+      setLoading(false);
+    }, 400);
+  };
+
+  if (loading) {
+    return (
+      <Preloader
+        progress={loadProgress}
+        currentLog={currentLog}
+        showSkipButton={showSkipButton}
+        onSkip={handleSkip}
+      />
+    );
+  }
 
   if (!guest) return <GuestNotFound code={code} />;
 
