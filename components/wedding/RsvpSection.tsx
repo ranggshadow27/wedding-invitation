@@ -25,7 +25,6 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   const [submitting, setSubmitting] = useState(false);
   const [rsvps, setRsvps] = useState<any[]>([]);
 
-  // Helper function untuk mengubah tanggal menjadi time ago format
   const formatDateDiff = (dateString: string) => {
     if (!dateString) return "";
     const now = new Date();
@@ -82,15 +81,15 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
   };
 
   return (
-    <section className="py-16 px-6  bg-linear-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] w-full overflow-hidden text-white">
+    <section className="py-16 px-6 bg-gradient-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] w-full overflow-hidden text-white">
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}
         <motion.div
           className="text-center mb-6"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl md:text-6xl font-['Allura'] text-amber-100 tracking-wide">
             Confirm Your Attendance
@@ -100,10 +99,10 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
 
         <motion.p
           className="text-center text-xs md:text-sm text-gray-200 max-w-xl mx-auto mb-14 leading-relaxed font-light"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
         >
           Kehadiran serta doa restu Anda merupakan hadiah dan kesan terindah di
           hari bahagia kami. Mohon kesediaannya untuk mengonfirmasi kehadiran di
@@ -111,16 +110,15 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
         </motion.p>
 
         {/* Main Grid Layout */}
-        <div className="grid md:grid-cols-2 gap-8 backdrop-blur-sm items-start">
+        <div className="grid md:grid-cols-2 gap-8 items-start">
           {/* ================= FORM CARD ================= */}
           <motion.div
-            className="rounded-2xl border border-white/20 bg-white/10 p-6 md:p-8 relative overflow-hidden"
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            className="rounded-2xl border border-white/20 bg-white/10 p-6 md:p-8 relative overflow-hidden backdrop-blur-md transform-gpu will-change-transform"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+            transition={{ duration: 0.6 }}
           >
-            {/* Background Glare */}
             <div className="absolute -top-16 -left-16 w-32 h-32 bg-rose-400/10 rounded-full blur-3xl pointer-events-none" />
 
             <h3 className="text-lg font-semibold text-white mb-6 tracking-wide flex items-center gap-2">
@@ -129,7 +127,6 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-5 text-gray-200">
-              {/* Input Nama */}
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-300">
                   Your Name *
@@ -139,12 +136,11 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Masukkan nama Anda"
-                  className="w-full border border-white/20 bg-black/30 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-amber-200 focus:ring-1 focus:ring-amber-200/50 transition-all"
+                  className="w-full border border-white/20 bg-black/30 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-amber-200 transition-all"
                   required
                 />
               </div>
 
-              {/* Radio Attendance Custom */}
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-300">
                   Will you be there? *
@@ -153,7 +149,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                   <button
                     type="button"
                     onClick={() => setAttending(true)}
-                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-medium transition-all ${
+                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
                       attending === true
                         ? "bg-emerald-500/20 border-emerald-400 text-emerald-200 shadow-lg"
                         : "bg-black/20 border-white/10 text-gray-300 hover:bg-white/10"
@@ -166,7 +162,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                   <button
                     type="button"
                     onClick={() => setAttending(false)}
-                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-medium transition-all ${
+                    className={`flex items-center justify-center gap-2 p-3 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
                       attending === false
                         ? "bg-rose-500/20 border-rose-400 text-rose-200 shadow-lg"
                         : "bg-black/20 border-white/10 text-gray-300 hover:bg-white/10"
@@ -178,13 +174,8 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                 </div>
               </div>
 
-              {/* Input Total Person */}
               {attending && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                >
+                <div className="transition-all duration-300">
                   <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-300">
                     Total Attending (Person)
                   </label>
@@ -196,10 +187,9 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                     onChange={(e) => setTotalAttending(Number(e.target.value))}
                     className="w-full border border-white/20 bg-black/30 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-amber-200 transition-all"
                   />
-                </motion.div>
+                </div>
               )}
 
-              {/* Wishes TextArea */}
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-300">
                   Your Wishes & Prayers
@@ -209,15 +199,14 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tuliskan ucapan dan doa terbaik Anda..."
                   rows={4}
-                  className="w-full border border-white/20 bg-black/30 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-amber-200 focus:ring-1 focus:ring-amber-200/50 transition-all resize-none"
+                  className="w-full border border-white/20 bg-black/30 rounded-xl px-4 py-3 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-amber-200 transition-all resize-none"
                 />
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={submitting || attending === null}
-                className="w-full flex items-center justify-center gap-2 bg-linear-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 disabled:opacity-40 text-white py-3 px-6 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all shadow-lg active:scale-[0.98] cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 disabled:opacity-40 text-white py-3 px-6 rounded-xl font-semibold text-xs uppercase tracking-widest transition-all shadow-lg active:scale-[0.98] cursor-pointer"
               >
                 {submitting ? (
                   "Submitting..."
@@ -233,11 +222,11 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
 
           {/* ================= WISHES & RSVP LIST ================= */}
           <motion.div
-            className="rounded-2xl border border-white/20 bg-white/10  p-6 md:p-8 flex flex-col h-130"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            className="rounded-2xl border border-white/20 bg-white/10 p-6 md:p-8 flex flex-col h-130 backdrop-blur-md transform-gpu will-change-transform"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
               <h3 className="text-lg font-semibold text-white tracking-wide flex items-center gap-2">
@@ -249,7 +238,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
               </span>
             </div>
 
-            {/* Scrollable Container */}
+            {/* Scrollable Container dengan Elemen HTML Biasa (No Flicker) */}
             <div className="flex-1 overflow-y-auto space-y-4 pr-1 custom-scrollbar">
               {rsvps.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center text-gray-400">
@@ -260,17 +249,13 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                 </div>
               ) : (
                 rsvps.map((rsvp, index) => (
-                  <motion.div
-                    key={index}
-                    className="p-4 rounded-xl border border-white/10 bg-black/20 hover:bg-black/30 transition-all"
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.04 }}
+                  <div
+                    key={rsvp.id || index}
+                    className="p-4 rounded-xl border border-white/10 bg-black/20 hover:bg-black/30 transition-colors duration-200"
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-full bg-linear-to-tr from-rose-400 to-amber-200 text-gray-900 font-bold text-xs flex items-center justify-center shadow-md">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-400 to-amber-200 text-gray-900 font-bold text-xs flex items-center justify-center shadow-md">
                           {rsvp.guest_name?.slice(0, 2).toUpperCase()}
                         </div>
                         <div>
@@ -283,7 +268,6 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                         </div>
                       </div>
 
-                      {/* Status Badge */}
                       {rsvp.attending ? (
                         <span className="inline-flex items-center gap-1 text-[0.65rem] font-medium text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
                           <CheckCircle2 className="w-3 h-3 text-emerald-400" />
@@ -302,7 +286,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
                         "{rsvp.message}"
                       </p>
                     )}
-                  </motion.div>
+                  </div>
                 ))
               )}
             </div>

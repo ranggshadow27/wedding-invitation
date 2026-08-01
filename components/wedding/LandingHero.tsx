@@ -30,7 +30,13 @@ export default function LandingHero({ guestName, onOpen }: LandingHeroProps) {
       transition={{ duration: 0.8 }}
       className="relative min-h-dvh w-full text-white flex flex-col antialiased items-center justify-end pb-10 text-center px-6 overflow-hidden touch-none"
     >
-      <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/80 via-black/40 to-transparent -z-5 pointer-events-none" />
+      {/* ==================== FIX linear OVERLAY ==================== */}
+      {/* Menggunakan inset-0 dan h-full w-full penuh untuk mencegah blank space di mobile */}
+      <div className="absolute inset-0 w-full h-full bg-linear-to-t from-black via-black/30 to-transparent pointer-events-none -z-10" />
+
+      {/* Ambient Lighting Tambahan di Dasar (Menjamin 100% Hitam Pekat di Bawah) */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 w-full bg-black/20 pointer-events-none -z-10 blur-xl" />
+      {/* ============================================================== */}
 
       <motion.div
         initial={{ opacity: 0, y: 15 }}
@@ -57,7 +63,7 @@ export default function LandingHero({ guestName, onOpen }: LandingHeroProps) {
         </h1>
       </motion.div>
 
-      <div className="w-40 h-px bg-gradient-to-r from-transparent via-amber-200/50 to-transparent mb-4" />
+      <div className="w-40 h-px bg-linear-to-r from-transparent via-amber-200/50 to-transparent mb-4" />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -75,10 +81,10 @@ export default function LandingHero({ guestName, onOpen }: LandingHeroProps) {
         transition={{ delay: 0.5, duration: 0.6 }}
         className="w-full max-w-xs mb-6 p-4 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-xl font-['Montserrat']"
       >
-        <p className="text-[0.65rem] text-gray-300 font-light uppercase tracking-widest mb-1">
+        <p className="text-[0.5rem] text-gray-300 font-light uppercase tracking-widest mb-1">
           Dear Sir / Madam,
         </p>
-        <p className="text-base md:text-lg font-bold text-white tracking-wide capitalize truncate px-2">
+        <p className="text-sm md:text-lg font-bold text-white tracking-wide capitalize truncate px-2">
           {guestName}
         </p>
       </motion.div>

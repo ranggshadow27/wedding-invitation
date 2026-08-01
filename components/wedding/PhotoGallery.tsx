@@ -1,28 +1,10 @@
 // components/wedding/PhotoGallery.tsx
+"use client";
+
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Masonry from "react-masonry-css";
-
-// Helper SVG Shimmer
-const shimmer = (w: number, h: number) => `
-<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <linearGradient id="g">
-      <stop stop-color="#e2e8f0" offset="20%" />
-      <stop stop-color="#cbd5e1" offset="50%" />
-      <stop stop-color="#e2e8f0" offset="70%" />
-    </linearGradient>
-  </defs>
-  <rect width="${w}" height="${h}" fill="#e2e8f0" />
-  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite" />
-</svg>`;
-
-const toBase64 = (str: string) =>
-  typeof window === "undefined"
-    ? Buffer.from(str).toString("base64")
-    : window.btoa(str);
 
 const galleryImages = [
   {
@@ -95,26 +77,24 @@ function ParallaxCard({
     offset: ["start end", "end start"],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+  // Range parallax dibuat lebih halus (-4% ke 4%) agar tidak membebankan GPU HP
+  const y = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
 
   return (
     <motion.div
       ref={cardRef}
-      /* Gap bawah diperrapat dari mb-6 ke mb-2.5 (mobile) & mb-3.5 (desktop) */
-      className="mb-2.5 md:mb-3.5 rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 group"
-      initial={{ opacity: 0, y: 30 }}
+      className="mb-2.5 md:mb-3.5 rounded-xl md:rounded-2xl overflow-hidden shadow-md transition-shadow duration-300 transform-gpu will-change-transform"
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.04, duration: 0.5 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay: index * 0.03, duration: 0.5, ease: "easeOut" }}
     >
       <div
-        className={`relative overflow-hidden w-full ${
-          photo.aspect || "aspect-4/3"
-        }`}
+        className={`relative overflow-hidden w-full ${photo.aspect || "aspect-4/3"}`}
       >
         <motion.div
           style={{ y }}
-          className="w-full h-full transform scale-115 group-hover:scale-120 transition-transform duration-500 ease-out"
+          className="w-full h-full transform-gpu scale-105"
         >
           <Image
             src={photo.url}
@@ -122,11 +102,8 @@ function ParallaxCard({
             fill
             className="object-cover"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 50vw"
-            quality={85}
-            placeholder="blur"
-            blurDataURL={`data:image/svg+xml;base64,${toBase64(
-              shimmer(600, 400),
-            )}`}
+            quality={80}
+            priority={index < 4} // Priority load untuk 4 foto teratas
           />
         </motion.div>
       </div>
@@ -147,23 +124,22 @@ export default function PhotoGallery() {
       <div className="text-center mb-10 max-w-2xl mx-auto px-4">
         <motion.h2
           className="text-3xl md:text-6xl font-['Allura'] text-amber-100 tracking-wide mb-2"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
         >
           Our Moments
         </motion.h2>
 
-        <div className="w-20 h-px bg-amber-200/50 mx-auto my-3"></div>
+        <div className="w-20 h-px bg-amber-200/50 mx-auto my-3" />
 
-        {/* Paragraf Cerita Momen */}
         <motion.p
           className="text-xs md:text-sm text-gray-200 leading-relaxed font-light mt-3"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2, duration: 0.8 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
         >
           Setiap detik perjalanan kami terangkum dalam cerita indah. Dari tawa
           sederhana hingga komitmen bersama, inilah beberapa potret kebahagiaan
@@ -171,11 +147,10 @@ export default function PhotoGallery() {
         </motion.p>
       </div>
 
-      {/* Masonry Container dengan Gap Rapat */}
+      {/* Masonry Container */}
       <div className="max-w-5xl mx-auto">
         <Masonry
           breakpointCols={breakpointColumnsObj}
-          /* Margin & Padding dirapatkan agar jarak antar foto pas & tidak bolong jauh */
           className="flex w-auto -ml-2 md:-ml-3.5"
           columnClassName="pl-2 md:pl-3.5 bg-clip-padding"
         >

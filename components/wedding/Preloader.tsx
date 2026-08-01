@@ -40,7 +40,7 @@ export default function Preloader({ progress }: PreloaderProps) {
 
       <div className="w-48 h-1 bg-white/10 rounded-full mt-6 overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-amber-300 to-amber-100"
+          className="h-full bg-linear-to-r from-amber-300 to-amber-100"
           initial={{ width: "0%" }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.3 }}
