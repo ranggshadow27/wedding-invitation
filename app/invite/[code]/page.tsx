@@ -181,6 +181,8 @@ export default function InvitationPage({
         </div>
       )}
 
+      <div className="fixed inset-0 w-full h-dvh pointer-events-none -z-10 bg-linear-to-b from-black/5 via-black/20 to-stone-950/45" />
+
       {/* Landing Cover Overlay */}
       <AnimatePresence mode="wait">
         {!isOpened && (

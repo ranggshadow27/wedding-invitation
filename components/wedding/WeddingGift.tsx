@@ -4,14 +4,8 @@
 import {
   Copy,
   CheckCircle,
-  CurrencyBtc,
-  CurrencyEth,
-  PaypalLogo,
-  Bank,
-  SimCard,
   GiftIcon,
   CurrencyBtcIcon,
-  CurrencyEthIcon,
   PaypalLogoIcon,
   BankIcon,
 } from "@phosphor-icons/react";
@@ -63,28 +57,30 @@ export default function WeddingGift() {
   };
 
   return (
-    <div className="py-16 px-6 text-white bg-linear-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] overflow-hidden">
+    <div className="py-16 px-6 text-white bg-gradient-to-b from-[#CFCDC9]/20 via-black/30 to-[#CFCDC9]/10 font-['Montserrat'] overflow-hidden">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
           className="text-center mb-6"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          style={{ transform: "translateZ(0)" }}
         >
           <h2 className="text-3xl md:text-6xl font-['Allura'] text-amber-100 tracking-wide">
             Wedding Gift
           </h2>
-          <div className="w-20 h-px bg-amber-200/50 mx-auto mt-4"></div>
+          <div className="w-20 h-px bg-amber-200/50 mx-auto mt-4" />
         </motion.div>
 
         <motion.p
           className="text-center text-xs md:text-sm text-gray-200 max-w-xl mx-auto mb-14 leading-relaxed font-light"
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1, duration: 0.6 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
+          style={{ transform: "translateZ(0)" }}
         >
           Kehadiran dan doa Anda sudah lebih dari cukup bagi kami. Namun bagi
           keluarga dan kerabat yang ingin mengirimkan tanda kasih, kami sangat
@@ -100,22 +96,29 @@ export default function WeddingGift() {
             return (
               <motion.div
                 key={gift.id}
-                className="relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl transition-all duration-300 hover:border-amber-200/50 hover:bg-white/15 backdrop-blur-xs transform-gpu will-change-transform"
-                style={{ backfaceVisibility: "hidden" }}
+                className="relative overflow-hidden rounded-2xl border border-white/20 bg-stone-900/40 p-6 shadow-xl transition-all duration-300 hover:border-amber-200/50 hover:bg-stone-900/80"
+                style={{
+                  transform: "translateZ(0)",
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-30px" }}
                 transition={{
-                  delay: index * 0.08,
-                  duration: 0.5,
+                  delay: index * 0.06,
+                  duration: 0.45,
                   ease: "easeOut",
                 }}
               >
-                {/* Background Glare Effect */}
-                <div className="absolute -top-12 -right-12 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+                {/* Background Glare Effect (Statis tanpa kalkulasi ulang blur) */}
+                <div
+                  className="absolute -top-12 -right-12 w-32 h-32 bg-amber-200/10 rounded-full blur-xl pointer-events-none"
+                  style={{ transform: "translateZ(0)" }}
+                />
 
                 {/* Top Section: Chip & Badge */}
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-6 relative z-10">
                   <div className="flex items-center gap-2">
                     <GiftIcon
                       size={32}
@@ -134,33 +137,35 @@ export default function WeddingGift() {
                 </div>
 
                 {/* Name/Label */}
-                <p className="text-[.6rem] text-gray-300 uppercase tracking-wider font-bold mb-1">
+                <p className="text-[.6rem] text-gray-300 uppercase tracking-wider font-bold mb-1 relative z-10">
                   {gift.name}
                 </p>
 
                 {/* Account Number / Copy Status & Copy Button */}
-                <div className="flex items-center justify-between gap-3 my-2 bg-black/20 rounded-xl p-3 border border-white/10 min-h-12.5">
+                <div className="flex items-center justify-between gap-3 my-2 bg-black/40 rounded-xl p-3 border border-white/10 min-h-12.5 relative z-10">
                   {/* Container Teks Rekening dengan Transisi Mode Wait */}
-                  <div className="font-mono text-sm md:text-base font-bold tracking-wider text-white break-all flex-1">
-                    <AnimatePresence mode="wait">
+                  <div className="font-mono text-sm md:text-base font-bold tracking-wider text-white break-all flex-1 overflow-hidden">
+                    <AnimatePresence mode="wait" initial={false}>
                       {isCopied ? (
                         <motion.span
                           key="copied"
-                          initial={{ opacity: 0, y: 5 }}
+                          initial={{ opacity: 0, y: 4 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -5 }}
-                          transition={{ duration: 0.2 }}
+                          exit={{ opacity: 0, y: -4 }}
+                          transition={{ duration: 0.15 }}
                           className="text-emerald-400 text-xs uppercase font-mono md:text-sm font-semibold tracking-widest flex items-center gap-1.5"
+                          style={{ display: "inline-flex" }}
                         >
                           Berhasil disalin! ✓
                         </motion.span>
                       ) : (
                         <motion.span
                           key="account"
-                          initial={{ opacity: 0, y: 5 }}
+                          initial={{ opacity: 0, y: 4 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -5 }}
-                          transition={{ duration: 0.2 }}
+                          exit={{ opacity: 0, y: -4 }}
+                          transition={{ duration: 0.15 }}
+                          style={{ display: "inline-block" }}
                         >
                           {gift.account}
                         </motion.span>
@@ -168,25 +173,21 @@ export default function WeddingGift() {
                     </AnimatePresence>
                   </div>
 
-                  {/* Copy Button Interactive (Menggunakan animasi bawaanmu) */}
+                  {/* Copy Button Interactive */}
                   <motion.button
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => copyToClipboard(gift.account, gift.id)}
                     className="flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors relative shrink-0 cursor-pointer"
                     title="Copy Account Number"
                   >
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence mode="wait" initial={false}>
                       {isCopied ? (
                         <motion.div
                           key="check"
-                          initial={{ scale: 0, rotate: -45 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          exit={{ scale: 0 }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 400,
-                            damping: 20,
-                          }}
+                          initial={{ scale: 0.5, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0.5, opacity: 0 }}
+                          transition={{ duration: 0.15 }}
                           className="flex items-center text-emerald-400"
                         >
                           <CheckCircle size={20} weight="fill" />
@@ -197,6 +198,7 @@ export default function WeddingGift() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
+                          transition={{ duration: 0.15 }}
                         >
                           <Copy size={20} weight="duotone" />
                         </motion.div>
@@ -206,7 +208,7 @@ export default function WeddingGift() {
                 </div>
 
                 {/* Owner Name */}
-                <div className="mt-4 flex items-center justify-between text-[0.7rem] text-gray-300 tracking-wider">
+                <div className="mt-4 flex items-center justify-between text-[0.7rem] text-gray-300 tracking-wider relative z-10">
                   <span className="uppercase text-gray-400">
                     Account Holder
                   </span>
