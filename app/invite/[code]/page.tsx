@@ -10,7 +10,6 @@ import {
   TOTAL_ASSET_COUNT,
   STREAMING_VIDEO_URL, // Import URL Supabase
   preloadImage,
-  preloadAudio,
 } from "@/lib/preloadAssets";
 import Preloader from "@/components/wedding/Preloader";
 import LandingHero from "@/components/wedding/LandingHero";
@@ -72,8 +71,7 @@ export default function InvitationPage({
         setLog("Loading core assets...");
         await Promise.all(
           MAIN_ASSETS.map(async (src) => {
-            if (src.endsWith(".mp3")) await preloadAudio(src);
-            else await preloadImage(src);
+            await preloadImage(src);
             incrementProgress();
           }),
         );
