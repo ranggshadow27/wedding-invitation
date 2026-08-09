@@ -12,7 +12,7 @@ export const STREAMING_VIDEO_URL =
   "https://kqjfktikmpxzgowjbmut.supabase.co/storage/v1/object/public/assets/footage_1.mp4";
 
 export const STREAMING_AUDIO_URL =
-  "https://<project-id>.supabase.co/storage/v1/object/public/assets/wedding-song.mp3";
+  "https://kqjfktikmpxzgowjbmut.supabase.co/storage/v1/object/public/assets/wedding-song-compressed.mp3";
 
 export const GALLERY_ASSETS = [
   "/images/gallery/img_date.jpg",
