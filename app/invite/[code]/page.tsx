@@ -6,12 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import {
   MAIN_ASSETS,
-  VIDEO_ASSETS,
   GALLERY_ASSETS,
   TOTAL_ASSET_COUNT,
+  STREAMING_VIDEO_URL, // Import URL Supabase
   preloadImage,
   preloadAudio,
-  preloadVideo,
 } from "@/lib/preloadAssets";
 import Preloader from "@/components/wedding/Preloader";
 import LandingHero from "@/components/wedding/LandingHero";
@@ -92,19 +91,6 @@ export default function InvitationPage({
           }
         }, 5000);
 
-        // Preload Video dengan Race Timeout 5 Detik
-        const videoPromise = preloadVideo(VIDEO_ASSETS[0]).then((blobUrl) => {
-          if (blobUrl && isMounted) setVideoBlobUrl(blobUrl);
-          incrementProgress();
-        });
-
-        const timeoutPromise = new Promise((resolve) =>
-          setTimeout(resolve, 5000),
-        );
-
-        await Promise.race([videoPromise, timeoutPromise]);
-        clearTimeout(skipTimer);
-
         if (!isMounted) return;
         setShowSkipButton(false);
         setLog("✓ Video status checked");
@@ -162,43 +148,49 @@ export default function InvitationPage({
   if (!guest) return <GuestNotFound code={code} />;
 
   return (
-    <main className="relative w-full min-h-dvh overflow-x-hidden pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
-      {/* Background Image / Video dipaksa FULL inset-0 tanpa terpengaruh safe area */}
+    <main className="relative w-full min-h-dvh overflow-x-hidden">
+      {/* 1. BACKGROUND MEDIA (FULL EDGE-TO-EDGE TEMBUS NOTCH) */}
+      {/* Penting: inset-0 murni tanpa padding apapun agar ngisi 100% kaca HP */}
       {!isOpened ? (
-        <div className="fixed inset-0 w-full h-full bg-[url('/images/bg.jpg')] bg-cover bg-center bg-no-repeat pointer-events-none -z-20" />
+        <div className="fixed inset-0 w-full h-dvh bg-[url('/images/bg.jpg')] bg-cover bg-center bg-no-repeat pointer-events-none -z-20" />
       ) : (
-        <div className="fixed inset-0 w-full h-full -z-20 overflow-hidden pointer-events-none">
+        <div className="fixed inset-0 w-full h-dvh -z-20 overflow-hidden pointer-events-none">
           <video
             autoPlay
             loop
             muted
             playsInline
-            poster="/images/bg.jpg"
-            src={videoBlobUrl || "/videos/footage_1.mp4"}
+            preload="metadata" // 🔥 Menginstruksikan browser untuk progressive streaming (byte-by-byte)
+            poster="/images/bg.png" // Fallback gambar sementara video buffering chunk awal
+            src={STREAMING_VIDEO_URL}
             className="w-full h-full object-cover object-center"
           />
         </div>
       )}
 
-      <div className="fixed inset-0 w-full h-dvh pointer-events-none -z-10 bg-linear-to-b from-black/5 via-black/20 to-stone-950/45" />
+      {/* 2. OVERLAY GRADIENT (FULL TEMBUS NOTCH JUGA) */}
+      <div className="fixed inset-0 w-full h-dvh pointer-events-none -z-10" />
 
-      {/* Landing Cover Overlay */}
+      {/* 3. LANDING HERO (KONTEN UTAMA DENGAN SAFE AREA PADDING) */}
       <AnimatePresence mode="wait">
         {!isOpened && (
-          <LandingHero
-            guestName={guest.name}
-            onOpen={() => setIsOpened(true)}
-          />
+          <div className="pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] min-h-dvh flex flex-col justify-between">
+            <LandingHero
+              guestName={guest.name}
+              onOpen={() => setIsOpened(true)}
+            />
+          </div>
         )}
       </AnimatePresence>
 
-      {/* Main Wedding Scroll Content */}
+      {/* 4. WEDDING CONTENT (BERI PADDING PADA CONTENT UTAMA SAJA) */}
       <AnimatePresence>
         {isOpened && (
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
           >
             <WeddingContent guest={guest} />
             <AudioPlayer isOpened={isOpened} />
