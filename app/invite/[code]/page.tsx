@@ -159,7 +159,7 @@ export default function InvitationPage({
             muted
             playsInline
             preload="metadata" // 🔥 Menginstruksikan browser untuk progressive streaming (byte-by-byte)
-            poster="/images/bg.png" // Fallback gambar sementara video buffering chunk awal
+            poster="/images/bg.jpg" // Fallback gambar sementara video buffering chunk awal
             src={STREAMING_VIDEO_URL}
             className="w-full h-full object-cover object-center"
           />
