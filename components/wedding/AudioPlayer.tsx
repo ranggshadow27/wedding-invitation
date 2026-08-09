@@ -45,7 +45,7 @@ export default function AudioPlayer({ isOpened = false }: AudioPlayerProps) {
 
   // Inisialisasi Audio
   useEffect(() => {
-    audioRef.current = new Audio("/audio/wedding-song.mp3");
+    audioRef.current = new Audio("/audio/wedding-song-compressed.mp3");
     audioRef.current.loop = true;
 
     return () => {

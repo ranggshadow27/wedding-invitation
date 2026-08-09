@@ -1,25 +1,27 @@
 // lib/preloadAssets.ts
 
 export const MAIN_ASSETS = [
-  "/images/bg.png",
+  "/images/bg.jpg",
   "/images/bride.png",
   "/images/groom.png",
-  "/audio/wedding-song.mp3",
+  "/images/music_96.png",
+  "/images/music_256.png",
+  "/audio/wedding-song-compressed.mp3",
 ];
 
-export const VIDEO_ASSETS = ["/videos/footage.mp4"];
+export const VIDEO_ASSETS = ["/videos/footage_1.mp4"];
 
 export const GALLERY_ASSETS = [
-  "/images/gallery/img_date.png",
-  "/images/gallery/img_1_v2.png",
-  "/images/gallery/img_2.png",
-  "/images/gallery/img_3.png",
-  "/images/gallery/img_4_wide.png",
-  "/images/gallery/img_5_wide.png",
-  "/images/gallery/img_6.png",
-  "/images/gallery/img_7.png",
-  "/images/gallery/img_8.png",
-  "/images/gallery/img_9.png",
+  "/images/gallery/img_date.jpg",
+  "/images/gallery/img_1_v2.jpg",
+  "/images/gallery/img_2.jpg",
+  // "/images/gallery/img_3.jpg",
+  // "/images/gallery/img_4_wide.jpg",
+  // "/images/gallery/img_5_wide.jpg",
+  // "/images/gallery/img_6.jpg",
+  // "/images/gallery/img_7.jpg",
+  // "/images/gallery/img_8.jpg",
+  // "/images/gallery/img_9.jpg",
 ];
 
 export const TOTAL_ASSET_COUNT =

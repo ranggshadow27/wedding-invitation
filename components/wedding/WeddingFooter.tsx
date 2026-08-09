@@ -152,32 +152,37 @@ export default function WeddingFooter() {
             transition={{ delay: 0.3 }}
           >
             <a
-              href="#"
+              href="https://www.instagram.com/"
+              target="_blank"
               className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
             >
               <InstagramLogoIcon size={20} weight="duotone" />
             </a>
 
             <a
-              href="#"
+              href="https://www.threads.com/"
+              target="_blank"
               className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
             >
               <ThreadsLogoIcon size={20} weight="duotone" />
             </a>
             <a
-              href="#"
+              href="https://www.facebook.com/"
+              target="_blank"
               className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
             >
               <FacebookLogoIcon size={20} weight="duotone" />
             </a>
             <a
-              href="#"
+              href="https://discord.com/users/529625255229128714"
+              target="_blank"
               className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
             >
               <DiscordLogoIcon size={20} weight="duotone" />
             </a>
             <a
-              href="#"
+              href="https://github.com/ranggshadow27"
+              target="_blank"
               className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
             >
               <GithubLogoIcon size={20} weight="duotone" />

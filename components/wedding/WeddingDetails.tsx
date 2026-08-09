@@ -177,18 +177,18 @@ export default function WeddingDetails() {
           {/* 1. LAYER 1: Container Gambar (Model Pintu) */}
           <div className="relative w-full h-120 aspect-1/2 rounded-t-[4rem] rounded-b-none overflow-hidden shadow-xl bg-stone-200 z-10">
             <img
-              src="/images/gallery/img_date.png"
+              src="/images/gallery/img_date.jpg"
               alt="Wedding Photo"
               className="w-full h-full object-cover"
             />
           </div>
 
           {/* 2. LAYER 2: Container Vector Fence (Di atas Gambar) */}
-          <div className="absolute inset-0 pointer-events-none z-20 select-none px-10 flex flex-col items-center justify-end">
+          <div className="absolute inset-0 pointer-events-none z-20 select-none px-4 flex flex-col items-center justify-end">
             <img
               src="/rec.png"
               alt="Fence Vector Top"
-              className="w-full h-160 md:h-130 object-fill items-center opacity-90 -mt-8"
+              className="w-full h-130 md:h-130 object-fill items-center opacity-90 -mt-8"
             />
           </div>
 
@@ -230,7 +230,7 @@ export default function WeddingDetails() {
                 Akad Nikah
               </p>
               <p className="text-xs md:text-sm font-medium text-white">
-                09.00 - 10.00 WIB
+                09.00 - 11.00 WIB
               </p>
             </div>
             <div className="pl-2">
@@ -238,7 +238,7 @@ export default function WeddingDetails() {
                 Resepsi
               </p>
               <p className="text-xs md:text-sm font-medium text-white">
-                11.00 - 16.00 WIB
+                11.00 - 17.00 WIB
               </p>
             </div>
           </div>

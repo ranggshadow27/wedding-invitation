@@ -27,7 +27,7 @@ export default function GuestNotFound({ code }: GuestNotFoundProps) {
   return (
     <main className="relative min-h-dvh w-full overflow-hidden bg-stone-950 font-['Montserrat'] text-white flex flex-col justify-between items-center p-6">
       {/* Background Image Overlay */}
-      <div className="fixed inset-0 bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none -z-10" />
+      <div className="fixed inset-0 bg-[url('/images/bg.jpg')] bg-cover bg-center bg-no-repeat opacity-20 pointer-events-none -z-10" />
 
       {/* Ambient Radial Gradient */}
       <div className="absolute inset-0 bg-radial from-amber-500/10 via-black/70 to-black pointer-events-none -z-5" />
@@ -69,8 +69,8 @@ export default function GuestNotFound({ code }: GuestNotFoundProps) {
 
         {/* Description */}
         <p className="text-xs text-gray-300 font-light leading-relaxed mb-8 max-w-xs">
-          Mohon maaf, data tamu untuk kode unik ini tidak terdaftar di sistem
-          kami. Silakan hubungi mempelai jika terjadi kesalahan tautan.
+          Mohon maaf, data tamu untuk kode unik ini tidak terdaftar. Silakan
+          hubungi mempelai jika terjadi kesalahan tautan.
         </p>
 
         {/* Action Buttons */}

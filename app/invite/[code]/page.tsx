@@ -162,22 +162,21 @@ export default function InvitationPage({
   if (!guest) return <GuestNotFound code={code} />;
 
   return (
-    <main className="relative w-full min-h-dvh overflow-x-hidden">
-      {/* Dynamic Background Image / Video */}
+    <main className="relative w-full min-h-dvh overflow-x-hidden pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
+      {/* Background Image / Video dipaksa FULL inset-0 tanpa terpengaruh safe area */}
       {!isOpened ? (
-        <div className="fixed inset-0 bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat pointer-events-none -z-10" />
+        <div className="fixed inset-0 w-full h-full bg-[url('/images/bg.jpg')] bg-cover bg-center bg-no-repeat pointer-events-none -z-20" />
       ) : (
-        <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
+        <div className="fixed inset-0 w-full h-full -z-20 overflow-hidden pointer-events-none">
           <video
             autoPlay
             loop
             muted
             playsInline
-            poster="/images/bg.png"
-            src={videoBlobUrl || "/videos/footage.mp4"}
+            poster="/images/bg.jpg"
+            src={videoBlobUrl || "/videos/footage_1.mp4"}
             className="w-full h-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-black/20" />
         </div>
       )}
 

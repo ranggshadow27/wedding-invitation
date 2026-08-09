@@ -37,7 +37,7 @@ export default function HomePage() {
   return (
     <main className="relative min-h-dvh w-full overflow-hidden bg-stone-950 font-['Montserrat'] text-white flex flex-col justify-between items-center p-6">
       {/* Background Image Container */}
-      <div className="fixed inset-0 bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat opacity-30 pointer-events-none -z-10" />
+      <div className="fixed inset-0 bg-[url('/images/bg.jpg')] bg-cover bg-center bg-no-repeat opacity-30 pointer-events-none -z-10" />
 
       {/* Ambient Lighting linear */}
       <div className="absolute inset-0 bg-radial from-amber-500/10 via-black/70 to-black pointer-events-none -z-5" />
