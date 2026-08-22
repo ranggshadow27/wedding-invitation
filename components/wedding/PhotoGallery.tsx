@@ -35,7 +35,7 @@ const galleryImages = [
     id: 5,
     url: "/images/gallery/img_4_wide.jpg",
     alt: "Prewedding 5",
-    aspect: "aspect-[4/6]",
+    aspect: "aspect-[4/4]",
   },
   {
     id: 6,
@@ -51,21 +51,15 @@ const galleryImages = [
   },
   {
     id: 8,
-    url: "/images/gallery/img_10.jpg",
+    url: "/images/gallery/img_8.jpg",
     alt: "Prewedding 8",
-    aspect: "aspect-[3/4]",
+    aspect: "aspect-[4/6]",
   },
   {
     id: 9,
-    url: "/images/gallery/img_8.jpg",
-    alt: "Prewedding 9",
-    aspect: "aspect-[4/6]",
-  },
-  {
-    id: 10,
     url: "/images/gallery/img_9.jpg",
-    alt: "Prewedding 10",
-    aspect: "aspect-[4/6]",
+    alt: "Prewedding 9",
+    aspect: "aspect-[4/5]",
   },
 ];
 
@@ -108,7 +102,7 @@ function ParallaxCard({
             fill
             className="object-cover"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 50vw"
-            quality={80}
+            quality={75}
             priority={index < 4} // Priority load untuk 4 foto teratas
           />
         </motion.div>

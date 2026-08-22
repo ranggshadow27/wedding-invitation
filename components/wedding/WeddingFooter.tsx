@@ -16,11 +16,11 @@ export default function WeddingFooter() {
       {/* ========================================================= */}
       {/* SECTION THANK YOU WITH BG IMAGE                           */}
       {/* ========================================================= */}
-      <section className="relative w-full overflow-hidden flex items-start justify-center min-h-125 md:min-h-150 py-6 px-8 text-white text-center">
+      <section className="relative w-full overflow-hidden flex items-start justify-center min-h-125 md:min-h-275 py-6 px-8 text-white text-center">
         {/* Background Image Container */}
         <div className="absolute inset-0 w-full h-full -z-10">
           <img
-            src="/images/bg_footer_2.png" // Ganti dengan path foto prewedding / background-mu
+            src="/images/footer_bg.jpg" // Ganti dengan path foto prewedding / background-mu
             alt="Thank You Background"
             className="w-full h-full object-cover object-center"
           />

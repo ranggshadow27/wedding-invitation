@@ -230,7 +230,7 @@ export default function WeddingDetails() {
                 Akad Nikah
               </p>
               <p className="text-xs md:text-sm font-medium text-white">
-                09.00 - 11.00 WIB
+                09.00 - Selesai
               </p>
             </div>
             <div className="pl-2">
@@ -238,7 +238,7 @@ export default function WeddingDetails() {
                 Resepsi
               </p>
               <p className="text-xs md:text-sm font-medium text-white">
-                11.00 - 17.00 WIB
+                12.00 - 17.00 WIB
               </p>
             </div>
           </div>
