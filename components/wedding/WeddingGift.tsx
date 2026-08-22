@@ -8,6 +8,8 @@ import {
   CurrencyBtcIcon,
   PaypalLogoIcon,
   BankIcon,
+  MapPinIcon,
+  CreditCardIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,35 +17,41 @@ import { motion, AnimatePresence } from "framer-motion";
 const gifts = [
   {
     id: 1,
-    name: "Bitcoin Wallet",
-    icon: CurrencyBtcIcon,
-    account: "1111 2222 3333 4567",
-    owner: "Annisa Lutfia Putri",
-    badge: "CRYPTO",
-  },
-  {
-    id: 2,
     name: "Bank Transfer (Mandiri)",
     icon: BankIcon,
     account: "1234 5678 9012 3456",
-    owner: "Rangga Tito Prayogo",
+    owner: "Annisa Lutfia Putri",
     badge: "MANDIRI",
+    badgeStyle: "text-yellow-400 bg-yellow-500/10 border-yellow-400/30",
   },
   {
-    id: 3,
-    name: "PayPal Account",
-    icon: PaypalLogoIcon,
-    account: "paypal.me/yourwedding",
-    owner: "Rangga Tito Prayogo",
-    badge: "E-WALLET",
-  },
-  {
-    id: 4,
+    id: 2,
     name: "Bank Transfer (BCA)",
     icon: BankIcon,
     account: "1234 5678 9012 3456",
-    owner: "Rangga Tito Prayogo",
+    owner: "Annisa Lutfia Putri",
     badge: "BCA",
+    badgeStyle: "text-blue-400 bg-blue-500/10 border-blue-400/30",
+  },
+  {
+    id: 3,
+    name: "GoPay Account",
+    icon: CreditCardIcon,
+    account: "0812 2234 2910",
+    owner: "Rangga Tito Prayogo",
+    badge: "GOPAY",
+    badgeStyle: "text-emerald-400 bg-emerald-500/10 border-emerald-400/30",
+  },
+  {
+    id: 4,
+    name: "Send Your Gift At :",
+    icon: MapPinIcon,
+    account:
+      "Jl. Mawar Indah No. 123, RT 02/RW 05, Kel. Kebayoran Baru, Jakarta Selatan 12110",
+    owner: "Rangga & Annisa",
+    badge: "GIFT",
+    badgeStyle: "text-yellow-400 bg-yellow-500/10 border-yellow-400/30",
+    isAddress: true, // Flag khusus untuk layout teks alamat
   },
 ];
 
@@ -96,7 +104,9 @@ export default function WeddingGift() {
             return (
               <motion.div
                 key={gift.id}
-                className="relative overflow-hidden rounded-2xl border border-white/20 bg-stone-900/40 p-6 shadow-xl transition-all duration-300 hover:border-amber-200/50 hover:bg-stone-900/80"
+                className={`relative overflow-hidden rounded-2xl border border-white/20 bg-stone-900/40 p-6 shadow-xl transition-all duration-300 hover:border-amber-200/50 hover:bg-stone-900/80 ${
+                  gift.isAddress ? "md:col-span-2" : ""
+                }`}
                 style={{
                   transform: "translateZ(0)",
                   backfaceVisibility: "hidden",
@@ -111,7 +121,7 @@ export default function WeddingGift() {
                   ease: "easeOut",
                 }}
               >
-                {/* Background Glare Effect (Statis tanpa kalkulasi ulang blur) */}
+                {/* Background Glare Effect */}
                 <div
                   className="absolute -top-12 -right-12 w-32 h-32 bg-amber-200/10 rounded-full blur-xl pointer-events-none"
                   style={{ transform: "translateZ(0)" }}
@@ -131,7 +141,10 @@ export default function WeddingGift() {
                       className="text-white/90"
                     />
                   </div>
-                  <span className="text-[0.65rem] font-semibold tracking-widest text-amber-200/90 bg-amber-400/10 border border-amber-200/20 px-2.5 py-1 rounded-full uppercase">
+                  {/* Badge Warna Dinamis */}
+                  <span
+                    className={`text-[0.65rem] font-semibold tracking-widest border px-2.5 py-1 rounded-full uppercase ${gift.badgeStyle}`}
+                  >
                     {gift.badge}
                   </span>
                 </div>
@@ -141,10 +154,15 @@ export default function WeddingGift() {
                   {gift.name}
                 </p>
 
-                {/* Account Number / Copy Status & Copy Button */}
+                {/* Account Number / Address / Copy Status & Copy Button */}
                 <div className="flex items-center justify-between gap-3 my-2 bg-black/40 rounded-xl p-3 border border-white/10 min-h-12.5 relative z-10">
-                  {/* Container Teks Rekening dengan Transisi Mode Wait */}
-                  <div className="font-mono text-sm md:text-base font-bold tracking-wider text-white break-all flex-1 overflow-hidden">
+                  <div
+                    className={`font-mono text-sm md:text-base font-bold tracking-wider text-white flex-1 overflow-hidden ${
+                      gift.isAddress
+                        ? "normal-case text-xs md:text-sm font-sans font-normal leading-relaxed text-gray-200"
+                        : "break-all"
+                    }`}
+                  >
                     <AnimatePresence mode="wait" initial={false}>
                       {isCopied ? (
                         <motion.span
@@ -177,8 +195,10 @@ export default function WeddingGift() {
                   <motion.button
                     whileTap={{ scale: 0.95 }}
                     onClick={() => copyToClipboard(gift.account, gift.id)}
-                    className="flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors relative shrink-0 cursor-pointer"
-                    title="Copy Account Number"
+                    className="flex items-center justify-center p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors relative shrink-0 cursor-pointer self-center"
+                    title={
+                      gift.isAddress ? "Copy Address" : "Copy Account Number"
+                    }
                   >
                     <AnimatePresence mode="wait" initial={false}>
                       {isCopied ? (
@@ -207,10 +227,10 @@ export default function WeddingGift() {
                   </motion.button>
                 </div>
 
-                {/* Owner Name */}
+                {/* Owner Name / Recipient */}
                 <div className="mt-4 flex items-center justify-between text-[0.7rem] text-gray-300 tracking-wider relative z-10">
                   <span className="uppercase text-gray-400">
-                    Account Holder
+                    {gift.isAddress ? "Recipient" : "Account Holder"}
                   </span>
                   <span className="font-semibold text-white">{gift.owner}</span>
                 </div>
