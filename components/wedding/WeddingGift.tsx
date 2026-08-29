@@ -8,6 +8,7 @@ import {
   CurrencyBtcIcon,
   PaypalLogoIcon,
   BankIcon,
+  WalletIcon,
   MapPinIcon,
   CreditCardIcon,
 } from "@phosphor-icons/react";
@@ -18,8 +19,8 @@ const gifts = [
   {
     id: 1,
     name: "Bank Transfer (Mandiri)",
-    icon: BankIcon,
-    account: "1234 5678 9012 3456",
+    icon: CreditCardIcon,
+    account: "1270010990735",
     owner: "Annisa Lutfia Putri",
     badge: "MANDIRI",
     badgeStyle: "text-yellow-400 bg-yellow-500/10 border-yellow-400/30",
@@ -27,8 +28,8 @@ const gifts = [
   {
     id: 2,
     name: "Bank Transfer (BCA)",
-    icon: BankIcon,
-    account: "1234 5678 9012 3456",
+    icon: CreditCardIcon,
+    account: "5222437911",
     owner: "Annisa Lutfia Putri",
     badge: "BCA",
     badgeStyle: "text-blue-400 bg-blue-500/10 border-blue-400/30",
@@ -36,8 +37,8 @@ const gifts = [
   {
     id: 3,
     name: "GoPay Account",
-    icon: CreditCardIcon,
-    account: "0812 2234 2910",
+    icon: WalletIcon,
+    account: "0896 8684 8970",
     owner: "Rangga Tito Prayogo",
     badge: "GOPAY",
     badgeStyle: "text-emerald-400 bg-emerald-500/10 border-emerald-400/30",

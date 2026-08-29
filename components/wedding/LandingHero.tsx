@@ -1,4 +1,3 @@
-// components/wedding/LandingHero.tsx
 "use client";
 
 import { motion, useAnimation } from "framer-motion";
@@ -28,15 +27,13 @@ export default function LandingHero({ guestName, onOpen }: LandingHeroProps) {
       key="landing"
       exit={{ opacity: 0, y: -100, scale: 0.98 }}
       transition={{ duration: 0.8 }}
-      className="relative min-h-dvh w-full text-white flex flex-col antialiased items-center justify-end pb-10 text-center px-6 overflow-hidden touch-none"
+      className="relative h-dvh w-full text-white flex flex-col antialiased items-center justify-end pt-[env(safe-area-inset-top)] pb-[calc(2.5rem+env(safe-area-inset-bottom))] text-center px-6 overflow-hidden touch-none"
     >
-      {/* ==================== FIX linear OVERLAY ==================== */}
-      {/* Menggunakan inset-0 dan h-full w-full penuh untuk mencegah blank space di mobile */}
-      <div className="absolute inset-0 w-full h-full bg-linear-to-t from-black via-black/30 to-transparent pointer-events-none -z-10" />
+      {/* Background Gradient overlay */}
+      <div className="absolute inset-0 w-full h-full bg-linear-to-t from-black via-black/40 to-transparent pointer-events-none -z-10" />
 
-      {/* Ambient Lighting Tambahan di Dasar (Menjamin 100% Hitam Pekat di Bawah) */}
-      <div className="absolute inset-x-0 bottom-0 h-1/2 w-full bg-black/20 pointer-events-none -z-10 blur-xl" />
-      {/* ============================================================== */}
+      {/* Ambient Lighting di Dasar */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 w-full bg-black/40 pointer-events-none -z-10 blur-xl" />
 
       <motion.div
         initial={{ opacity: 0, y: 15 }}

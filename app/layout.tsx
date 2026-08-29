@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata, Viewport } from "next"; // disesuaikan jika impor font kamu bermasalah
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
@@ -8,14 +8,13 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-// 🌟 Config Viewport agar Edge-to-Edge menembus Notch
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  viewportFit: "cover", // Magic key untuk menghilangkan potongan hitam di notch!
-  themeColor: "#0c0a09", // Sesuaikan dengan warna bg-stone-950 kamu
+  viewportFit: "cover",
+  themeColor: "#0c0a09",
 };
 
 const geistMono = Geist_Mono({
@@ -51,9 +50,8 @@ export default function RootLayout({
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          minHeight: "100vh",
         }}
-        className="min-h-screen"
+        className="min-h-full h-full w-full bg-stone-950 text-white"
       >
         {children}
       </body>

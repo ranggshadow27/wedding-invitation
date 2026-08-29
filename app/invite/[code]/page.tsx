@@ -1,4 +1,3 @@
-// app/invite/[code]/page.tsx
 "use client";
 
 import { useState, useEffect, use } from "react";
@@ -8,7 +7,7 @@ import {
   MAIN_ASSETS,
   GALLERY_ASSETS,
   TOTAL_ASSET_COUNT,
-  STREAMING_VIDEO_URL, // Import URL Supabase
+  STREAMING_VIDEO_URL,
   preloadImage,
 } from "@/lib/preloadAssets";
 import Preloader from "@/components/wedding/Preloader";
@@ -22,17 +21,14 @@ export default function InvitationPage({
 }: {
   params: Promise<{ code: string }>;
 }) {
-  // Safe Unwrap Async Params
   const resolvedParams = use(params);
   const code = resolvedParams.code;
 
   const [guest, setGuest] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [loadProgress, setLoadProgress] = useState(0);
-  const [videoBlobUrl, setVideoBlobUrl] = useState<string>("");
   const [isOpened, setIsOpened] = useState(false);
 
-  // States untuk Logger & Skip Option
   const [currentLog, setCurrentLog] = useState<string>("Initializing...");
   const [showSkipButton, setShowSkipButton] = useState(false);
 
@@ -58,7 +54,6 @@ export default function InvitationPage({
       try {
         setLog("Connecting to server...");
 
-        // 1. Fetch Guest Data Supabase
         const { data: guestData } = await supabase
           .from("guests")
           .select("*")
@@ -67,7 +62,6 @@ export default function InvitationPage({
 
         if (isMounted) setGuest(guestData);
 
-        // ================= PHASE 1: MAIN ASSETS =================
         setLog("Loading core assets...");
         await Promise.all(
           MAIN_ASSETS.map(async (src) => {
@@ -78,10 +72,8 @@ export default function InvitationPage({
         if (!isMounted) return;
         setLog("✓ Main assets loaded");
 
-        // ================= PHASE 2: VIDEO ASSET (WITH 5s TIMEOUT) =================
         setLog("Loading video background...");
 
-        // Timer 5 Detik jika jaringan lambat
         const skipTimer = setTimeout(() => {
           if (isMounted) {
             setShowSkipButton(true);
@@ -93,7 +85,6 @@ export default function InvitationPage({
         setShowSkipButton(false);
         setLog("✓ Video status checked");
 
-        // ================= PHASE 3: GALLERY ASSETS =================
         setLog("Loading gallery images...");
         await Promise.all(
           GALLERY_ASSETS.map(async (src) => {
@@ -106,7 +97,6 @@ export default function InvitationPage({
         setLog("✓ All assets loaded successfully!");
         setLoadProgress(100);
 
-        // Delay kecil agar animasi 100% terlihat
         setTimeout(() => {
           if (isMounted) setLoading(false);
         }, 500);
@@ -124,7 +114,6 @@ export default function InvitationPage({
     };
   }, [code]);
 
-  // Handler untuk tombol Skip Best Experience
   const handleSkip = () => {
     setLog("⏩ Skipping best experience...");
     setTimeout(() => {
@@ -147,8 +136,7 @@ export default function InvitationPage({
 
   return (
     <main className="relative w-full min-h-dvh overflow-x-hidden">
-      {/* 1. BACKGROUND MEDIA (FULL EDGE-TO-EDGE TEMBUS NOTCH) */}
-      {/* Penting: inset-0 murni tanpa padding apapun agar ngisi 100% kaca HP */}
+      {/* 1. BACKGROUND MEDIA (SOLUSI FIX SAFARI EDGE-TO-EDGE) */}
       {!isOpened ? (
         <div className="fixed inset-0 w-full h-dvh bg-[url('/images/bg.jpg')] bg-cover bg-center bg-no-repeat pointer-events-none -z-20" />
       ) : (
@@ -158,21 +146,21 @@ export default function InvitationPage({
             loop
             muted
             playsInline
-            preload="metadata" // 🔥 Menginstruksikan browser untuk progressive streaming (byte-by-byte)
-            poster="/images/bg.jpg" // Fallback gambar sementara video buffering chunk awal
+            preload="metadata"
+            poster="/images/bg.jpg"
             src={STREAMING_VIDEO_URL}
             className="w-full h-full object-cover object-center"
           />
         </div>
       )}
 
-      {/* 2. OVERLAY GRADIENT (FULL TEMBUS NOTCH JUGA) */}
+      {/* 2. OVERLAY GRADIENT */}
       <div className="fixed inset-0 w-full h-dvh pointer-events-none -z-10" />
 
-      {/* 3. LANDING HERO (KONTEN UTAMA DENGAN SAFE AREA PADDING) */}
+      {/* 3. LANDING HERO */}
       <AnimatePresence mode="wait">
         {!isOpened && (
-          <div className="pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] min-h-dvh flex flex-col justify-between">
+          <div className="w-full h-full">
             <LandingHero
               guestName={guest.name}
               onOpen={() => setIsOpened(true)}
@@ -181,7 +169,7 @@ export default function InvitationPage({
         )}
       </AnimatePresence>
 
-      {/* 4. WEDDING CONTENT (BERI PADDING PADA CONTENT UTAMA SAJA) */}
+      {/* 4. WEDDING CONTENT */}
       <AnimatePresence>
         {isOpened && (
           <motion.div

@@ -1,12 +1,8 @@
-// app/not-found.tsx
 "use client";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  HeartBreak,
-  House,
-  ArrowLeft,
   HeartIcon,
   HeartBreakIcon,
   HouseIcon,
@@ -15,14 +11,14 @@ import {
 
 export default function NotFound() {
   return (
-    <main className="relative min-h-dvh w-full overflow-hidden bg-stone-950 font-['Montserrat'] text-white flex flex-col justify-between items-center p-6">
+    <main className="relative min-h-dvh w-full overflow-hidden bg-stone-950 font-['Montserrat'] text-white flex flex-col justify-between items-center p-6 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
       {/* Background Image Overlay */}
-      <div className="fixed inset-0 bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat opacity-25 pointer-events-none -z-10" />
+      <div className="fixed inset-0 w-full h-full bg-[url('/images/bg.png')] bg-cover bg-center bg-no-repeat opacity-25 pointer-events-none -z-10" />
 
       {/* Dark Ambient linear */}
-      <div className="absolute inset-0 bg-radial from-amber-500/10 via-black/60 to-black pointer-events-none -z-5" />
+      <div className="fixed inset-0 w-full h-full bg-radial from-amber-500/10 via-black/60 to-black pointer-events-none -z-5" />
 
-      {/* Spacer Atas untuk Balancing Flex Layout */}
+      {/* Spacer Atas */}
       <div className="w-full h-6" />
 
       <motion.div
@@ -31,7 +27,6 @@ export default function NotFound() {
         transition={{ duration: 0.8 }}
         className="relative w-full max-w-md p-8 rounded-3xl border border-white/15 bg-white/5 backdrop-blur-xl shadow-2xl text-center flex flex-col items-center my-auto"
       >
-        {/* Animated Icon */}
         <motion.div
           animate={{ scale: [1, 1.1, 1], rotate: [0, -5, 5, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -44,7 +39,6 @@ export default function NotFound() {
           />
         </motion.div>
 
-        {/* Big 404 Header */}
         <h1 className="text-6xl md:text-7xl font-bold tracking-wider bg-linear-to-r from-amber-100 via-amber-200 to-amber-400 bg-clip-text text-transparent mb-2">
           404
         </h1>
@@ -55,13 +49,11 @@ export default function NotFound() {
 
         <div className="w-16 h-px bg-linear-to-r from-transparent via-amber-200/50 to-transparent mb-6" />
 
-        {/* Message */}
         <p className="text-xs text-gray-300 font-light leading-relaxed mb-8 max-w-xs">
           Maaf, halaman atau rute undangan yang Anda cari tidak ditemukan.
           Pastikan tautan atau kode unik undangan Anda sudah benar.
         </p>
 
-        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
           <Link
             href="/"
@@ -80,13 +72,11 @@ export default function NotFound() {
           </button>
         </div>
 
-        {/* Couple Signature Footer */}
         <p className="font-['Allura'] text-2xl text-amber-100/60 mt-8 tracking-wide">
           Annisa & Rangga
         </p>
       </motion.div>
 
-      {/* Professional Footer & Copyright */}
       <footer className="w-full max-w-md text-center py-4 font-['Montserrat']">
         <div className="flex items-center justify-center gap-1.5 text-[0.65rem] text-gray-400 font-bold tracking-tight">
           <span>Crafted with</span>
