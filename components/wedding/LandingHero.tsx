@@ -76,12 +76,14 @@ export default function LandingHero({ guestName, onOpen }: LandingHeroProps) {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.5, duration: 0.6 }}
+        // 🌟 Memastikan box nama memiliki padding horizontal yang cukup
         className="w-full max-w-xs mb-6 p-4 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-md shadow-xl font-['Montserrat']"
       >
         <p className="text-[0.5rem] text-gray-300 font-light uppercase tracking-widest mb-1">
           Dear Sir / Madam,
         </p>
-        <p className="text-sm md:text-lg font-bold text-white tracking-wide capitalize truncate px-2">
+        {/* 🌟 FIX WRAPPING NAMA PANJANG 🌟 */}
+        <p className="text-sm md:text-lg font-bold text-white tracking-wide capitalize px-2 leading-tight warp-break-word">
           {guestName}
         </p>
       </motion.div>

@@ -238,7 +238,7 @@ export default function WeddingDetails() {
                 Resepsi
               </p>
               <p className="text-xs md:text-sm font-medium text-white">
-                12.00 - 17.00 WIB
+                12.00 - 16.00 WIB
               </p>
             </div>
           </div>

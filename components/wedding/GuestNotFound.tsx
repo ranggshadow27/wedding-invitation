@@ -19,9 +19,9 @@ interface GuestNotFoundProps {
 
 export default function GuestNotFound({ code }: GuestNotFoundProps) {
   // Nomor WA Admin/Mempelai
-  const whatsappNumber = "6281234567890";
+  const whatsappNumber = "6289686848970";
   const waMessage = encodeURIComponent(
-    `Halo Annisa & Rangga, saya mencoba membuka undangan digital dengan kode "${code || "tanpa kode"}" namun data undangan tidak ditemukan. Bisakah bantu mengeceknya?`,
+    `Halo Annisa & Rangga, saya mencoba membuka undangan digital dengan kode "${code || "tanpa kode"}" namun data undangan tidak ditemukan. apakah bisa dibantu untuk dicek kembali?`,
   );
 
   return (

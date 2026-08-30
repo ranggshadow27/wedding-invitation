@@ -1,3 +1,4 @@
+// app/invite/[code]/page.tsx
 "use client";
 
 import { useState, useEffect, use } from "react";
@@ -36,6 +37,29 @@ export default function InvitationPage({
     setCurrentLog(msg);
   };
 
+  // Helper untuk cek kelompok yang diabaikan (TEST / EARLY-ACCESS)
+  const shouldSkipAnalytics = (guestData: any) => {
+    if (!guestData) return true;
+    const groupName = guestData.group_name?.toUpperCase() || "";
+    return ["TEST", "EARLY-ACCESS"].includes(groupName);
+  };
+
+  // Handler Logging Event (visit / swipe)
+  const recordAnalytics = async (type: "visit" | "swipe", guestData: any) => {
+    if (shouldSkipAnalytics(guestData)) return;
+
+    const sessionKey = `viewed_${type}_${code}`;
+    const hasRecorded = sessionStorage.getItem(sessionKey);
+
+    if (!hasRecorded) {
+      await supabase
+        .from("guest_views")
+        .insert([{ guest_id: guestData.id, type }]);
+
+      sessionStorage.setItem(sessionKey, "true");
+    }
+  };
+
   useEffect(() => {
     if (!code) return;
     let isMounted = true;
@@ -61,6 +85,11 @@ export default function InvitationPage({
           .single();
 
         if (isMounted) setGuest(guestData);
+
+        // --- RECORD ANALYTICS: VISIT ---
+        if (guestData) {
+          recordAnalytics("visit", guestData);
+        }
 
         setLog("Loading core assets...");
         await Promise.all(
@@ -114,6 +143,14 @@ export default function InvitationPage({
     };
   }, [code]);
 
+  // Trigger saat user sukses Swipe Up
+  const handleOpenInvitation = () => {
+    setIsOpened(true);
+    if (guest) {
+      recordAnalytics("swipe", guest);
+    }
+  };
+
   const handleSkip = () => {
     setLog("⏩ Skipping best experience...");
     setTimeout(() => {
@@ -136,7 +173,7 @@ export default function InvitationPage({
 
   return (
     <main className="relative w-full min-h-dvh overflow-x-hidden">
-      {/* 1. BACKGROUND MEDIA (SOLUSI FIX SAFARI EDGE-TO-EDGE) */}
+      {/* 1. BACKGROUND MEDIA */}
       {!isOpened ? (
         <div className="fixed inset-0 w-full h-dvh bg-[url('/images/bg.jpg')] bg-cover bg-center bg-no-repeat pointer-events-none -z-20" />
       ) : (
@@ -161,10 +198,7 @@ export default function InvitationPage({
       <AnimatePresence mode="wait">
         {!isOpened && (
           <div className="w-full h-full">
-            <LandingHero
-              guestName={guest.name}
-              onOpen={() => setIsOpened(true)}
-            />
+            <LandingHero guestName={guest.name} onOpen={handleOpenInvitation} />
           </div>
         )}
       </AnimatePresence>

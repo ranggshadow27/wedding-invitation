@@ -242,9 +242,9 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
             <div className="flex-1 overflow-y-auto space-y-4 pr-1 custom-scrollbar">
               {rsvps.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center text-gray-400">
-                  <Heart className="w-12 h-12 mb-3 text-rose-300/40 animate-pulse" />
-                  <p className="text-xs font-light">
-                    Belum ada konfirmasi. Jadilah yang pertama!
+                  <Heart className="w-12 h-12 mb-3 text-rose-300 animate-pulse" />
+                  <p className="text-xs font-light text-white">
+                    Belum ada konfirmasi kehadiran. <br /> Jadilah yang pertama!
                   </p>
                 </div>
               ) : (
