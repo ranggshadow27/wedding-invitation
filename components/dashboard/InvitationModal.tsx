@@ -2,6 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createClient } from "@/lib/supabase/client";
 import { Guest } from "@/types/guest";
 import {
   INVITATION_TEMPLATES,
@@ -17,6 +18,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "@/components/ui/toast";
 import {
   Select,
   SelectContent,
@@ -24,22 +27,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Copy, Check, MessageCircle } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 
 interface InvitationModalProps {
   isOpen: boolean;
   onClose: () => void;
   guest: Guest | null;
+  onSuccess?: () => void;
 }
 
 export default function InvitationModal({
   isOpen,
   onClose,
   guest,
+  onSuccess,
 }: InvitationModalProps) {
   const [selectedTemplateId, setSelectedTemplateId] = useState("formal");
   const [message, setMessage] = useState("");
   const [copied, setCopied] = useState(false);
+  const [isShared, setIsShared] = useState(false);
+  const [updating, setUpdating] = useState(false);
+
+  const supabase = createClient();
 
   const generateMessage = (templateContent: string, currentGuest: Guest) => {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
@@ -55,6 +64,7 @@ export default function InvitationModal({
 
   useEffect(() => {
     if (guest && isOpen) {
+      setIsShared(Boolean(guest.is_shared));
       const template = INVITATION_TEMPLATES.find(
         (t) => t.id === selectedTemplateId,
       );
@@ -65,7 +75,7 @@ export default function InvitationModal({
   }, [guest, selectedTemplateId, isOpen]);
 
   const handleTemplateChange = (templateId: string | null) => {
-    if (!templateId) return; // Abaikan jika bernilai null
+    if (!templateId) return;
 
     setSelectedTemplateId(templateId);
     if (guest) {
@@ -79,14 +89,44 @@ export default function InvitationModal({
   const handleCopy = () => {
     navigator.clipboard.writeText(message);
     setCopied(true);
+    toast.add({
+      type: "success",
+      description: "Teks undangan berhasil disalin!",
+    });
 
     setTimeout(() => {
       setCopied(false);
     }, 2000);
   };
 
-  const handleOpenWhatsApp = () => {
-    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank");
+  // Update status is_shared langsung ke Supabase
+  const handleToggleShared = async (checked: boolean) => {
+    if (!guest) return;
+    setUpdating(true);
+    setIsShared(checked);
+
+    const { error } = await supabase
+      .from("guests")
+      .update({ is_shared: checked })
+      .eq("id", guest.id);
+
+    setUpdating(false);
+
+    if (error) {
+      setIsShared(!checked); // Kembalikan state jika ada error
+      toast.add({
+        type: "error",
+        description: `Gagal memperbarui status: ${error.message}`,
+      });
+    } else {
+      toast.add({
+        type: "success",
+        description: checked
+          ? "Status berhasil diubah menjadi Terkirim (Done)."
+          : "Status dikembalikan ke Belum Terkirim.",
+      });
+      if (onSuccess) onSuccess();
+    }
   };
 
   if (!guest) return null;
@@ -101,6 +141,7 @@ export default function InvitationModal({
         </DialogHeader>
 
         <div className="space-y-4 pt-2 flex-1 overflow-y-auto pr-1">
+          {/* Dropdown Select Template */}
           <div className="space-y-2">
             <Label htmlFor="template-select" className="text-xs sm:text-sm">
               Pilih Variasi Kata-kata
@@ -129,6 +170,7 @@ export default function InvitationModal({
             </Select>
           </div>
 
+          {/* Textarea Preview Pesan */}
           <div className="space-y-2">
             <Label htmlFor="message-preview" className="text-xs sm:text-sm">
               Pratinjau Pesan
@@ -138,23 +180,53 @@ export default function InvitationModal({
               rows={8}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="font-sans text-xs sm:text-sm leading-relaxed bg-background min-h-45 sm:min-h-55 resize-y"
+              className="font-sans text-xs sm:text-sm leading-relaxed bg-background min-h-45 sm:min-h-50 resize-y"
+            />
+          </div>
+
+          {/* Toggle Box Mark as Done (Persis dengan di GuestModal) */}
+          <div className="flex items-center justify-between rounded-lg border p-3 shadow-xs bg-card">
+            <div className="space-y-0.5">
+              <Label
+                htmlFor="modal_is_shared"
+                className="text-xs sm:text-sm font-medium cursor-pointer"
+              >
+                Status Terkirim (Mark as Done)
+              </Label>
+              <p className="text-[11px] sm:text-xs text-muted-foreground">
+                Tandai jika teks undangan ini sudah dikirimkan ke tamu.
+              </p>
+            </div>
+            <Switch
+              id="modal_is_shared"
+              checked={isShared}
+              disabled={updating}
+              onCheckedChange={handleToggleShared}
             />
           </div>
         </div>
 
-        <DialogFooter className="shrink-0 flex-col sm:flex-row gap-2 pt-4 border-t mt-4">
+        {/* Footer Modal */}
+        <DialogFooter className="shrink-0 flex-col-reverse sm:flex-row gap-2 pt-4 border-t mt-4">
           <Button
             type="button"
             variant="outline"
+            onClick={onClose}
+            className="w-full sm:w-auto h-9 text-xs sm:text-sm"
+          >
+            Tutup
+          </Button>
+
+          <Button
+            type="button"
             onClick={handleCopy}
             className={`w-full sm:w-auto h-9 text-xs sm:text-sm transition-colors duration-200 ${
-              copied ? "text-emerald-600 border-emerald-600/50" : ""
+              copied ? "bg-emerald-600 hover:bg-emerald-700 text-white" : ""
             }`}
           >
             {copied ? (
               <>
-                <Check className="mr-2 h-3.5 w-3.5 text-emerald-600 animate-in zoom-in-50 duration-200" />
+                <Check className="mr-2 h-3.5 w-3.5 animate-in zoom-in-50 duration-200" />
                 Teks Berhasil Disalin!
               </>
             ) : (
@@ -163,15 +235,6 @@ export default function InvitationModal({
                 Salin Teks
               </>
             )}
-          </Button>
-
-          <Button
-            type="button"
-            onClick={handleOpenWhatsApp}
-            className="w-full sm:w-auto h-9 text-xs sm:text-sm bg-emerald-600 hover:bg-emerald-700 text-white"
-          >
-            <MessageCircle className="mr-2 h-3.5 w-3.5" />
-            Buka WhatsApp
           </Button>
         </DialogFooter>
       </DialogContent>

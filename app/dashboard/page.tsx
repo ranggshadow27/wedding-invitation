@@ -1,4 +1,3 @@
-// app/dashboard/page.tsx
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -8,7 +7,7 @@ import GuestModal from "@/components/dashboard/GuestModal";
 import InvitationModal from "@/components/dashboard/InvitationModal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/toast"; // <-- Import objek toast langsung
+import { toast } from "@/components/ui/toast";
 import {
   Table,
   TableBody,
@@ -54,6 +53,9 @@ import {
   MoreHorizontal,
   Filter,
   FileText,
+  CheckCircle2,
+  Minus,
+  CheckCheck,
 } from "lucide-react";
 import ViewsChart, { ChartData } from "@/components/dashboard/ViewsChart";
 
@@ -101,7 +103,7 @@ export default function DashboardPage() {
     setLoading(false);
   }, [supabase]);
 
-  // Fetch Data Views & Grouping per Hari (7 Hari Terakhir)
+  // Fetch Data Views & Grouping per Hari
   const fetchViewsAnalytics = useCallback(async () => {
     let days = 7;
     if (timeRange === "30d") days = 30;
@@ -119,7 +121,6 @@ export default function DashboardPage() {
       let visitsCount = 0;
       let swipesCount = 0;
 
-      // Inisialisasi tanggal
       const dateMap: {
         [key: string]: { dateStr: string; visit: number; swipe: number };
       } = {};
@@ -130,7 +131,6 @@ export default function DashboardPage() {
         dateMap[isoKey] = { dateStr: isoKey, visit: 0, swipe: 0 };
       }
 
-      // Grouping data visit & swipe
       viewsData.forEach((item) => {
         const itemKey = item.created_at.split("T")[0];
         const viewType = item.type || "visit";
@@ -163,6 +163,33 @@ export default function DashboardPage() {
     fetchGuests();
     fetchViewsAnalytics();
   }, [fetchGuests, fetchViewsAnalytics]);
+
+  // Logic Update Status Shared
+  const toggleSharedStatus = async (
+    id: string,
+    currentStatus: boolean | undefined | null,
+  ) => {
+    const newStatus = !currentStatus;
+    const { error } = await supabase
+      .from("guests")
+      .update({ is_shared: newStatus })
+      .eq("id", id);
+
+    if (error) {
+      toast.add({
+        type: "error",
+        description: `Gagal memperbarui status: ${error.message}`,
+      });
+    } else {
+      toast.add({
+        type: "success",
+        description: newStatus
+          ? "Status berhasil diubah menjadi Terkirim (Done)."
+          : "Status dikembalikan ke Belum Terkirim.",
+      });
+      fetchGuests();
+    }
+  };
 
   // Logic Hapus
   const handleDelete = async (id: string, name: string) => {
@@ -312,7 +339,7 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* Tampilkan Line Chart di sini */}
+        {/* Line Chart */}
         <ViewsChart
           data={chartData}
           totalVisits={totalVisits}
@@ -368,9 +395,7 @@ export default function DashboardPage() {
               <TableRow className="hover:bg-transparent border-b">
                 <TableHead className="w-[30%] h-12 py-3">Nama Tamu</TableHead>
                 <TableHead className="h-12 py-3">Kelompok</TableHead>
-                <TableHead className="h-12 py-3 text-center">
-                  Jumlah Pax
-                </TableHead>
+                <TableHead className="h-12 py-3 text-center">Shared</TableHead>
                 <TableHead className="h-12 py-3">Kode Unik</TableHead>
                 <TableHead className="h-12 py-3 text-right">Aksi</TableHead>
               </TableRow>
@@ -431,8 +456,29 @@ export default function DashboardPage() {
                         </Badge>
                       </TableCell>
 
-                      <TableCell className="py-1 text-center font-medium text-foreground text-sm">
-                        {guest.total_invited}
+                      {/* Status Shared (Icon Check / Minus) */}
+                      <TableCell className="py-1 text-center">
+                        <div className="flex items-center justify-center">
+                          {guest.is_shared ? (
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p className="text-xs">Sudah Dibagikan</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          ) : (
+                            <Tooltip>
+                              <TooltipTrigger>
+                                <Minus className="h-4 w-4 text-muted-foreground/50" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p className="text-xs">Belum Dibagikan</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          )}
+                        </div>
                       </TableCell>
 
                       {/* Kode Unik */}
@@ -483,6 +529,26 @@ export default function DashboardPage() {
                           <Button
                             size="icon"
                             variant="ghost"
+                            title={
+                              guest.is_shared
+                                ? "Tandai Belum Terkirim"
+                                : "Tandai Sudah Terkirim (Mark as Done)"
+                            }
+                            onClick={() =>
+                              toggleSharedStatus(guest.id, guest.is_shared)
+                            }
+                            className={`h-7 w-7 cursor-pointer ${
+                              guest.is_shared
+                                ? "text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-950/50"
+                                : "text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950/50"
+                            }`}
+                          >
+                            <CheckCheck className="h-3.5 w-3.5" />
+                          </Button>
+
+                          <Button
+                            size="icon"
+                            variant="ghost"
                             title="Salin Link Undangan"
                             onClick={() => copyLink(guest.unique_code)}
                             className="h-7 w-7 cursor-pointer text-muted-foreground hover:text-foreground"
@@ -519,6 +585,9 @@ export default function DashboardPage() {
                           <MobileActionMenu
                             guest={guest}
                             onGenerateInvite={handleOpenInviteModal}
+                            onToggleShared={(id, current) =>
+                              toggleSharedStatus(id, current)
+                            }
                             copyLink={copyLink}
                             copyUniqueCodeOnly={copyUniqueCodeOnly}
                             onEdit={(g) => {
@@ -595,6 +664,7 @@ export default function DashboardPage() {
 function MobileActionMenu({
   guest,
   onGenerateInvite,
+  onToggleShared,
   copyLink,
   copyUniqueCodeOnly,
   onEdit,
@@ -602,6 +672,10 @@ function MobileActionMenu({
 }: {
   guest: Guest;
   onGenerateInvite: (guest: Guest) => void;
+  onToggleShared: (
+    id: string,
+    currentStatus: boolean | undefined | null,
+  ) => void;
   copyLink: (code: string) => void;
   copyUniqueCodeOnly: (code: string) => void;
   onEdit: (guest: Guest) => void;
@@ -639,6 +713,22 @@ function MobileActionMenu({
             >
               <FileText className="mr-2 h-4 w-4" />
               <span>Generate Teks</span>
+            </div>
+          </DropdownMenuItem>
+
+          {/* Mark as Done / Toggle Shared */}
+          <DropdownMenuItem className="text-blue-600 dark:text-blue-400 cursor-pointer">
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                handleAction(() => onToggleShared(guest.id, guest.is_shared));
+              }}
+              className="flex items-center w-full px-2 py-1 text-sm"
+            >
+              <CheckCheck className="mr-2 h-4 w-4" />
+              <span>
+                {guest.is_shared ? "Batal Mark as Done" : "Mark as Done"}
+              </span>
             </div>
           </DropdownMenuItem>
 

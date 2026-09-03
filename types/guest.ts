@@ -7,4 +7,5 @@ export interface Guest {
   total_invited: number;
   unique_code: string;
   created_at: string;
+  is_shared?: boolean;
 }
