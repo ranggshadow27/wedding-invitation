@@ -29,7 +29,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Check, ChevronsUpDown, Plus } from "lucide-react";
+import { Check, ChevronsUpDown, Plus, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface GuestModalProps {
@@ -127,27 +127,35 @@ export default function GuestModal({
     }
   }, [guestToEdit, isOpen]);
 
+  // Handle Perubahan Nama Tamu -> Auto Update Slug & Unique Code (Berlaku untuk Tambah & Edit)
   const handleNameChange = (val: string) => {
     setName(val);
-    if (!guestToEdit) {
-      const newSlug = generateSlug(val);
-      setSlug(newSlug);
-      setUniqueCode(generateCustomUniqueCode(newSlug, groupName));
-    }
+    const newSlug = generateSlug(val);
+    setSlug(newSlug);
+    setUniqueCode(generateCustomUniqueCode(newSlug, groupName));
   };
 
+  // Handle Perubahan Slug Manual -> Auto Update Unique Code
   const handleSlugChange = (val: string) => {
     setSlug(val);
-    if (!guestToEdit) {
-      setUniqueCode(generateCustomUniqueCode(val, groupName));
-    }
+    setUniqueCode(generateCustomUniqueCode(val, groupName));
   };
 
+  // Handle Perubahan Kelompok -> Auto Update Unique Code
   const handleGroupChange = (val: string) => {
     setGroupName(val);
-    if (!guestToEdit) {
-      setUniqueCode(generateCustomUniqueCode(slug, val));
-    }
+    setUniqueCode(generateCustomUniqueCode(slug, val));
+  };
+
+  // Manual Trigger Regenerate Slug & Unique Code
+  const handleRegenerate = () => {
+    const newSlug = generateSlug(name);
+    setSlug(newSlug);
+    setUniqueCode(generateCustomUniqueCode(newSlug, groupName));
+    toast.add({
+      type: "success",
+      description: "Slug dan Kode Unik berhasil diperbarui.",
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -223,7 +231,19 @@ export default function GuestModal({
         <form onSubmit={handleSubmit} className="space-y-3.5 pt-2">
           {/* Input Nama Tamu */}
           <div className="space-y-1.5">
-            <Label htmlFor="name">Nama Tamu</Label>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="name">Nama Tamu</Label>
+              {guestToEdit && (
+                <button
+                  type="button"
+                  onClick={handleRegenerate}
+                  className="text-[11px] text-rose-600 hover:text-rose-700 flex items-center gap-1 font-medium cursor-pointer"
+                  title="Generate ulang Slug dan Kode Unik berdasarkan Nama & Kelompok saat ini"
+                >
+                  <RefreshCw className="h-3 w-3" /> Sync Slug & Kode
+                </button>
+              )}
+            </div>
             <Input
               id="name"
               placeholder="Masukan Nama Tamu"
