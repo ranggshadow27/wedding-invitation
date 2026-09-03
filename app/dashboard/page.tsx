@@ -191,6 +191,26 @@ export default function DashboardPage() {
     }
   };
 
+  // Buat fungsi helper untuk update state lokal secara realtime
+  const handleGuestSharedToggle = (
+    guestId: string,
+    newSharedStatus: boolean,
+  ) => {
+    // 1. Update daftar guests di tabel
+    setGuests((prevGuests) =>
+      prevGuests.map((g) =>
+        g.id === guestId ? { ...g, is_shared: newSharedStatus } : g,
+      ),
+    );
+
+    // 2. Update state guest yang sedang aktif di modal agar tidak stale saat dibuka lagi
+    if (inviteGuest && inviteGuest.id === guestId) {
+      setInviteGuest((prev) =>
+        prev ? { ...prev, is_shared: newSharedStatus } : null,
+      );
+    }
+  };
+
   // Logic Hapus
   const handleDelete = async (id: string, name: string) => {
     if (confirm(`Apakah kamu yakin ingin menghapus data ${name}?`)) {
@@ -655,6 +675,8 @@ export default function DashboardPage() {
           isOpen={isInviteModalOpen}
           onClose={() => setIsInviteModalOpen(false)}
           guest={inviteGuest}
+          onSuccess={fetchGuests}
+          onSharedChange={handleGuestSharedToggle} // <-- Tambahkan handler ini
         />
       </div>
     </TooltipProvider>

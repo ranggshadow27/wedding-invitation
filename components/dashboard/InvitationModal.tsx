@@ -34,6 +34,7 @@ interface InvitationModalProps {
   onClose: () => void;
   guest: Guest | null;
   onSuccess?: () => void;
+  onSharedChange?: (guestId: string, newStatus: boolean) => void; // <-- Tambahkan prop ini
 }
 
 export default function InvitationModal({
@@ -41,6 +42,7 @@ export default function InvitationModal({
   onClose,
   guest,
   onSuccess,
+  onSharedChange,
 }: InvitationModalProps) {
   const [selectedTemplateId, setSelectedTemplateId] = useState("formal");
   const [message, setMessage] = useState("");
@@ -72,7 +74,7 @@ export default function InvitationModal({
         setMessage(generateMessage(template.content, guest));
       }
     }
-  }, [guest, selectedTemplateId, isOpen]);
+  }, [guest, guest?.is_shared, selectedTemplateId, isOpen]);
 
   const handleTemplateChange = (templateId: string | null) => {
     if (!templateId) return;
@@ -105,6 +107,12 @@ export default function InvitationModal({
     setUpdating(true);
     setIsShared(checked);
 
+    // 1. Langsung update state di parent (Page) secara realtime
+    if (onSharedChange) {
+      onSharedChange(guest.id, checked);
+    }
+
+    // 2. Kirim update ke Supabase
     const { error } = await supabase
       .from("guests")
       .update({ is_shared: checked })
@@ -113,7 +121,11 @@ export default function InvitationModal({
     setUpdating(false);
 
     if (error) {
-      setIsShared(!checked); // Kembalikan state jika ada error
+      // Revert state jika server gagal menyimpan
+      setIsShared(!checked);
+      if (onSharedChange) {
+        onSharedChange(guest.id, !checked);
+      }
       toast.add({
         type: "error",
         description: `Gagal memperbarui status: ${error.message}`,
