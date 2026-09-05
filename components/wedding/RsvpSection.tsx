@@ -98,7 +98,7 @@ export default function RsvpSection({ guest }: RsvpSectionProps) {
         </motion.div>
 
         <motion.p
-          className="text-center text-xs md:text-sm text-gray-200 max-w-xl mx-auto mb-14 leading-relaxed font-light"
+          className="text-center text-xs md:text-sm text-gray-200 text-shadow-lg/30 max-w-xl mx-auto mb-14 leading-relaxed font-light"
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

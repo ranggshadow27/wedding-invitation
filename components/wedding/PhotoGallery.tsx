@@ -47,14 +47,14 @@ const galleryImages = [
     id: 7,
     url: "/images/gallery/img_5_wide.jpg",
     alt: "Prewedding 7",
-    aspect: "aspect-[4/4]",
-  },
-  {
-    id: 8,
-    url: "/images/gallery/img_8.jpg",
-    alt: "Prewedding 8",
     aspect: "aspect-[4/6]",
   },
+  // {
+  //   id: 8,
+  //   url: "/images/gallery/img_8.jpg",
+  //   alt: "Prewedding 8",
+  //   aspect: "aspect-[4/6]",
+  // },
   {
     id: 9,
     url: "/images/gallery/img_9.jpg",

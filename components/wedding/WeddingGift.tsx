@@ -36,11 +36,11 @@ const gifts = [
   },
   {
     id: 3,
-    name: "GoPay Account",
+    name: "E-Wallet Account (GoPay)",
     icon: WalletIcon,
     account: "0896 8684 8970",
     owner: "Rangga Tito Prayogo",
-    badge: "GOPAY",
+    badge: "GoPay",
     badgeStyle: "text-emerald-400 bg-emerald-500/10 border-emerald-400/30",
   },
   {
@@ -48,8 +48,9 @@ const gifts = [
     name: "Send Your Gift At :",
     icon: MapPinIcon,
     account:
-      "Jl. Mawar Indah No. 123, RT 02/RW 05, Kel. Kebayoran Baru, Jakarta Selatan 12110",
-    owner: "Rangga & Annisa",
+      "Mutiara Bekasi Jaya Blok D7 No. 8, Sindang Mulya, Cibarusah, Kabupaten Bekasi 17340",
+    owner: "Annisa Lutfia",
+
     badge: "GIFT",
     badgeStyle: "text-yellow-400 bg-yellow-500/10 border-yellow-400/30",
     isAddress: true, // Flag khusus untuk layout teks alamat
@@ -84,7 +85,7 @@ export default function WeddingGift() {
         </motion.div>
 
         <motion.p
-          className="text-center text-xs md:text-sm text-gray-200 max-w-xl mx-auto mb-14 leading-relaxed font-light"
+          className="text-center text-xs md:text-sm text-gray-200 max-w-xl mx-auto mb-14 leading-relaxed text-shadow-lg/30 font-light"
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}

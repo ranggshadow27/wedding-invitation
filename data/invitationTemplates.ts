@@ -21,7 +21,6 @@ export const INVITATION_TEMPLATES: Template[] = [
     label: "Formal / Orang Tua & VIP",
     content: `Kepada Yth.
 Bapak/Ibu/Saudara/i {nama}
-di Tempat
 
 Assalamu’alaikum Wr. Wb. / Selamat {waktu},
 
@@ -35,7 +34,7 @@ Detail informasi mengenai lokasi dan jadwal acara dapat diakses melalui tautan u
 
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.
 
-Mohon maaf atas keterbatasan penyampaian undangan ini. Terima kasih.
+Mohon maaf atas keterbatasan penyampaian undangan ini. Terima kasih atas perhatiannya!
 
 Wassalamu’alaikum Wr. Wb.`,
   },
@@ -46,15 +45,15 @@ Wassalamu’alaikum Wr. Wb.`,
 
 Selamat {waktu}! Semoga sehat bahagia selalu ya.
 
-Hari pernikahan kami akan segera tiba, oleh karenanya kami ingin mengundang untuk datang dan merayakan hari bahagia kami! 🎉
+Hari pernikahan kami sudah semakin dekat. Tanpa mengurangi rasa hormat, kami ingin mengundang untuk hadir dan berbagi kebahagiaan bersama kami di hari istimewa ini. 🎉
 
 💍 *The Wedding of Annisa & Rangga*
-Untuk info detail acara dan lokasinya sebagai berikut,
+Detail acara dan lokasi selengkapnya dapat diakses melalui tautan berikut:
 
 🔗 Link Undangan : 
 *{link}*
 
-Kehadiran dan doa restumu bakal berharga banget buat kami. See you! 🙌`,
+Kehadiran serta doa restu dari {nama} sangat berarti bagi kami. Terima kasih dan sampai jumpa! 🙌`,
   },
   {
     id: "singkat",
