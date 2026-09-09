@@ -152,7 +152,7 @@ export default function WeddingFooter() {
             transition={{ delay: 0.3 }}
           >
             <a
-              href="https://www.instagram.com/ichannisa13"
+              href="https://www.instagram.com/ichannisa13_"
               target="_blank"
               className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
             >
