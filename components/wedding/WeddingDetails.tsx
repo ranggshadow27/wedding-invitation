@@ -62,7 +62,7 @@ export default function WeddingDetails() {
                     transition={{ delay: 0.2 }}
                   >
                     <span className="font-bold">Annisa</span> Lutfia Putri
-                    Pratama
+                    Pratama, A.Md.Kep
                   </motion.p>
                   <motion.p
                     className="text-gray-800/80 mt-2 text-xs"
@@ -132,7 +132,8 @@ export default function WeddingDetails() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 }}
                   >
-                    <span className="font-bold">Rangga</span> Tito Prayogo
+                    <span className="font-bold">Rangga</span> Tito Prayogo,
+                    S.Kom
                   </motion.h3>
                   <motion.p
                     className="text-gray-800/80 mt-2 text-xs"

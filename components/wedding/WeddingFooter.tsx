@@ -152,14 +152,14 @@ export default function WeddingFooter() {
             transition={{ delay: 0.3 }}
           >
             <a
-              href="https://www.instagram.com/"
+              href="https://www.instagram.com/ichannisa13"
               target="_blank"
               className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
             >
               <InstagramLogoIcon size={20} weight="duotone" />
             </a>
 
-            <a
+            {/* <a
               href="https://www.threads.com/"
               target="_blank"
               className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
@@ -172,7 +172,7 @@ export default function WeddingFooter() {
               className="border border-white/70 hover:border-white text-white p-2 rounded-full transition-all hover:scale-110"
             >
               <FacebookLogoIcon size={20} weight="duotone" />
-            </a>
+            </a> */}
             <a
               href="https://discord.com/users/529625255229128714"
               target="_blank"
