@@ -34,7 +34,7 @@ Detail informasi mengenai lokasi dan jadwal acara dapat diakses melalui tautan u
 
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.
 
-Mohon maaf atas keterbatasan penyampaian undangan ini. Terima kasih atas perhatiannya!
+Mohon maaf atas keterbatasan penyampaian undangan ini. Terima kasih atas perhatiannya.
 
 Wassalamu’alaikum Wr. Wb.`,
   },
