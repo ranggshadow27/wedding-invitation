@@ -23,7 +23,10 @@ export default function InvitationPage({
   params: Promise<{ code: string }>;
 }) {
   const resolvedParams = use(params);
-  const code = resolvedParams.code;
+
+  // Clean-up karakter '*' jika ada di URL param
+  const rawCode = resolvedParams.code || "";
+  const code = rawCode.replaceAll("*", "");
 
   const [guest, setGuest] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -32,6 +35,14 @@ export default function InvitationPage({
 
   const [currentLog, setCurrentLog] = useState<string>("Initializing...");
   const [showSkipButton, setShowSkipButton] = useState(false);
+
+  // Auto-clean URL di Address Bar browser jika ada '*'
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.href.includes("*")) {
+      const cleanUrl = window.location.href.replaceAll("*", "");
+      window.history.replaceState(null, "", cleanUrl);
+    }
+  }, []);
 
   const setLog = (msg: string) => {
     setCurrentLog(msg);
