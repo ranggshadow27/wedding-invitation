@@ -50,8 +50,8 @@ Hari pernikahan kami sudah semakin dekat. Tanpa mengurangi rasa hormat, kami ing
 💍 *The Wedding of Annisa & Rangga*
 Detail acara dan lokasi selengkapnya dapat diakses melalui tautan berikut:
 
-🔗 Link Undangan : 
-*{link}*
+🔗 *Link Undangan :* 
+{link}
 
 Kehadiran serta doa restu dari {nama} sangat berarti bagi kami. Terima kasih dan sampai jumpa! 🙌`,
   },
