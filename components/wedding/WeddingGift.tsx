@@ -18,7 +18,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const gifts = [
   {
     id: 1,
-    name: "Bank Transfer (Mandiri)",
+    name: "Bank Transfer (Bank Mandiri)",
     icon: CreditCardIcon,
     account: "1270010990735",
     owner: "Annisa Lutfia Putri",
@@ -27,7 +27,7 @@ const gifts = [
   },
   {
     id: 2,
-    name: "Bank Transfer (BCA)",
+    name: "Bank Transfer (Bank BCA)",
     icon: CreditCardIcon,
     account: "5222437911",
     owner: "Annisa Lutfia Putri",
@@ -36,6 +36,15 @@ const gifts = [
   },
   {
     id: 3,
+    name: "Bank Transfer (Bank Sinarmas)",
+    icon: CreditCardIcon,
+    account: "0059029991",
+    owner: "Rangga Tito Prayogo",
+    badge: "Sinarmas",
+    badgeStyle: "text-red-400 bg-red-500/10 border-red-400/30",
+  },
+  {
+    id: 4,
     name: "E-Wallet Account (GoPay)",
     icon: WalletIcon,
     account: "0896 8684 8970",
@@ -44,7 +53,7 @@ const gifts = [
     badgeStyle: "text-emerald-400 bg-emerald-500/10 border-emerald-400/30",
   },
   {
-    id: 4,
+    id: 5,
     name: "Send Your Gift At :",
     icon: MapPinIcon,
     account:
