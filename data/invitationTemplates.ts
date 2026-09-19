@@ -29,8 +29,8 @@ Tanpa mengurangi rasa hormat, berhubung keterbatasan jarak dan waktu, melalui pe
 💍 *The Wedding of Annisa & Rangga*
 Detail informasi mengenai lokasi dan jadwal acara dapat diakses melalui tautan undangan digital berikut:
 
-🔗 Link Undangan : 
-*{link}*
+🔗 *Link Undangan :* 
+{link}
 
 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir.
 
