@@ -58,7 +58,7 @@ const gifts = [
     icon: MapPinIcon,
     account:
       "Mutiara Bekasi Jaya Blok D7 No. 8, Sindang Mulya, Cibarusah, Kabupaten Bekasi 17340",
-    owner: "Annisa Lutfia",
+    owner: "Annisa Lutfia Icaa",
 
     badge: "GIFT",
     badgeStyle: "text-yellow-400 bg-yellow-500/10 border-yellow-400/30",
